@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<exceptionHelper>
+	<exceptionGroup type="Kent.Boogaart.Converters.FormatConverter">
+		<exception key="NoFormatString" type="System.InvalidOperationException">
+			No FormatString has been specified.
+		</exception>
+	</exceptionGroup>
+
+	<exceptionGroup type="Kent.Boogaart.Converters.TypeConverter">
+		<exception key="NoSourceType" type="System.InvalidOperationException">
+			No SourceType has been specified.
+		</exception>
+		<exception key="NoTargetType" type="System.InvalidOperationException">
+			No TargetType has been specified.
+		</exception>
+	</exceptionGroup>
+
+	<exceptionGroup type="Kent.Boogaart.Converters.MultiConverterGroup">
+		<exception key="FinalStepMustHaveOneConverter" type="System.InvalidOperationException">
+			The final step in a MultiConverterGroup must have a single converter added to it.
+		</exception>
+		<exception key="EachStepMustHaveAtLeastOneConverter" type="System.InvalidOperationException">
+			Each step in a MultiConverterGroup must have at least one converter added to it.
+		</exception>
+		<exception key="NumberOfConvertersInStepMustEqualNumberOfValuesFromPreviousStep" type="System.InvalidOperationException">
+			Step with index {0} produced {1} values but the subsequent step (index {2}) requires {3} values.
+		</exception>
+	</exceptionGroup>
+
+	<exceptionGroup type="Kent.Boogaart.Converters.ExpressionConverter">
+		<exception key="NoExpression" type="System.InvalidOperationException">
+			No Expression has been specified.
+		</exception>
+	</exceptionGroup>
+
+	<exceptionGroup type="Kent.Boogaart.Converters.Expressions.Tokenizer">
+		<exception key="UnrecognizedEscapeSequence" type="Kent.Boogaart.Converters.Expressions.ParseException, Kent.Boogaart.Converters">
+			Unrecognized escape sequence.
+		</exception>
+	</exceptionGroup>
+
+	<exceptionGroup type="Kent.Boogaart.Converters.Expressions.Parser">
+		<exception key="UnexpectedEndOfInput" type="Kent.Boogaart.Converters.Expressions.ParseException, Kent.Boogaart.Converters">
+			Unexpected end of input.
+		</exception>
+		<exception key="UnexpectedToken" type="Kent.Boogaart.Converters.Expressions.ParseException, Kent.Boogaart.Converters">
+			Unexpected input '{0}'. Expected '{1}'.
+		</exception>
+		<exception key="ExpressionExpected" type="Kent.Boogaart.Converters.Expressions.ParseException, Kent.Boogaart.Converters">
+			Expected an expression.
+		</exception>
+		<exception key="InvalidNumber" type="Kent.Boogaart.Converters.Expressions.ParseException, Kent.Boogaart.Converters">
+			Invalid number: {0}
+		</exception>
+		<exception key="CannotCastToType" type="Kent.Boogaart.Converters.Expressions.ParseException, Kent.Boogaart.Converters">
+			Cannot cast to type '{0}'.
+		</exception>
+		<exception key="UnexpectedInput" type="Kent.Boogaart.Converters.Expressions.ParseException, Kent.Boogaart.Converters">
+			Unexpected input '{0}'.
+		</exception>		
+	</exceptionGroup>
+
+	<exceptionGroup type="Kent.Boogaart.Converters.Expressions.Nodes.VariableNode">
+		<exception key="ArgumentNotFound" type="Kent.Boogaart.Converters.Expressions.ParseException, Kent.Boogaart.Converters">
+			No argument with index {0} has been supplied.
+		</exception>
+	</exceptionGroup>
+
+	<exceptionGroup type="Kent.Boogaart.Converters.Expressions.Nodes.NegateNode">
+		<exception key="CannotNegateValue" type="Kent.Boogaart.Converters.Expressions.ParseException, Kent.Boogaart.Converters">
+			Operator '~' cannot be applied to operand of type '{0}'.
+		</exception>
+	</exceptionGroup>
+
+	<exceptionGroup type="Kent.Boogaart.Converters.Expressions.Nodes.WideningBinaryNode">
+		<exception key="OperatorNotSupportedWithOperands" type="Kent.Boogaart.Converters.Expressions.ParseException, Kent.Boogaart.Converters">
+			Operator '{0}' cannot be applied to operands of type '{1}' and '{2}'.
+		</exception>
+	</exceptionGroup>
+
+	<exceptionGroup type="Kent.Boogaart.Converters.Expressions.Nodes.ConditionalNode">
+		<exception key="OperandsNotBoolean" type="Kent.Boogaart.Converters.Expressions.ParseException, Kent.Boogaart.Converters">
+			Operator '{0}' cannot be applied to operands of type '{1}' and '{2}'.
+		</exception>
+	</exceptionGroup>
+
+	<exceptionGroup type="Kent.Boogaart.Converters.Expressions.Nodes.ShiftNode">
+		<exception key="NodeValuesNotSupportedTypes" type="Kent.Boogaart.Converters.Expressions.ParseException, Kent.Boogaart.Converters">
+			Operator '{0}' cannot be applied to operands of type '{1}' and '{2}'.
+		</exception>
+	</exceptionGroup>
+
+	<exceptionGroup type="Kent.Boogaart.Converters.Expressions.Nodes.ComplementNode">
+		<exception key="NotIntegralType" type="Kent.Boogaart.Converters.Expressions.ParseException, Kent.Boogaart.Converters">
+			Operator '~' cannot be applied to operand of type '{0}'.
+		</exception>
+	</exceptionGroup>
+
+	<exceptionGroup type="Kent.Boogaart.Converters.Expressions.Nodes.NotNode">
+		<exception key="NotBooleanType" type="Kent.Boogaart.Converters.Expressions.ParseException, Kent.Boogaart.Converters">
+			Operator '!' cannot be applied to operand of type '{0}'.
+		</exception>
+	</exceptionGroup>
+
+	<exceptionGroup type="Kent.Boogaart.Converters.Expressions.Nodes.CastNode">
+		<exception key="CannotCast" type="Kent.Boogaart.Converters.Expressions.ParseException, Kent.Boogaart.Converters">
+			Cannot convert type '{0}' to type '{1}'.
+		</exception>
+	</exceptionGroup>
+
+	<exceptionGroup type="Kent.Boogaart.Converters.Markup.ExpressionConverterExtension">
+		<exception key="NoExpression" type="System.InvalidOperationException">
+			No expression has been provided.
+		</exception>
+	</exceptionGroup>
+
+	<exceptionGroup type="Kent.Boogaart.Converters.Markup.FormatConverterExtension">
+		<exception key="NoFormatString" type="System.InvalidOperationException">
+			No format string has been provided.
+		</exception>
+	</exceptionGroup>	
+</exceptionHelper>
