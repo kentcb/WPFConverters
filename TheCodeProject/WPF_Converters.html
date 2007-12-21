@@ -1,0 +1,528 @@
+<!--------------------------------------------------------------------------->  
+<!--                           INTRODUCTION                                
+
+ The Code Project article submission template (HTML version)
+
+Using this template will help us post your article sooner. To use, just 
+follow the 3 easy steps below:
+ 
+     1. Fill in the article description details
+     2. Add links to your images and downloads
+     3. Include the main article text
+
+That's all there is to it! All formatting will be done by our submission
+scripts and style sheets. 
+
+-->  
+<!--------------------------------------------------------------------------->  
+<!--                        IGNORE THIS SECTION                            -->
+<html>
+<head>
+<title>The Code Project</title>
+<Style>
+BODY, P, TD { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10pt }
+H2,H3,H4,H5 { color: #ff9900; font-weight: bold; }
+H2 { font-size: 13pt; }
+H3 { font-size: 12pt; }
+H4 { font-size: 10pt; color: black; }
+PRE { BACKGROUND-COLOR: #FBEDBB; FONT-FAMILY: "Courier New", Courier, mono; WHITE-SPACE: pre; }
+CODE { COLOR: #990000; FONT-FAMILY: "Courier New", Courier, mono; }
+</style>
+<link rel="stylesheet" type=text/css href="http://www.codeproject.com/styles/global.css">
+</head>
+<body bgcolor="#FFFFFF" color=#000000>
+<!--------------------------------------------------------------------------->  
+
+
+<!-------------------------------     STEP 1      --------------------------->
+<!--  Fill in the details (CodeProject will reformat this section for you) -->
+
+<pre>
+Title:       WPF Converters
+Author:      Kent Boogaart
+Email:       kentcb@internode.on.net
+Member ID:   548409
+Language:    C# 2.0
+Platform:    Windows, .NET 3.0
+Technology:  WPF
+Level:       Intermediate, Advanced
+Description: An article that provides and describes a set of reusable WPF binding converters.
+Section      WPF
+SubSection   
+</pre>
+
+<!-------------------------------     STEP 2      --------------------------->
+<!--  Include download and sample image information.                       --> 
+
+<ul class=download>
+<li><a href="Source.zip">Full Source (includes unit tests) [Orcas beta 2]</a></li>
+<li><a href="Binaries.zip">Binaries [.NET 3.0 or greater]</a></li>
+<li><a href="WPFConvertersAPI.chm">API Documentation [.chm]</a></li>
+</ul>
+
+
+<!-------------------------------     STEP 3      --------------------------->
+<!--  Add the article text. Please use simple formatting (<h2>, <p> etc)   --> 
+
+<h2>Introduction</h2>
+
+<p>
+WPF’s data binding infrastructure is a huge boon to developer productivity. It allows developers to achieve far more with less code. However, most non-trivial applications will require code of some sort. Often this code comes in the form of custom value converters, which – as their name suggests – are used to convert values during the data binding process.
+</p>
+
+<p>
+One common mistake WPF novices make when using data binding is to implement custom value converters for each and every binding that requires one. Just like any other code, value converters can be generalized and re-used. This article presents a number of generalized value converters that can be used within your WPF applications.
+</p>
+
+
+<h2>Value Converters</h2>
+
+<p>
+WPF’s <code>Binding</code> and <code>MultiBinding</code> types define a <code>Converter</code> property that allows you to provide a converter that will be used during the binding process. If you don’t explicitly specify a value converter, WPF will use its built-in primitive ones behind the scenes (such as <code>DefaultValueConverter</code>, <code>ObjectTargetConverter</code> and <code>SystemConvertConverter</code> – all are <code>internal</code> types defined in the <code>MS.Internal.Data</code> namespace).
+</p>
+
+<p>
+If you do specify a value converter, WPF will invoke methods on your converter during the data binding process. These methods are:
+<ul>
+<li><code>Convert</code>. Called to convert a value when propagating it from the binding source to the binding target.</li>
+<li><code>ConvertBack</code>. Called to convert a value when propagating it from the binding target to the binding source.</li>
+</ul>
+</p>
+
+<p>
+The following diagram depicts this process:
+</p>
+
+<img src="Binding.png"/>
+
+<p>
+What I have found whilst working with WPF is that value converters (shown in the middle of the above diagram) are often needed to solve similar problems. This article and code library seeks to address the most common converter requirements and alleviate the need for a lot of custom converter code in any WPF application.
+</p>
+
+
+<h2>Using the Value Converters</h2>
+
+<p>
+To use the value converters provided in this article, follow these steps:
+<ol>
+<li>Add a reference to the <i>Kent.Boogaart.Converters.dll</i> assembly.</li>
+<li>Add an XML namespace mapping to <code>http://schemas.kent.boogaart.com/converters</code> in your XAML.</li>
+</ol>
+</p>
+
+<p>
+In all the examples given in this article, the following XML namespace mapping is assumed:
+</p>
+
+<pre lang=xml>
+&lt;Window xmlns:con=&quot;http://schemas.kent.boogaart.com/converters&quot; ...
+</pre>
+
+<p>
+Note that the API documentation provides more complete and real-world examples than the short snippets provided in this article. The article is intended to give the general gist of the converters, whilst the API documentation will show you how to use it in earnest.
+</p>
+
+
+<h2>Converters at a Glance</h2>
+
+<p>
+This table can be used to get a quick overview of the converters provided and their capabilities:
+</p>
+
+<img src="Matrix.png"/>
+
+
+<h2>CaseConverter</h2>
+
+<p>
+The <code>CaseConverter</code> and <code>CaseConverterExtension</code> classes allow you to convert a <code>string</code> to upper or lower case. They accept a single parameter: <code>Casing</code>, which is used to specify the desired case for the resultant <code>string</code>. It is very simple to use, as the following example demonstrates:
+</p>
+
+<pre lang=xml>
+&lt;TextBox x:Name=&quot;_textBox&quot;/&gt;
+&lt;Label Content=&quot;{Binding Text, ElementName=_textBox, Converter={con:CaseConverter Upper}}&quot;/&gt;
+&lt;Label Content=&quot;{Binding Text, ElementName=_textBox, Converter={con:CaseConverter Lower}}&quot;/&gt;
+</pre>
+
+<p>
+Anything typed in the <code>TextBox</code> will be displayed in uppercase in the first <code>Label</code>, and lowercase in the second.
+</p>
+
+
+<h2>FormatConverter</h2>
+
+<p>
+The <code>FormatConverter</code> and <code>FormatConverterExtension</code> classes allow you to convert any number of <code>object</code>s to a <code>string</code> by using .NET’s standard formatting capabilities. They accept a single parameter: <code>FormatString</code>, which defines the format for the resultant <code>string</code>.
+</p>
+
+<p>
+When binding to a single value it can be used as follows:
+</p>
+
+<pre lang=xml>
+&lt;TextBox x:Name=&quot;_textBox&quot;/&gt;
+&lt;Label Content=&quot;{Binding Text, ElementName=_textBox, Converter={con:FormatConverter {}Your name is {0}}}&quot;/&gt;
+</pre>
+
+<p>
+Note how the format string passed to the <code>FormatConverter</code> is escaped with “{}”, which is necessary because it contains the “{” and “}” characters within it. The format string on its own is simply “Your name is {0}”.
+</p>
+
+<p>
+Binding to multiple values looks like this:
+</p>
+
+<pre lang=xml>
+&lt;TextBox x:Name=&quot;_textBox1&quot;/&gt;
+&lt;TextBox x:Name=&quot;_textBox2&quot;/&gt;
+&lt;Label&gt;
+	&lt;Label.Content&gt;
+		&lt;MultiBinding Converter=&quot;{con:FormatConverter {}You said {0} and {1}.}&quot;&gt;
+			&lt;Binding Path=&quot;Text&quot; ElementName=&quot;_textBox1&quot;/&gt;
+			&lt;Binding Path=&quot;Text&quot; ElementName=&quot;_textBox2&quot;/&gt;
+		&lt;/MultiBinding&gt;
+	&lt;/Label.Content>
+&lt;/Label>
+</pre>
+
+
+<h2>DateTimeConverter</h2>
+
+<p>
+The <code>DateTimeConverter</code> and <code>DateTimeConverterExtension</code> classes allow you to perform specialized conversions on <code>DateTime</code>s during data binding. Using these classes, you can do any of the following:
+<ul>
+<li>Convert between different kinds of <code>DateTime</code>s (i.e. convert between UTC and local time).</li>
+<li>Convert between different kinds of <code>DateTime</code>s without changing the underlying <code>DateTime</code> value (i.e. convert by using <code>DateTime.SpecifyKind</code> instead of <code>ToLocalTime</code> or <code>ToUniversalTime</code>).</li>
+</ul>
+</p>
+
+<p>
+The <code>DateTimeConverter</code> supports both forward and backwards conversions. This allows you, for example, to store <code>DateTime</code>s in UTC format in your business objects but convert them to local time prior to using them in your interface. The following example shows how you could achieve this (and assumes the existence of a WPF <code>DatePicker</code> class<sup><a href="#fn7">7</a></sup>):
+</p>
+
+<pre lang=xml>
+&lt;DatePicker Value=&quot;{Binding StartDate, Converter={con:DateTimeConverter TargetKind=Local, SourceKind=Utc}}&quot;/&gt;
+</pre>
+
+
+<h2>MapConverter</h2>
+
+<p>
+The <code>MapConverter</code> class (which has no corresponding markup extension) can be used to map one set of values to another. This is an extremely useful converter that has many use cases. Here are some examples:
+<ul>
+<li>Converting enumeration values to human-readable strings prior to display.</li>
+<li>Converting between <code>bool</code> values and <code>Visibility</code> enumeration values.</li>
+<li>Converting between <code>bool</code> values and an image source so the user sees a tick or a cross depending on the <code>bool</code> value.</li>
+</ul>
+</p>
+
+<p>
+The <code>MapConverter</code> works by using a collection of <code>Mapping</code> objects. Each <code>Mapping</code> object specifies a value to map from and a value to map to. The same <code>Mapping</code> objects are used both for forward conversions and backward conversions.
+</p>
+
+<p>
+If no relevant <code>Mapping</code> object can be found during a conversion, the <code>MapConverter</code> uses its <code>FallbackBehavior</code> property to decide what to do. You can tell it to either return <code>DependencyProperty.UnsetValue</code> or to return the value it was asked to convert.
+</p>
+
+<p>
+An example should make this all clear:
+</p>
+
+<pre lang=xml>
+&lt;Label&gt;
+	&lt;Label.Content&gt;
+		&lt;Binding Path=&quot;Gender&quot;&gt;
+			&lt;Binding.Converter&gt;
+				&lt;con:MapConverter&gt;
+					&lt;con:Mapping From=&quot;{x:Static Gender.Male}&quot; To=&quot;Guy&quot;/&gt;
+					&lt;con:Mapping From=&quot;{x:Static Gender.Female}&quot; To=&quot;Gal&quot;/&gt;
+				&lt;/con:MapConverter&gt;
+			&lt;/Binding.Converter&gt;
+		&lt;/Binding&gt;
+	&lt;/Label.Content&gt;
+&lt;/Label&gt;
+</pre>
+
+<p>
+This example uses a <code>MapConverter</code> to convert from members in a <code>Gender</code> enumeration to either “Guy” or “Gal”. Now suppose that the <code>Gender</code> enumeration also defines a value of <code>Unknown</code> (a wise move in these modern times). The above mapping won’t successfully convert values of <code>Unknown</code> – it will just return <code>DependencyProperty.UnsetValue</code> instead.
+</p>
+
+<p>
+If you want unknown genders to display as “Unknown” you can either add another <code>Mapping</code> or just tell the <code>MapConverter</code> to return the original value if it cannot map the value it is given:
+</p>
+
+<pre lang=xml>
+&lt;con:MapConverter FallbackBehavior=&quot;ReturnOriginalValue&quot;&gt;
+	&lt;con:Mapping From=&quot;{x:Static Gender.Male}&quot; To=&quot;Guy&quot;/&gt;
+	&lt;con:Mapping From=&quot;{x:Static Gender.Female}&quot; To=&quot;Gal&quot;/&gt;
+&lt;/con:MapConverter&gt;
+</pre>
+
+<p>
+A <code>FallbackBehavior</code> of <code>ReturnOriginalValue</code> is extremely useful where you only want to map a subset of the total possible values.
+</p>
+
+
+<h2>ExpressionConverter</h2>
+
+<p>
+The <code>ExpressionConverter</code> and <code>ExpressionConverterExtension</code> classes allow you to convert one or more bound values by running them through a C#-like expression. The expression uses placeholders of the form <code>{x}</code> to demarcate bound arguments, where <code>x</code> is the argument number starting at zero.
+</p>
+
+<p>
+Let’s start with something simple:
+</p>
+
+<pre lang=xml>
+&lt;Canvas&gt;
+	&lt;Slider x:Name=&quot;_slider&quot; Width=&quot;300&quot; Minimum=&quot;1&quot; Maximum=&quot;100&quot;/&gt;
+	&lt;Rectangle Canvas.Top=&quot;20&quot; Fill=&quot;Red&quot; Width=&quot;100&quot; Height=&quot;{Binding Value, ElementName=_slider}&quot;/&gt;
+	&lt;Rectangle Canvas.Top=&quot;100&quot; Fill=&quot;Blue&quot; Width=&quot;100&quot; Height=&quot;{Binding Value, ElementName=_slider, Converter={con:ExpressionConverter {}{0} * 2}}&quot;/&gt;
+&lt;/Canvas&gt;
+</pre>
+
+<p>
+In this example, the value of the <code>Slider</code> dictates the height of the first rectangle. It also dictates the height of the second rectangle, but an <code>ExpressionConverter</code> is used to double the value first. Notice how the expression passed to the <code>ExpressionConverter</code> is escaped with &quot;{}&quot;. As with the <code>FormatConverter</code>, this is necessary because it includes the &quot;{&quot; and &quot;}&quot; characters. The expression on its own is simply &quot;{0} * 2&quot;. In English, this means &quot;multiply the first argument by two&quot;.
+</p>
+
+<p>
+Now, let’s do something a little more complex:
+</p>
+
+<pre lang=xml>
+&lt;StackPanel x:Name=&quot;_panel&quot;&gt;
+	&lt;Label&gt;What bands do you like?&lt;/Label&gt;
+	&lt;CheckBox x:Name=&quot;_rammstein&quot;>Rammstein&lt;/Label&gt;
+	&lt;CheckBox x:Name=&quot;_powderfinger&quot;>Powderfinger&lt;/Label&gt;
+	&lt;CheckBox x:Name=&quot;_nickelback&quot;>Nickelback&lt;/Label&gt;
+	&lt;CheckBox x:Name=&quot;_ministry&quot;>Ministry&lt;/Label&gt;
+	&lt;Button Content=&quot;Let me in!&quot;&gt;
+		&lt;Button.IsEnabled&gt;
+			&lt;MultiBinding Converter=&quot;{ExpressionConverter {}{0} &amp;&amp; {1} &amp;&amp; {3} &amp;&amp; !{2}}&quot;&gt;
+				&lt;Binding Path=&quot;IsChecked&quot; ElementName=&quot;_rammstein&quot;/&gt;
+				&lt;Binding Path=&quot;IsChecked&quot; ElementName=&quot;_powderfinger&quot;/&gt;
+				&lt;Binding Path=&quot;IsChecked&quot; ElementName=&quot;_nickelback&quot;/&gt;
+				&lt;Binding Path=&quot;IsChecked&quot; ElementName=&quot;_ministry&quot;/&gt;
+			&lt;/MultiBinding&gt;
+		&lt;/Button.IsEnabled&gt;
+	&lt;/Button&gt;
+&lt;/StackPanel&gt;
+</pre>
+
+<p>
+In this example, the entry button is only enabled if the correct combination of bands is chosen. If you don’t like a good band or if you do like a sucky band, you won’t be allowed in.
+</p>
+
+<p>
+The actual expression has again been escaped due to its presence in XAML. Unescaped, it is simply &quot;{0} && {1} && {3} && !{2}&quot;. An alternative approach that avoids all this escaping is to use a more long-winded syntax in the <code>MultiBinding</code> as follows:
+</p>
+
+<pre lang=xml>
+&lt;MultiBinding&gt;
+	&lt;MultiBinding.Converter&gt;
+		&lt;con:ExpressionConverterExtension&gt;
+			&lt;con:ExpressionConverterExtension.Expression&gt;
+				&lt;![CDATA[
+				{0} && {1} && {3} && !{2}
+				]]&gt;
+			&lt;/con:ExpressionConverterExtension.Expression&gt;
+		&lt;/con:ExpressionConverterExtension&gt;
+	&lt;/MultiBinding.Converter&gt;
+&lt;/MultiBinding&gt;
+</pre>
+
+<p>
+The <code>ExpressionConverter</code> supports a lot of C# operators and we’ve only scratched the surface of the possibilities here. Please see the API documentation for a full list of supported operators.
+</p>
+
+
+<h3>A Word on the ExpressionConverter's Parser</h3>
+
+<p>
+I am not going to go into detail here on the implementation of the parser behind the <code>ExpressionConverter</code>. For a good overview on writing a code parser, you should check out Tommy Carlier’s series<sup><a href="#fn8">8</a></sup> or any good book on compiler construction. However, I would like to point out a few things.
+</p>
+
+<p>
+Firstly, I did not leverage .NET’s C# CodeDom implementation to parse the expressions. This was due to the imposed security restrictions. I want the <code>ExpressionConverter</code> to be usable in low trust applications (including Silverlight).
+</p>
+
+<p>
+Secondly, I did not leverage ANTLR to generate the parser because then my library would have a dependency of the .NET ANTLR runtime. This was not an option as I was trying to keep the overhead of my library to a minimum.</p>
+
+<p>
+Of course, I did experiment with both CodeDom and ANTLR prior to implementing the parser. This gave me some insights and helped me formulate goals for the parser. Some things that are <em>not</em> supported by my implementation are:
+<ul>
+<li>Verbatim strings (i.e. strings starting with <code>@</code>).</li>
+<li>Hexadecimal or Unicode escape sequences in strings (but common escape sequences such as <code>\n</code> and <code>\t</code> <em>are</em> supported).</li>
+<li>Property accessors (e.g. an expression such as &quot;{0}.Age > 18&quot; will not work).</li>
+<li>Array indexers (e.g. an expression such as &quot;{0}[0] > {0}[1]&quot; will not work).</li>
+<li>Branching statements (and in particular, no ternary operator).</li>
+</ul>
+</p>
+
+<p>
+These features were left out consciously: either because of space constraints, concerns about abuse, or concerns about the efficiency of an interpretive implementation. If you feel there is good reason to include some of these features then please let me know. If you make a strong case I may well add your feature of choice.
+</p>
+
+<p>
+Finally, as I hinted at above, the current implementation of the parser functions as an interpreter. It does not yet leverage .NET’s <code>DynamicMethod</code> class to produce compiled output, but it may in the future . Note that expressions given to the <code>ExpressionConverter</code> are parsed only once. After being parsed, the same abstract syntax tree (AST) is used to evaluate the expression any number of times. Having said that, evaluation of the expressions will be slower than an otherwise equivalent implementation based on <code>DynamicMethod</code>. If this proves to be a problem in the real world then I may change the implementation.
+</p>
+
+<h2>ConverterGroup</h2>
+
+<p>
+The <code>Binding</code> class only allows you to provide one converter. The <code>ConverterGroup</code> class allows you to construct a pipeline of converters that can be assigned to a <code>Binding</code>, which essentially annuls this restriction. Here’s an example:
+</p>
+
+<pre lang=xml>
+&lt;TextBox x:Name=&quot;_textBox&quot;/&gt;
+&lt;Label&gt;
+	&lt;Label.Content&gt;
+		&lt;Binding Path=&quot;Text&quot; ElementName=&quot;_textBox&quot;&gt;
+			&lt;Binding.Converter&gt;
+				&lt;con:ConverterGroup&gt;
+					&lt;con:CaseConverter Casing=&quot;Upper&quot;/&gt;
+					&lt;con:FormatConverter FormatString=&quot;In uppercase, you entered ‘{0}’.&quot;/&gt;
+				&lt;/con:ConverterGroup&gt;
+			&lt;/Binding.Converter&gt;
+		&lt;/Binding&gt;
+	&lt;/Label.Content&gt;
+&lt;/Label&gt;
+</pre>
+
+<p>
+In this example, any input in the <code>TextBox</code> is first converted to uppercase with the <code>CaseConverter</code> and then formatted via the <code>FormatConverter</code>. If all converters in the pipeline support backward conversions (not so in this case) then the <code>ConverterGroup</code> will also support backwards conversions.
+</p>
+
+
+<h2>MultiConverterGroup</h2>
+
+<p>
+The <code>MultiConverterGroup</code> class has the same goals as the <code>ConverterGroup</code> class except that it is an implementation of <code>IMultiValueConverter</code> rather than <code>IValueConverter</code>. It works with a pipeline of steps (represented by instances of <code>MultiConverterGroupStep</code>). Each step can have any number of multi-value converters in it. The output from each step is the combined output from each converter in the step. This output is then fed into the next step.
+</p>
+
+<p>
+If your head hurts from reading that (mine sure does after writing it) then perhaps this diagram will help:
+</p>
+
+<img src="MultiConverterGroup.png"/>
+
+<p>
+The above example defines three steps in the conversion pipeline. The <code>MultiConverterGroup</code> combines objects output from the converters in Step 1 and uses that as the input to Step 2. Similarly, the output from Step 2 is fed into Step 3. The XAML for this example would look like this:
+</p>
+
+<pre lang=xml>
+&lt;con:MultiConverterGroup&gt;
+	&lt;MultiConverterGroupStep&gt;
+		&lt;Converter1/&gt;
+		&lt;Converter2/&gt;
+		&lt;Converter3/&gt;
+	&lt;/MultiConverterGroupStep&gt;
+	&lt;MultiConverterGroupStep&gt;
+		&lt;Converter4/&gt;
+		&lt;Converter5/&gt;
+		&lt;Converter6/&gt;
+	&lt;/MultiConverterGroupStep&gt;
+	&lt;MultiConverterGroupStep&gt;
+		&lt;Converter7/&gt;
+	&lt;/MultiConverterGroupStep&gt;
+&lt;/con:MultiConverterGroup&gt;
+</pre>
+
+<p>
+Note that the last step must <em>always</em> have exactly one converter, which makes sense because at the end of the day the pipeline needs to produce a single value. If you violate this constraint, you’ll get an exception.
+</p>
+
+<p>
+So that covers forward conversions, but what about backward conversions? If you examine the diagram, you’ll realize that a backward conversion starts at the bottom and heads toward the top, <em>but could take one of many paths</em>. In theory, if all converters are implemented correctly and they all support backward conversions, then any path from the bottom to the top with the same input would yield the same output.
+</p>
+
+<p>
+The <code>MultiConverterGroup</code> solves this ambiguity by leaning on the left-hand side of the path when converting backwards. In the example, it will pass output from Converter7 into Converter4 and then pass the output from that into Converter1.
+</p>
+
+
+<h2>TypeConverter</h2>
+
+<p>
+The <code>TypeConverter</code> and <code>TypeConverterExtension</code> classes provide the ability to convert input values to different types. It is essentially a public implementation of the <code>internal</code> <code>DefaultValueConverter</code> and <code>SystemConvertConverter</code> BCL types. It is useful in coercing a value to required type during a pipeline conversion using <code>ConverterGroup</code>. Using it is straightforward:
+</p>
+
+<pre lang=xml>
+&lt;Label&gt;
+	&lt;Label.Content&gt;
+		&lt;Binding Path=&quot;Dob&quot;&gt;
+			&lt;Binding.Converter&gt;
+				&lt;con:ConverterGroup&gt;
+					&lt;con:TypeConverter TargetType=&quot;{x:Type sys:DateTime}&quot;/&gt;
+					&lt;con:DateTimeConverter TargetKind=&quot;Local&quot;/&gt;
+				&lt;/con:ConverterGroup&gt;
+			&lt;/Binding.Converter&gt;
+		&lt;/Binding&gt;
+	&lt;/Label.Content&gt;
+&lt;/Label&gt;
+</pre>
+
+<p>
+In this highly fabricated example, there is a <code>Dob</code> property that is a <code>string</code> when it really should be a <code>DateTime</code>. A <code>TypeConverter</code> is used to convert the <code>string</code> to a <code>DateTime</code> prior to feeding it into a <code>DateTimeConverter</code>.
+</p>
+
+<p>
+The <code>TypeConverter</code> will first attempt to convert data by way of an <code>IConvertible</code> implementation. If the value does not implement <code>IConvertible</code> then an attempt will be made to use any <code>System.ComponentModel.TypeConverter</code> implementation type for the class. If all attempts to convert the value fail, <code>DependencyProperty.UnsetValue</code> will be returned.
+</p>
+
+
+<h2>A Word on Data Binding and Converters</h2>
+
+<p>
+The observant among you may have noticed that my converter implementations inherit from <code>DependencyObject</code> and define their properties as <code>DependencyProperty</code>s. You may see this and try something like:
+</p>
+
+<pre lang=xml>
+&lt;Label&gt;
+	&lt;Label.Content&gt;
+		&lt;Binding Path=&quot;Name&quot;&gt;
+			&lt;Binding.Converter&gt;
+				&lt;con:CaseConverter Casing=&quot;{Binding Casing}&quot;/&gt;
+			&lt;/Binding.Converter&gt;
+		&lt;/Binding&gt;
+	&lt;/Label.Content&gt;
+&lt;/Label&gt;
+</pre>
+
+<p>
+Alas, this won’t work, at least with the current version of WPF. You’ll get an error:
+</p>
+
+<pre>
+Cannot find governing FrameworkElement or FrameworkContentElement for target element. BindingExpression:Path=Casing; DataItem=null; target element is 'CaseConverter'
+</pre>
+
+<p>
+So why did I bother with <code>DependencyObjects</code>? Well, if you really need to bind properties on your converters you can use Josh Smith’s virtual branch technique<sup><a href="#fn9">9</a></sup> to do so.
+</p>
+
+
+<h2>Conclusion</h2>
+
+<p>
+If you do any work in WPF you will get value out of the converters presented in this article. For more examples and information on any of the converters, please download the source and API documentation. Finally, any feedback you can give me on the library will help to improve it over time.
+</p>
+
+
+<!-- footnotes -->
+<p>
+<a name="fn7"/>
+<sup>7</sup> See my blog post for help on using Kevin Moore’s <code>DatePicker</code> control: <a href="http://kentb.blogspot.com/2007/07/wpf-and-date-entry.html">http://kentb.blogspot.com/2007/07/wpf-and-date-entry.html</a>
+<br />
+<a name="fn8"/>
+<sup>8</sup> See <a href="http://tommycarlier.blogspot.com/2007/05/writing-parser-overview.html">http://tommycarlier.blogspot.com/2007/05/writing-parser-overview.html</a>.
+<br />
+<a name="fn9"/>
+<sup>9</sup> See <a href="http://www.codeproject.com/WPF/AttachingVirtualBranches.asp">http://www.codeproject.com/WPF/AttachingVirtualBranches.asp</a>.
+<br />
+</p>
+
+<!-------------------------------    That's it!   --------------------------->
+</body>
+</html>
