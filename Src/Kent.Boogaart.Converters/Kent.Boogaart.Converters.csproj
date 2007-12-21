@@ -1,0 +1,116 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{AA776761-9BB4-48BE-A68D-432E5B61A83C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Kent.Boogaart.Converters</RootNamespace>
+    <AssemblyName>Kent.Boogaart.Converters</AssemblyName>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\Kent.Boogaart.snk</AssemblyOriginatorKeyFile>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <TargetFrameworkVersion>v3.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <DocumentationFile>bin\Debug\Kent.Boogaart.Converters.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <DocumentationFile>bin\Release\Kent.Boogaart.Converters.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Kent.Boogaart.HelperTrinity, Version=1.1.0.0, Culture=neutral, PublicKeyToken=cc96fa93a217f7a1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Lib\Kent.Boogaart.HelperTrinity.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86" />
+    <Reference Include="PresentationFramework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CaseConverter.cs" />
+    <Compile Include="ConverterGroup.cs" />
+    <Compile Include="DateTimeConversionMode.cs" />
+    <Compile Include="DateTimeConverter.cs" />
+    <Compile Include="ExpressionConverter.cs" />
+    <Compile Include="Expressions\Nodes\AddNode.cs" />
+    <Compile Include="Expressions\Nodes\CastNode.cs" />
+    <Compile Include="Expressions\Nodes\ConditionalAndNode.cs" />
+    <Compile Include="Expressions\Nodes\ConditionalNode.cs" />
+    <Compile Include="Expressions\Nodes\ConditionalOrNode.cs" />
+    <Compile Include="Expressions\Nodes\EqualityNode.cs" />
+    <Compile Include="Expressions\Nodes\GreaterThanNode.cs" />
+    <Compile Include="Expressions\Nodes\GreaterThanOrEqualNode.cs" />
+    <Compile Include="Expressions\Nodes\InequalityNode.cs" />
+    <Compile Include="Expressions\Nodes\LessThanNode.cs" />
+    <Compile Include="Expressions\Nodes\LessThanOrEqualNode.cs" />
+    <Compile Include="Expressions\Nodes\BinaryNode.cs" />
+    <Compile Include="Expressions\Nodes\ComplementNode.cs" />
+    <Compile Include="Expressions\Nodes\ConstantNode.cs" />
+    <Compile Include="Expressions\Nodes\DivideNode.cs" />
+    <Compile Include="Expressions\Nodes\LogicalAndNode.cs" />
+    <Compile Include="Expressions\Nodes\LogicalOrNode.cs" />
+    <Compile Include="Expressions\Nodes\LogicalXorNode.cs" />
+    <Compile Include="Expressions\Nodes\ModulusNode.cs" />
+    <Compile Include="Expressions\Nodes\MultiplyNode.cs" />
+    <Compile Include="Expressions\Nodes\NegateNode.cs" />
+    <Compile Include="Expressions\Nodes\Node.cs" />
+    <Compile Include="Expressions\Nodes\NodeEvaluationContext.cs" />
+    <Compile Include="Expressions\Nodes\NodeValueType.cs" />
+    <Compile Include="Expressions\Nodes\NotNode.cs" />
+    <Compile Include="Expressions\Nodes\NullNode.cs" />
+    <Compile Include="Expressions\Nodes\WideningBinaryNode.cs" />
+    <Compile Include="Expressions\Nodes\ShiftLeftNode.cs" />
+    <Compile Include="Expressions\Nodes\ShiftNode.cs" />
+    <Compile Include="Expressions\Nodes\ShiftRightNode.cs" />
+    <Compile Include="Expressions\Nodes\SubtractNode.cs" />
+    <Compile Include="Expressions\Nodes\UnaryNode.cs" />
+    <Compile Include="Expressions\Nodes\VariableNode.cs" />
+    <Compile Include="Expressions\Parser.cs" />
+    <Compile Include="Expressions\ParseException.cs" />
+    <Compile Include="Expressions\Token.cs" />
+    <Compile Include="Expressions\Tokenizer.cs" />
+    <Compile Include="Expressions\TokenType.cs" />
+    <Compile Include="FallbackBehavior.cs" />
+    <Compile Include="FormatConverter.cs" />
+    <Compile Include="MapConverter.cs" />
+    <Compile Include="Mapping.cs" />
+    <Compile Include="Markup\CaseConverterExtension.cs" />
+    <Compile Include="Markup\DateTimeConverterExtension.cs" />
+    <Compile Include="Markup\ExpressionConverterExtension.cs" />
+    <Compile Include="Markup\FormatConverterExtension.cs" />
+    <Compile Include="Markup\TypeConverterExtension.cs" />
+    <Compile Include="MultiConverterGroup.cs" />
+    <Compile Include="MultiConverterGroupStep.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TypeConverter.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\ExceptionHelper.xml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>
