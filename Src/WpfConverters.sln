@@ -1,0 +1,47 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9510EDF4-280D-4924-B493-E2983D64F57B}"
+	ProjectSection(SolutionItems) = preProject
+		Kent.Boogaart.snk = Kent.Boogaart.snk
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kent.Boogaart.Converters", "Kent.Boogaart.Converters\Kent.Boogaart.Converters.csproj", "{AA776761-9BB4-48BE-A68D-432E5B61A83C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kent.Boogaart.Converters.UnitTest", "Kent.Boogaart.Converters.UnitTest\Kent.Boogaart.Converters.UnitTest.csproj", "{F9A95501-1A1A-4A82-A40B-E7BAC6EAF80E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kent.Boogaart.Converters.Examples", "Kent.Boogaart.Converters.Examples\Kent.Boogaart.Converters.Examples.csproj", "{9DE85C8D-117B-4601-AAC0-473B5A943E3A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kent.Boogaart.Converters.Build", "Kent.Boogaart.Converters.Build\Kent.Boogaart.Converters.Build.csproj", "{FEEA17A2-ED5A-4543-A07E-25160C1130D6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F9A95501-1A1A-4A82-A40B-E7BAC6EAF80E} = {F9A95501-1A1A-4A82-A40B-E7BAC6EAF80E}
+		{AA776761-9BB4-48BE-A68D-432E5B61A83C} = {AA776761-9BB4-48BE-A68D-432E5B61A83C}
+		{9DE85C8D-117B-4601-AAC0-473B5A943E3A} = {9DE85C8D-117B-4601-AAC0-473B5A943E3A}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AA776761-9BB4-48BE-A68D-432E5B61A83C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA776761-9BB4-48BE-A68D-432E5B61A83C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA776761-9BB4-48BE-A68D-432E5B61A83C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA776761-9BB4-48BE-A68D-432E5B61A83C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9A95501-1A1A-4A82-A40B-E7BAC6EAF80E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9A95501-1A1A-4A82-A40B-E7BAC6EAF80E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9A95501-1A1A-4A82-A40B-E7BAC6EAF80E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9A95501-1A1A-4A82-A40B-E7BAC6EAF80E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DE85C8D-117B-4601-AAC0-473B5A943E3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DE85C8D-117B-4601-AAC0-473B5A943E3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DE85C8D-117B-4601-AAC0-473B5A943E3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DE85C8D-117B-4601-AAC0-473B5A943E3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEEA17A2-ED5A-4543-A07E-25160C1130D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEEA17A2-ED5A-4543-A07E-25160C1130D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEEA17A2-ED5A-4543-A07E-25160C1130D6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
