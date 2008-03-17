@@ -4,6 +4,498 @@
         <name>Kent.Boogaart.HelperTrinity</name>
     </assembly>
     <members>
+        <member name="T:Kent.Boogaart.HelperTrinity.ExceptionHelper">
+            <summary>
+            Provides helper methods for raising exceptions.
+            </summary>
+            <remarks>
+            <para>
+            The <c>ExceptionHelper</c> class provides a centralised mechanism for throwing exceptions. This helps to keep exception
+            messages and types consistent.
+            </para>
+            <para>
+            Exception information is stored in an embedded resource called <c>ExceptionHelper.xml</c>, which must reside in the
+            <c>Properties</c> namespace for the calling assembly. For example, if the root namespace for an assembly is
+            <c>Company.Product</c> then the exception information must be stored in a resource called
+            <c>Company.Product.Properties.ExceptionHelper.xml</c>
+            </para>
+            <para>
+            The format for the exception information XML includes a grouping mechanism such that exception keys are scoped to the
+            type throwing the exception. Thus, different types can use the same exception key because they have different scopes in
+            the XML structure. An example of the format for the exception XML can be seen below.
+            </para>
+            <note type="implementation">
+            This class is designed to be efficient in the common case (ie. no exception thrown) but is quite inefficient if an
+            exception is actually thrown. This is not considered a problem, however, since an exception usually indicates that
+            execution cannot reliably continue.
+            </note>
+            </remarks>
+            <example>
+            The following example shows how an exception can be conditionally thrown:
+            <code>
+            ExceptionHelper.ThrowIf(foo == null, "myKey", "hello");
+            </code>
+            Assuming this code resides in a class called <c>Foo.Bar</c>, the XML configuration might look like this:
+            <code>
+            <![CDATA[
+            <?xml version="1.0" encoding="utf-8" ?> 
+            
+            <exceptionHelper>
+            	<exceptionGroup type="Foo.Bar">
+            		<exception key="myKey" type="System.NullReferenceException">
+            			Foo is null but I'll say '{0}' anyway.
+            		</exception>
+            	</exceptionGroup>
+            </exceptionHelper>
+            ]]>
+            </code>
+            With this configuration, a <see cref="T:System.NullReferenceException"/> will be thrown if <c>foo</c> is <see langword="null"/>.
+            The exception message will be "Foo is null but I'll say 'hello' anyway.".
+            </example>
+        </member>
+        <member name="F:Kent.Boogaart.HelperTrinity.ExceptionHelper._typeAttributeName">
+            <summary>
+            The name of the attribute that holds the exception type.
+            </summary>
+        </member>
+        <member name="F:Kent.Boogaart.HelperTrinity.ExceptionHelper._exceptionInfos">
+            <summary>
+            Caches exception information for each participating assembly.
+            </summary>
+        </member>
+        <member name="F:Kent.Boogaart.HelperTrinity.ExceptionHelper._exceptionInfosLock">
+            <summary>
+            Synchronizes access to <see cref="F:Kent.Boogaart.HelperTrinity.ExceptionHelper._exceptionInfos"/>.
+            </summary>
+        </member>
+        <member name="M:Kent.Boogaart.HelperTrinity.ExceptionHelper.ThrowIf(System.Boolean,System.String,System.Object[])">
+            <summary>
+            Conditionally throws an exception.
+            </summary>
+            <param name="condition">
+            The condition.
+            </param>
+            <param name="exceptionKey">
+            The exception key.
+            </param>
+            <param name="messageArgs">
+            Arguments to the exception message.
+            </param>
+        </member>
+        <member name="M:Kent.Boogaart.HelperTrinity.ExceptionHelper.ThrowIf(System.Boolean,System.String,System.Exception,System.Object[])">
+            <summary>
+            Conditionally throws an exception.
+            </summary>
+            <param name="condition">
+            The condition.
+            </param>
+            <param name="exceptionKey">
+            The exception key.
+            </param>
+            <param name="innerException">
+            The inner exception - the cause of the new exception.
+            </param>
+            <param name="messageArgs">
+            Arguments to the exception message.
+            </param>
+        </member>
+        <member name="M:Kent.Boogaart.HelperTrinity.ExceptionHelper.ThrowIf(System.Boolean,System.String,System.Object[],System.Exception)">
+            <summary>
+            Conditionally throws an exception.
+            </summary>
+            <param name="condition">
+            The condition.
+            </param>
+            <param name="exceptionKey">
+            The exception key.
+            </param>
+            <param name="constructorArgs">
+            Additional arguments for the exception constructor.
+            </param>
+            <param name="innerException">
+            The inner exception - the cause of the new exception.
+            </param>
+        </member>
+        <member name="M:Kent.Boogaart.HelperTrinity.ExceptionHelper.ThrowIf(System.Boolean,System.String,System.Object[],System.Object[])">
+            <summary>
+            Conditionally throws an exception.
+            </summary>
+            <param name="condition">
+            The condition.
+            </param>
+            <param name="exceptionKey">
+            The exception key.
+            </param>
+            <param name="constructorArgs">
+            Additional arguments for the exception constructor.
+            </param>
+            <param name="messageArgs">
+            Arguments to the exception message.
+            </param>
+        </member>
+        <member name="M:Kent.Boogaart.HelperTrinity.ExceptionHelper.ThrowIf(System.Boolean,System.String,System.Object[],System.Exception,System.Object[])">
+            <summary>
+            Conditionally throws an exception.
+            </summary>
+            <param name="condition">
+            The condition.
+            </param>
+            <param name="exceptionKey">
+            The exception key.
+            </param>
+            <param name="constructorArgs">
+            Additional arguments for the exception constructor.
+            </param>
+            <param name="messageArgs">
+            Arguments to the exception message.
+            </param>
+            <param name="innerException">
+            The inner exception - the cause of the new exception.
+            </param>
+        </member>
+        <member name="M:Kent.Boogaart.HelperTrinity.ExceptionHelper.Throw(System.String,System.Object[])">
+            <summary>
+            Throws an exception.
+            </summary>
+            <param name="exceptionKey">
+            The exception key.
+            </param>
+            <param name="messageArgs">
+            Arguments to the exception message.
+            </param>
+        </member>
+        <member name="M:Kent.Boogaart.HelperTrinity.ExceptionHelper.Throw(System.String,System.Exception,System.Object[])">
+            <summary>
+            Throws an exception.
+            </summary>
+            <param name="exceptionKey">
+            The exception key.
+            </param>
+            <param name="messageArgs">
+            Arguments to the exception message.
+            </param>
+            <param name="innerException">
+            The inner exception - the cause of the new exception.
+            </param>
+        </member>
+        <member name="M:Kent.Boogaart.HelperTrinity.ExceptionHelper.Throw(System.String,System.Object[],System.Exception)">
+            <summary>
+            Throws an exception.
+            </summary>
+            <param name="exceptionKey">
+            The exception key.
+            </param>
+            <param name="constructorArgs">
+            Additional arguments for the exception constructor.
+            </param>
+            <param name="innerException">
+            The inner exception - the cause of the new exception.
+            </param>
+        </member>
+        <member name="M:Kent.Boogaart.HelperTrinity.ExceptionHelper.Throw(System.String,System.Object[],System.Object[])">
+            <summary>
+            Throws an exception.
+            </summary>
+            <param name="exceptionKey">
+            The exception key.
+            </param>
+            <param name="constructorArgs">
+            Additional arguments for the exception constructor.
+            </param>
+            <param name="messageArgs">
+            Arguments to the exception message.
+            </param>
+        </member>
+        <member name="M:Kent.Boogaart.HelperTrinity.ExceptionHelper.Throw(System.String,System.Object[],System.Exception,System.Object[])">
+            <summary>
+            Throws an exception.
+            </summary>
+            <param name="exceptionKey">
+            The exception key.
+            </param>
+            <param name="constructorArgs">
+            Additional arguments for the exception constructor.
+            </param>
+            <param name="messageArgs">
+            Arguments to the exception message.
+            </param>
+            <param name="innerException">
+            The inner exception - the cause of the new exception.
+            </param>
+            <exception cref="T:System.InvalidOperationException">
+            If any problem occurs locating the details of the exception to throw, or in constructing the exception to throw.
+            </exception>
+            <exception cref="T:System.Exception">
+            This method always throws an exception. The exact type of the exception depends on the configuration.
+            </exception>
+        </member>
+        <member name="M:Kent.Boogaart.HelperTrinity.ExceptionHelper.GetExceptionInfo(System.Reflection.Assembly)">
+            <summary>
+            Gets exception information for a specified assembly.
+            </summary>
+            <param name="assembly">
+            The assembly for which exception information should be retrieved.
+            </param>0
+            <returns>
+            The exception information.
+            </returns>
+        </member>
+        <member name="T:Kent.Boogaart.HelperTrinity.EventHelper">
+            <summary>
+            Provides helper methods for raising events.
+            </summary>
+            <remarks>
+            <para>
+            The <c>EventHelper</c> class provides methods that can be used to raise events. It avoids the need for explicitly
+            checking event sinks for <see langword="null"/> before raising the event.
+            </para>
+            </remarks>
+            <example>
+            The following example shows how a non-generic event can be raised:
+            <code>
+            public event EventHandler Changed;
+            
+            protected void OnChanged()
+            {
+            	EventHelper.Raise(Changed, this);
+            }
+            </code>
+            </example>
+            <example>
+            The following example shows how a non-generic event can be raised where the event type requires a specific
+            <c>EventArgs</c> subclass:
+            <code>
+            public event PropertyChangedEventHandler PropertyChanged;
+            
+            protected void OnPropertyChanged(PropertyChangedEventArgs e)
+            {
+            	EventHelper.Raise(PropertyChanged, this, e);
+            }
+            </code>
+            </example>
+            <example>
+            The following example shows how a generic event can be raised:
+            <code>
+            public event EventHandler&lt;EventArgs&gt; Changed;
+            
+            protected void OnChanged()
+            {
+            	EventHelper.Raise(Changed, this, EventArgs.Empty);
+            }
+            </code>
+            </example>
+            <example>
+            The following example shows how a generic event with custom event arguments can be raised:
+            <code>
+            public event EventHandler&lt;MyEventArgs&gt; MyEvent;
+            
+            protected void OnMyEvent(MyEventArgs e)
+            {
+            	EventHelper.Raise(MyEventArgs, this, e);
+            }
+            </code>
+            </example>
+            <example>
+            The following example raises a generic event, but does not create the event arguments unless there is at least one
+            handler for the event:
+            <code>
+            public event EventHandler&lt;MyEventArgs&gt; MyEvent;
+            
+            protected void OnMyEvent(int someData)
+            {
+            	EventHelper.Raise(MyEvent, this, delegate
+            	{
+            		return new MyEventArgs(someData);
+            	});
+            }
+            </code>
+            </example>
+        </member>
+        <member name="M:Kent.Boogaart.HelperTrinity.EventHelper.BeginRaise(System.EventHandler,System.Object,System.AsyncCallback,System.Object)">
+            <summary>
+            Begins raising a non-generic event.
+            </summary>
+            <remarks>
+            This method begins raising the specified non-generic event and passes in <c>EventArgs.Empty</c> as the event
+            arguments.
+            </remarks>
+            <param name="handler">
+            The event to be raised.
+            </param>
+            <param name="sender">
+            The sender of the event.
+            </param>
+            <param name="callback">
+            A delegate to call once the event has been raised, or <see langword="null"/> if no delegate should be called.
+            </param>
+            <param name="asyncState">
+            Any additional information to pass to the <paramref name="callback"/>.
+            </param>
+        </member>
+        <member name="M:Kent.Boogaart.HelperTrinity.EventHelper.Raise(System.EventHandler,System.Object)">
+            <summary>
+            Raises a non-generic event.
+            </summary>
+            <remarks>
+            This method raises the specified non-generic event and passes in <c>EventArgs.Empty</c> as the event arguments.
+            </remarks>
+            <param name="handler">
+            The event to be raised.
+            </param>
+            <param name="sender">
+            The sender of the event.
+            </param>
+        </member>
+        <member name="M:Kent.Boogaart.HelperTrinity.EventHelper.BeginRaise(System.Delegate,System.Object,System.EventArgs,System.AsyncCallback,System.Object)">
+            <summary>
+            Begins raising a non-generic event.
+            </summary>
+            <remarks>
+            This method can be used to begin raising a non-generic event that needs a specific <see cref="T:System.EventArgs"/> subclass
+            as its second parameter. This method assumes that <paramref name="handler"/> points to a method that conforms to the
+            standard .NET event signature. That is, it takes an <see cref="T:System.Object"/> as its first parameter and an
+            <see cref="T:System.EventArgs"/> instance as its second.
+            </remarks>
+            <param name="handler">
+            The event to be raised.
+            </param>
+            <param name="sender">
+            The sender of the event.
+            </param>
+            <param name="e">
+            The event arguments.
+            </param>
+            <param name="callback">
+            A delegate to call once the event has been raised, or <see langword="null"/> if no delegate should be called.
+            </param>
+            <param name="asyncState">
+            Any additional information to pass to the <paramref name="callback"/>.
+            </param>
+        </member>
+        <member name="M:Kent.Boogaart.HelperTrinity.EventHelper.Raise(System.Delegate,System.Object,System.EventArgs)">
+            <summary>
+            Raises a non-generic event.
+            </summary>
+            <remarks>
+            This method can be used to raise a non-generic event that needs a specific <see cref="T:System.EventArgs"/> subclass as its
+            second parameter. This method assumes that <paramref name="handler"/> points to a method that conforms to the
+            standard .NET event signature. That is, it takes an <see cref="T:System.Object"/> as its first parameter and an
+            <see cref="T:System.EventArgs"/> instance as its second.
+            </remarks>
+            <param name="handler">
+            The event handler.
+            </param>
+            <param name="sender">
+            The sender of the event.
+            </param>
+            <param name="e">
+            The arguments for the event.
+            </param>
+            <exception cref="T:System.Reflection.TargetParameterCountException">
+            If <paramref name="handler"/> does not contain the correct number of arguments or contains arguments of the wrong
+            type or in the wrong order.
+            </exception>
+        </member>
+        <member name="M:Kent.Boogaart.HelperTrinity.EventHelper.BeginRaise``1(System.EventHandler{``0},System.Object,``0,System.AsyncCallback,System.Object)">
+            <summary>
+            Begins raising a generic event.
+            </summary>
+            <remarks>
+            This method begins raising a generic event, passing in the specified event arguments.
+            </remarks>
+            <param name="handler">
+            The event to be raised.
+            </param>
+            <param name="sender">
+            The sender of the event.
+            </param>
+            <param name="e">
+            The event arguments.
+            </param>
+            <param name="callback">
+            A delegate to call once the event has been raised, or <see langword="null"/> if no delegate should be called.
+            </param>
+            <param name="asyncState">
+            Any additional information to pass to the <paramref name="callback"/>.
+            </param>
+        </member>
+        <member name="M:Kent.Boogaart.HelperTrinity.EventHelper.Raise``1(System.EventHandler{``0},System.Object,``0)">
+            <summary>
+            Raises a generic event.
+            </summary>
+            <remarks>
+            This method raises a generic event, passing in the specified event arguments.
+            </remarks>
+            <typeparam name="T">
+            The event arguments type.
+            </typeparam>
+            <param name="handler">
+            The event to be raised.
+            </param>
+            <param name="sender">
+            The sender of the event.
+            </param>
+            <param name="e">
+            The arguments for the event.
+            </param>
+        </member>
+        <member name="M:Kent.Boogaart.HelperTrinity.EventHelper.BeginRaise``1(System.EventHandler{``0},System.Object,Kent.Boogaart.HelperTrinity.EventHelper.CreateEventArguments{``0},System.AsyncCallback,System.Object)">
+            <summary>
+            Begins raising a generic event.
+            </summary>
+            <param name="handler">
+            The event to be raised.
+            </param>
+            <param name="sender">
+            The sender of the event.
+            </param>
+            <param name="createEventArguments">
+            The delegate to invoke if an event arguments instance is needed.
+            </param>
+            <param name="callback">
+            A delegate to call once the event has been raised, or <see langword="null"/> if no delegate should be called.
+            </param>
+            <param name="asyncState">
+            Any additional information to pass to the <paramref name="callback"/>.
+            </param>
+        </member>
+        <member name="M:Kent.Boogaart.HelperTrinity.EventHelper.Raise``1(System.EventHandler{``0},System.Object,Kent.Boogaart.HelperTrinity.EventHelper.CreateEventArguments{``0})">
+            <summary>
+            Raises a generic event, but does not create the event arguments unless there is at least one handler for the event.
+            </summary>
+            <typeparam name="T">
+            The event arguments type.
+            </typeparam>
+            <param name="handler">
+            The event to be raised.
+            </param>
+            <param name="sender">
+            The sender of the event.
+            </param>
+            <param name="createEventArguments">
+            The delegate to invoke if an event arguments instance is needed.
+            </param>
+            <exception cref="T:System.ArgumentNullException">
+            If <paramref name="createEventArguments"/> is <see langword="null"/>.
+            </exception>
+        </member>
+        <member name="T:Kent.Boogaart.HelperTrinity.EventHelper.CreateEventArguments`1">
+            <summary>
+            A handler used to create an event arguments instance for the
+            <see cref="M:Kent.Boogaart.HelperTrinity.EventHelper.Raise``1(System.EventHandler{``0},System.Object,Kent.Boogaart.HelperTrinity.EventHelper.CreateEventArguments{``0})"/> method.
+            </summary>
+            <remarks>
+            This delegate is invoked by the
+            <see cref="M:Kent.Boogaart.HelperTrinity.EventHelper.Raise``1(System.EventHandler{``0},System.Object,Kent.Boogaart.HelperTrinity.EventHelper.CreateEventArguments{``0})"/> method to create the
+            event arguments instance. The handler should create the instance and return it.
+            </remarks>
+            <typeparam name="T">
+            The event arguments type.
+            </typeparam>
+            <returns>
+            The event arguments instance.
+            </returns>
+        </member>
         <member name="T:Kent.Boogaart.HelperTrinity.ArgumentHelper">
             <summary>
             Provides helper methods for asserting arguments.
@@ -14,7 +506,7 @@
             laborious <c>if</c>, <c>throw</c> sequences in your code.
             </para>
             <para>
-            The <see cref="M:Kent.Boogaart.HelperTrinity.ArgumentHelper.AssertNotNull``1(``0,System.String)"/> method can be used to ensure that arguments are not <see langword="null"/>. The
+            The <see cref="M:Kent.Boogaart.HelperTrinity.ArgumentHelper.AssertNotNull``1(``0,System.String)"/> methods can be used to ensure that arguments are not <see langword="null"/>. The
             <see cref="M:Kent.Boogaart.HelperTrinity.ArgumentHelper.AssertNotNullOrEmpty(System.String,System.String)"/> overloads can be used to ensure that strings are not <see langword="null"/> or empty.
             The <see cref="M:Kent.Boogaart.HelperTrinity.ArgumentHelper.AssertEnumMember``1(``0,System.String)"/> overloads can be used to assert the validity of enumeration arguments.
             </para>
@@ -300,498 +792,6 @@
             If <paramref name="enumValue"/> is not present in <paramref name="validValues"/>, or (for flag enumerations) if
             <paramref name="enumValue"/> is not some combination of values specified in <paramref name="validValues"/>.
             </exception>
-        </member>
-        <member name="T:Kent.Boogaart.HelperTrinity.EventHelper">
-            <summary>
-            Provides helper methods for raising events.
-            </summary>
-            <remarks>
-            <para>
-            The <c>EventHelper</c> class provides methods that can be used to raise events. It avoids the need for explicitly
-            checking event sinks for <see langword="null"/> before raising the event.
-            </para>
-            </remarks>
-            <example>
-            The following example shows how a non-generic event can be raised:
-            <code>
-            public event EventHandler Changed;
-            
-            protected void OnChanged()
-            {
-            	EventHelper.Raise(Changed, this);
-            }
-            </code>
-            </example>
-            <example>
-            The following example shows how a non-generic event can be raised where the event type requires a specific
-            <c>EventArgs</c> subclass:
-            <code>
-            public event PropertyChangedEventHandler PropertyChanged;
-            
-            protected void OnPropertyChanged(PropertyChangedEventArgs e)
-            {
-            	EventHelper.Raise(PropertyChanged, this, e);
-            }
-            </code>
-            </example>
-            <example>
-            The following example shows how a generic event can be raised:
-            <code>
-            public event EventHandler&lt;EventArgs&gt; Changed;
-            
-            protected void OnChanged()
-            {
-            	EventHelper.Raise(Changed, this, EventArgs.Empty);
-            }
-            </code>
-            </example>
-            <example>
-            The following example shows how a generic event with custom event arguments can be raised:
-            <code>
-            public event EventHandler&lt;MyEventArgs&gt; MyEvent;
-            
-            protected void OnMyEvent(MyEventArgs e)
-            {
-            	EventHelper.Raise(MyEventArgs, this, e);
-            }
-            </code>
-            </example>
-            <example>
-            The following example raises a generic event, but does not create the event arguments unless there is at least one
-            handler for the event:
-            <code>
-            public event EventHandler&lt;MyEventArgs&gt; MyEvent;
-            
-            protected void OnMyEvent(int someData)
-            {
-            	EventHelper.Raise(MyEvent, this, delegate
-            	{
-            		return new MyEventArgs(someData);
-            	});
-            }
-            </code>
-            </example>
-        </member>
-        <member name="M:Kent.Boogaart.HelperTrinity.EventHelper.BeginRaise(System.EventHandler,System.Object,System.AsyncCallback,System.Object)">
-            <summary>
-            Begins raising a non-generic event.
-            </summary>
-            <remarks>
-            This method begins raising the specified non-generic event and passes in <c>EventArgs.Empty</c> as the event
-            arguments.
-            </remarks>
-            <param name="handler">
-            The event to be raised.
-            </param>
-            <param name="sender">
-            The sender of the event.
-            </param>
-            <param name="callback">
-            A delegate to call once the event has been raised, or <see langword="null"/> if no delegate should be called.
-            </param>
-            <param name="asyncState">
-            Any additional information to pass to the <paramref name="callback"/>.
-            </param>
-        </member>
-        <member name="M:Kent.Boogaart.HelperTrinity.EventHelper.Raise(System.EventHandler,System.Object)">
-            <summary>
-            Raises a non-generic event.
-            </summary>
-            <remarks>
-            This method raises the specified non-generic event and passes in <c>EventArgs.Empty</c> as the event arguments.
-            </remarks>
-            <param name="handler">
-            The event to be raised.
-            </param>
-            <param name="sender">
-            The sender of the event.
-            </param>
-        </member>
-        <member name="M:Kent.Boogaart.HelperTrinity.EventHelper.BeginRaise(System.Delegate,System.Object,System.EventArgs,System.AsyncCallback,System.Object)">
-            <summary>
-            Begins raising a non-generic event.
-            </summary>
-            <remarks>
-            This method can be used to begin raising a non-generic event that needs a specific <see cref="T:System.EventArgs"/> subclass
-            as its second parameter. This method assumes that <paramref name="handler"/> points to a method that conforms to the
-            standard .NET event signature. That is, it takes an <see cref="T:System.Object"/> as its first parameter and an
-            <see cref="T:System.EventArgs"/> instance as its second.
-            </remarks>
-            <param name="handler">
-            The event to be raised.
-            </param>
-            <param name="sender">
-            The sender of the event.
-            </param>
-            <param name="e">
-            The event arguments.
-            </param>
-            <param name="callback">
-            A delegate to call once the event has been raised, or <see langword="null"/> if no delegate should be called.
-            </param>
-            <param name="asyncState">
-            Any additional information to pass to the <paramref name="callback"/>.
-            </param>
-        </member>
-        <member name="M:Kent.Boogaart.HelperTrinity.EventHelper.Raise(System.Delegate,System.Object,System.EventArgs)">
-            <summary>
-            Raises a non-generic event.
-            </summary>
-            <remarks>
-            This method can be used to raise a non-generic event that needs a specific <see cref="T:System.EventArgs"/> subclass as its
-            second parameter. This method assumes that <paramref name="handler"/> points to a method that conforms to the
-            standard .NET event signature. That is, it takes an <see cref="T:System.Object"/> as its first parameter and an
-            <see cref="T:System.EventArgs"/> instance as its second.
-            </remarks>
-            <param name="handler">
-            The event handler.
-            </param>
-            <param name="sender">
-            The sender of the event.
-            </param>
-            <param name="e">
-            The arguments for the event.
-            </param>
-            <exception cref="!:TargetParameterCountException">
-            If <paramref name="handler"/> does not contain the correct number of arguments or contains arguments of the wrong
-            type or in the wrong order.
-            </exception>
-        </member>
-        <member name="M:Kent.Boogaart.HelperTrinity.EventHelper.BeginRaise``1(System.EventHandler{``0},System.Object,``0,System.AsyncCallback,System.Object)">
-            <summary>
-            Begins raising a generic event.
-            </summary>
-            <remarks>
-            This method begins raising a generic event, passing in the specified event arguments.
-            </remarks>
-            <param name="handler">
-            The event to be raised.
-            </param>
-            <param name="sender">
-            The sender of the event.
-            </param>
-            <param name="e">
-            The event arguments.
-            </param>
-            <param name="callback">
-            A delegate to call once the event has been raised, or <see langword="null"/> if no delegate should be called.
-            </param>
-            <param name="asyncState">
-            Any additional information to pass to the <paramref name="callback"/>.
-            </param>
-        </member>
-        <member name="M:Kent.Boogaart.HelperTrinity.EventHelper.Raise``1(System.EventHandler{``0},System.Object,``0)">
-            <summary>
-            Raises a generic event.
-            </summary>
-            <remarks>
-            This method raises a generic event, passing in the specified event arguments.
-            </remarks>
-            <typeparam name="T">
-            The event arguments type.
-            </typeparam>
-            <param name="handler">
-            The event to be raised.
-            </param>
-            <param name="sender">
-            The sender of the event.
-            </param>
-            <param name="e">
-            The arguments for the event.
-            </param>
-        </member>
-        <member name="M:Kent.Boogaart.HelperTrinity.EventHelper.BeginRaise``1(System.EventHandler{``0},System.Object,Kent.Boogaart.HelperTrinity.EventHelper.CreateEventArguments{``0},System.AsyncCallback,System.Object)">
-            <summary>
-            Begins raising a generic event.
-            </summary>
-            <param name="handler">
-            The event to be raised.
-            </param>
-            <param name="sender">
-            The sender of the event.
-            </param>
-            <param name="createEventArguments">
-            The delegate to invoke if an event arguments instance is needed.
-            </param>
-            <param name="callback">
-            A delegate to call once the event has been raised, or <see langword="null"/> if no delegate should be called.
-            </param>
-            <param name="asyncState">
-            Any additional information to pass to the <paramref name="callback"/>.
-            </param>
-        </member>
-        <member name="M:Kent.Boogaart.HelperTrinity.EventHelper.Raise``1(System.EventHandler{``0},System.Object,Kent.Boogaart.HelperTrinity.EventHelper.CreateEventArguments{``0})">
-            <summary>
-            Raises a generic event, but does not create the event arguments unless there is at least one handler for the event.
-            </summary>
-            <typeparam name="T">
-            The event arguments type.
-            </typeparam>
-            <param name="handler">
-            The event to be raised.
-            </param>
-            <param name="sender">
-            The sender of the event.
-            </param>
-            <param name="createEventArguments">
-            The delegate to invoke if an event arguments instance is needed.
-            </param>
-            <exception cref="T:System.ArgumentNullException">
-            If <paramref name="createEventArguments"/> is <see langword="null"/>.
-            </exception>
-        </member>
-        <member name="T:Kent.Boogaart.HelperTrinity.EventHelper.CreateEventArguments`1">
-            <summary>
-            A handler used to create an event arguments instance for the
-            <see cref="M:Kent.Boogaart.HelperTrinity.EventHelper.Raise``1(System.EventHandler{``0},System.Object,Kent.Boogaart.HelperTrinity.EventHelper.CreateEventArguments{``0})"/> method.
-            </summary>
-            <remarks>
-            This delegate is invoked by the
-            <see cref="M:Kent.Boogaart.HelperTrinity.EventHelper.Raise``1(System.EventHandler{``0},System.Object,Kent.Boogaart.HelperTrinity.EventHelper.CreateEventArguments{``0})"/> method to create the
-            event arguments instance. The handler should create the instance and return it.
-            </remarks>
-            <typeparam name="T">
-            The event arguments type.
-            </typeparam>
-            <returns>
-            The event arguments instance.
-            </returns>
-        </member>
-        <member name="T:Kent.Boogaart.HelperTrinity.ExceptionHelper">
-            <summary>
-            Provides helper methods for raising exceptions.
-            </summary>
-            <remarks>
-            <para>
-            The <c>ExceptionHelper</c> class provides a centralised mechanism for throwing exceptions. This helps to keep exception
-            messages and types consistent.
-            </para>
-            <para>
-            Exception information is stored in an embedded resource called <c>ExceptionHelper.xml</c>, which must reside in the
-            <c>Properties</c> namespace for the calling assembly. For example, if the root namespace for an assembly is
-            <c>Company.Product</c> then the exception information must be stored in a resource called
-            <c>Company.Product.Properties.ExceptionHelper.xml</c>
-            </para>
-            <para>
-            The format for the exception information XML includes a grouping mechanism such that exception keys are scoped to the
-            type throwing the exception. Thus, different types can use the same exception key because they have different scopes in
-            the XML structure. An example of the format for the exception XML can be seen below.
-            </para>
-            <note type="implementation">
-            This class is designed to be efficient in the common case (ie. no exception thrown) but is quite inefficient if an
-            exception is actually thrown. This is not considered a problem, however, since an exception usually indicates that
-            execution cannot reliably continue.
-            </note>
-            </remarks>
-            <example>
-            The following example shows how an exception can be conditionally thrown:
-            <code>
-            ExceptionHelper.ThrowIf(foo == null, "myKey", "hello");
-            </code>
-            Assuming this code resides in a class called <c>Foo.Bar</c>, the XML configuration might look like this:
-            <code>
-            <![CDATA[
-            <?xml version="1.0" encoding="utf-8" ?> 
-            
-            <exceptionHelper>
-            	<exceptionGroup type="Foo.Bar">
-            		<exception key="myKey" type="System.NullReferenceException">
-            			Foo is null but I'll say '{0}' anyway.
-            		</exception>
-            	</exceptionGroup>
-            </exceptionHelper>
-            ]]>
-            </code>
-            With this configuration, a <see cref="T:System.NullReferenceException"/> will be thrown if <c>foo</c> is <see langword="null"/>.
-            The exception message will be "Foo is null but I'll say 'hello' anyway.".
-            </example>
-        </member>
-        <member name="F:Kent.Boogaart.HelperTrinity.ExceptionHelper._typeAttributeName">
-            <summary>
-            The name of the attribute that holds the exception type.
-            </summary>
-        </member>
-        <member name="F:Kent.Boogaart.HelperTrinity.ExceptionHelper._exceptionInfos">
-            <summary>
-            Caches exception information for each participating assembly.
-            </summary>
-        </member>
-        <member name="F:Kent.Boogaart.HelperTrinity.ExceptionHelper._exceptionInfosLock">
-            <summary>
-            Synchronizes access to <see cref="F:Kent.Boogaart.HelperTrinity.ExceptionHelper._exceptionInfos"/>.
-            </summary>
-        </member>
-        <member name="M:Kent.Boogaart.HelperTrinity.ExceptionHelper.ThrowIf(System.Boolean,System.String,System.Object[])">
-            <summary>
-            Conditionally throws an exception.
-            </summary>
-            <param name="condition">
-            The condition.
-            </param>
-            <param name="exceptionKey">
-            The exception key.
-            </param>
-            <param name="messageArgs">
-            Arguments to the exception message.
-            </param>
-        </member>
-        <member name="M:Kent.Boogaart.HelperTrinity.ExceptionHelper.ThrowIf(System.Boolean,System.String,System.Exception,System.Object[])">
-            <summary>
-            Conditionally throws an exception.
-            </summary>
-            <param name="condition">
-            The condition.
-            </param>
-            <param name="exceptionKey">
-            The exception key.
-            </param>
-            <param name="innerException">
-            The inner exception - the cause of the new exception.
-            </param>
-            <param name="messageArgs">
-            Arguments to the exception message.
-            </param>
-        </member>
-        <member name="M:Kent.Boogaart.HelperTrinity.ExceptionHelper.ThrowIf(System.Boolean,System.String,System.Object[],System.Exception)">
-            <summary>
-            Conditionally throws an exception.
-            </summary>
-            <param name="condition">
-            The condition.
-            </param>
-            <param name="exceptionKey">
-            The exception key.
-            </param>
-            <param name="constructorArgs">
-            Additional arguments for the exception constructor.
-            </param>
-            <param name="innerException">
-            The inner exception - the cause of the new exception.
-            </param>
-        </member>
-        <member name="M:Kent.Boogaart.HelperTrinity.ExceptionHelper.ThrowIf(System.Boolean,System.String,System.Object[],System.Object[])">
-            <summary>
-            Conditionally throws an exception.
-            </summary>
-            <param name="condition">
-            The condition.
-            </param>
-            <param name="exceptionKey">
-            The exception key.
-            </param>
-            <param name="constructorArgs">
-            Additional arguments for the exception constructor.
-            </param>
-            <param name="messageArgs">
-            Arguments to the exception message.
-            </param>
-        </member>
-        <member name="M:Kent.Boogaart.HelperTrinity.ExceptionHelper.ThrowIf(System.Boolean,System.String,System.Object[],System.Exception,System.Object[])">
-            <summary>
-            Conditionally throws an exception.
-            </summary>
-            <param name="condition">
-            The condition.
-            </param>
-            <param name="exceptionKey">
-            The exception key.
-            </param>
-            <param name="constructorArgs">
-            Additional arguments for the exception constructor.
-            </param>
-            <param name="messageArgs">
-            Arguments to the exception message.
-            </param>
-            <param name="innerException">
-            The inner exception - the cause of the new exception.
-            </param>
-        </member>
-        <member name="M:Kent.Boogaart.HelperTrinity.ExceptionHelper.Throw(System.String,System.Object[])">
-            <summary>
-            Throws an exception.
-            </summary>
-            <param name="exceptionKey">
-            The exception key.
-            </param>
-            <param name="messageArgs">
-            Arguments to the exception message.
-            </param>
-        </member>
-        <member name="M:Kent.Boogaart.HelperTrinity.ExceptionHelper.Throw(System.String,System.Exception,System.Object[])">
-            <summary>
-            Throws an exception.
-            </summary>
-            <param name="exceptionKey">
-            The exception key.
-            </param>
-            <param name="messageArgs">
-            Arguments to the exception message.
-            </param>
-            <param name="innerException">
-            The inner exception - the cause of the new exception.
-            </param>
-        </member>
-        <member name="M:Kent.Boogaart.HelperTrinity.ExceptionHelper.Throw(System.String,System.Object[],System.Exception)">
-            <summary>
-            Throws an exception.
-            </summary>
-            <param name="exceptionKey">
-            The exception key.
-            </param>
-            <param name="constructorArgs">
-            Additional arguments for the exception constructor.
-            </param>
-            <param name="innerException">
-            The inner exception - the cause of the new exception.
-            </param>
-        </member>
-        <member name="M:Kent.Boogaart.HelperTrinity.ExceptionHelper.Throw(System.String,System.Object[],System.Object[])">
-            <summary>
-            Throws an exception.
-            </summary>
-            <param name="exceptionKey">
-            The exception key.
-            </param>
-            <param name="constructorArgs">
-            Additional arguments for the exception constructor.
-            </param>
-            <param name="messageArgs">
-            Arguments to the exception message.
-            </param>
-        </member>
-        <member name="M:Kent.Boogaart.HelperTrinity.ExceptionHelper.Throw(System.String,System.Object[],System.Exception,System.Object[])">
-            <summary>
-            Throws an exception.
-            </summary>
-            <param name="exceptionKey">
-            The exception key.
-            </param>
-            <param name="constructorArgs">
-            Additional arguments for the exception constructor.
-            </param>
-            <param name="messageArgs">
-            Arguments to the exception message.
-            </param>
-            <param name="innerException">
-            The inner exception - the cause of the new exception.
-            </param>
-            <exception cref="T:System.InvalidOperationException">
-            If any problem occurs locating the details of the exception to throw, or in constructing the exception to throw.
-            </exception>
-            <exception cref="T:System.Exception">
-            This method always throws an exception. The exact type of the exception depends on the configuration.
-            </exception>
-        </member>
-        <member name="M:Kent.Boogaart.HelperTrinity.ExceptionHelper.GetExceptionInfo(System.Reflection.Assembly)">
-            <summary>
-            Gets exception information for a specified assembly.
-            </summary>
-            <param name="assembly">
-            The assembly for which exception information should be retrieved.
-            </param>0
-            <returns>
-            The exception information.
-            </returns>
         </member>
     </members>
 </doc>

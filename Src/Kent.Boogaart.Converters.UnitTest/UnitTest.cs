@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
 using NUnit.Framework;
 using Rhino.Mocks;
 using Kent.Boogaart.HelperTrinity;
@@ -81,7 +79,7 @@ namespace Kent.Boogaart.Converters.UnitTest
 			{
 				return (T) methodInfo.Invoke(instance, args);
 			}
-			catch (System.Reflection.TargetInvocationException e)
+			catch (TargetInvocationException e)
 			{
 				throw e.InnerException;
 			}

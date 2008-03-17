@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
-
 namespace Kent.Boogaart.Converters.Expressions.Nodes
 {
 	//a node to a conditional or between the left and right nodes

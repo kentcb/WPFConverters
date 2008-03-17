@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 using Kent.Boogaart.HelperTrinity;
 
 namespace Kent.Boogaart.Converters.Expressions.Nodes
@@ -18,10 +15,10 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
 		{
 			object leftNodeValue = LeftNode.Evaluate(evaluationContext);
 			object rightNodeValue = RightNode.Evaluate(evaluationContext);
-			NodeValueType leftNodeValueType = Node.GetNodeValueType(leftNodeValue);
-			NodeValueType rightNodeValueType = Node.GetNodeValueType(rightNodeValue);
+			NodeValueType leftNodeValueType = GetNodeValueType(leftNodeValue);
+			NodeValueType rightNodeValueType = GetNodeValueType(rightNodeValue);
 			//right operand must always be Int32
-			ExceptionHelper.ThrowIf(!Node.IsNumericalNodeValueType(leftNodeValueType) || rightNodeValueType != NodeValueType.Int32, "NodeValuesNotSupportedTypes", OperatorSymbols, leftNodeValueType, rightNodeValueType);
+			ExceptionHelper.ThrowIf(!IsNumericalNodeValueType(leftNodeValueType) || rightNodeValueType != NodeValueType.Int32, "NodeValuesNotSupportedTypes", OperatorSymbols, leftNodeValueType, rightNodeValueType);
 
 			switch (leftNodeValueType)
 			{

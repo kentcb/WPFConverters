@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using NUnit.Framework;
 using Rhino.Mocks;
 using Kent.Boogaart.Converters.Expressions;
@@ -151,7 +148,7 @@ namespace Kent.Boogaart.Converters.UnitTest.Expressions
 		public void ReadNextToken_ShouldThrowIfUnrecognizedEscapeSequence()
 		{
 			CreateTokenizer(@"'\h'".Replace('\'', '"'));
-			Token token = _tokenizer.ReadNextToken();
+			_tokenizer.ReadNextToken();
 		}
 
 		[Test]

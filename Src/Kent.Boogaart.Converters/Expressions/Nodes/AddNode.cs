@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace Kent.Boogaart.Converters.Expressions.Nodes
 {
 	//a node to add the left node to the right node
@@ -23,7 +19,7 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
 		protected override bool IsSupported(NodeValueType leftNodeValueType, NodeValueType rightNodeValueType)
 		{
 			return (leftNodeValueType == NodeValueType.String && rightNodeValueType == NodeValueType.String) ||
-				(Node.IsNumericalNodeValueType(leftNodeValueType) && Node.IsNumericalNodeValueType(rightNodeValueType));
+				(IsNumericalNodeValueType(leftNodeValueType) && IsNumericalNodeValueType(rightNodeValueType));
 		}
 
 		protected override object DoString(string value1, string value2)

@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
-
 namespace Kent.Boogaart.Converters
 {
 	/// <summary>
@@ -11,7 +6,7 @@ namespace Kent.Boogaart.Converters
 	public enum FallbackBehavior
 	{
 		/// <summary>
-		/// Specifies that <see cref="DependencyProperty.UnsetValue"/> should be returned when falling back.
+		/// Specifies that <see cref="System.Windows.DependencyProperty.UnsetValue"/> should be returned when falling back.
 		/// </summary>
 		ReturnUnsetValue,
 		/// <summary>

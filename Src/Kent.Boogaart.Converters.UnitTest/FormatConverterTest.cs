@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using System.Windows;
 using NUnit.Framework;
 using Kent.Boogaart.Converters;
@@ -69,7 +67,7 @@ namespace Kent.Boogaart.Converters.UnitTest
 		[ExpectedException(typeof(ArgumentNullException))]
 		public void ConvertBack_Single_ShouldThrowIfNoTargetType()
 		{
-			_formatConverter.ConvertBack(null, (Type) null, null, null);
+			_formatConverter.ConvertBack(null, (Type)null, null, null);
 		}
 
 		[Test]

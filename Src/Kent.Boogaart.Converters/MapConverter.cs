@@ -1,9 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
-using System.Text;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Markup;
@@ -173,7 +171,7 @@ namespace Kent.Boogaart.Converters
 		{
 			foreach (Mapping mapping in Mappings)
 			{
-				if (object.Equals(value, mapping.From))
+				if (Equals(value, mapping.From))
 				{
 					return mapping.To;
 				}
@@ -211,7 +209,7 @@ namespace Kent.Boogaart.Converters
 		{
 			foreach (Mapping mapping in Mappings)
 			{
-				if (object.Equals(value, mapping.To))
+				if (Equals(value, mapping.To))
 				{
 					return mapping.From;
 				}

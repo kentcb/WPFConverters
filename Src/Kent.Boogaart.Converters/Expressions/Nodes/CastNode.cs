@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 using Kent.Boogaart.HelperTrinity;
 
 namespace Kent.Boogaart.Converters.Expressions.Nodes
@@ -22,8 +20,8 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
 		public override object Evaluate(NodeEvaluationContext evaluationContext)
 		{
 			object value = Node.Evaluate(evaluationContext);
-			NodeValueType nodeValueType = Node.GetNodeValueType(value);
-			bool canCast = (Node.IsNumericalNodeValueType(nodeValueType) && Node.IsNumericalNodeValueType(_targetType)) ||
+			NodeValueType nodeValueType = GetNodeValueType(value);
+			bool canCast = (IsNumericalNodeValueType(nodeValueType) && IsNumericalNodeValueType(_targetType)) ||
 							(nodeValueType == NodeValueType.Boolean && _targetType == NodeValueType.Boolean) ||
 							(nodeValueType == NodeValueType.String && _targetType == NodeValueType.String);
 			ExceptionHelper.ThrowIf(!canCast, "CannotCast", nodeValueType, _targetType);

@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Kent.Boogaart.HelperTrinity;
 
 namespace Kent.Boogaart.Converters.Expressions.Nodes
@@ -16,7 +13,7 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
 		public override object Evaluate(NodeEvaluationContext evaluationContext)
 		{
 			object leftNodeValue = LeftNode.Evaluate(evaluationContext);
-			NodeValueType leftNodeValueType = Node.GetNodeValueType(leftNodeValue);
+			NodeValueType leftNodeValueType = GetNodeValueType(leftNodeValue);
 
 			if (leftNodeValueType == NodeValueType.Boolean)
 			{
@@ -30,7 +27,7 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
 			}
 
 			object rightNodeValue = RightNode.Evaluate(evaluationContext);
-			NodeValueType rightNodeValueType = Node.GetNodeValueType(rightNodeValue);
+			NodeValueType rightNodeValueType = GetNodeValueType(rightNodeValue);
 			ExceptionHelper.ThrowIf(leftNodeValueType != NodeValueType.Boolean || rightNodeValueType != NodeValueType.Boolean, "OperandsNotBoolean", OperatorSymbols, leftNodeValueType, rightNodeValueType);
 
 			return DetermineResultPostRightEvaluation((bool) leftNodeValue, (bool) rightNodeValue);

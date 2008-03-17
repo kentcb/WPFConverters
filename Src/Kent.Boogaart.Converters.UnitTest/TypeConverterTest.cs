@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
-using System.Text;
 using System.Windows;
 using NUnit.Framework;
 using Kent.Boogaart.Converters;
@@ -198,7 +196,7 @@ namespace Kent.Boogaart.Converters.UnitTest
 
 		#region Supporting Types
 
-		[System.ComponentModel.TypeConverter(typeof(Type1TypeConverter))]
+		[TypeConverter(typeof(Type1TypeConverter))]
 		private class Type1
 		{
 		}
@@ -240,7 +238,7 @@ namespace Kent.Boogaart.Converters.UnitTest
 			}
 		}
 
-		[System.ComponentModel.TypeConverter(typeof(Type2TypeConverter))]
+		[TypeConverter(typeof(Type2TypeConverter))]
 		private class Type2
 		{
 		}

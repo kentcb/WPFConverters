@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
-
 namespace Kent.Boogaart.Converters.Expressions.Nodes
 {
 	//a node to determine whether the left node is less than or equal to the right node
@@ -23,7 +18,7 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
 
 		protected override bool IsSupported(NodeValueType leftNodeValueType, NodeValueType rightNodeValueType)
 		{
-			return Node.IsNumericalNodeValueType(leftNodeValueType) && Node.IsNumericalNodeValueType(rightNodeValueType);
+			return IsNumericalNodeValueType(leftNodeValueType) && IsNumericalNodeValueType(rightNodeValueType);
 		}
 
 		protected override object DoByte(byte value1, byte value2)

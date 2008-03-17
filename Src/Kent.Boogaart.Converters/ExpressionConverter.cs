@@ -1,10 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.CodeDom;
-using System.CodeDom.Compiler;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Text;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Markup;
@@ -171,6 +168,7 @@ namespace Kent.Boogaart.Converters
 		private static void Expression_Changed(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
 		{
 			ExpressionConverter expressionConverter = dependencyObject as ExpressionConverter;
+			Debug.Assert(expressionConverter != null);
 
 			if (expressionConverter.Expression != null)
 			{

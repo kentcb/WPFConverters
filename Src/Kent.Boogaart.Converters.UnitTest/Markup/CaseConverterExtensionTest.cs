@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Controls;
 using NUnit.Framework;
 using Kent.Boogaart.Converters.Markup;

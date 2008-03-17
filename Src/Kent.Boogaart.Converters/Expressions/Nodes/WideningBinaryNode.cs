@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 using Kent.Boogaart.HelperTrinity;
 
 namespace Kent.Boogaart.Converters.Expressions.Nodes
@@ -18,8 +16,8 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
 		{
 			object leftNodeValue = LeftNode.Evaluate(evaluationContext);
 			object rightNodeValue = RightNode.Evaluate(evaluationContext);
-			NodeValueType leftNodeValueType = Node.GetNodeValueType(leftNodeValue);
-			NodeValueType rightNodeValueType = Node.GetNodeValueType(rightNodeValue);
+			NodeValueType leftNodeValueType = GetNodeValueType(leftNodeValue);
+			NodeValueType rightNodeValueType = GetNodeValueType(rightNodeValue);
 
 			//base class determines whether the operation is supported
 			ExceptionHelper.ThrowIf(!IsSupported(leftNodeValueType, rightNodeValueType), "OperatorNotSupportedWithOperands", OperatorSymbols, leftNodeValueType, rightNodeValueType);
@@ -30,8 +28,8 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
 			//we have to convert rather than just cast because the value is boxed
 			IConvertible convertibleLeftNodeValue = leftNodeValue as IConvertible;
 			IConvertible convertibleRightNodeValue = rightNodeValue as IConvertible;
-			Debug.Assert(convertibleLeftNodeValue != null);
-			Debug.Assert(convertibleRightNodeValue != null);
+			Debug.Assert(convertibleLeftNodeValue != null || maxNodeValueType == NodeValueType.String);
+			Debug.Assert(convertibleRightNodeValue != null || maxNodeValueType == NodeValueType.String);
 
 			switch (maxNodeValueType)
 			{

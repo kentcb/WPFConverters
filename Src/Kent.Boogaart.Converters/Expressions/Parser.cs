@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 using Kent.Boogaart.Converters.Expressions.Nodes;
 using Kent.Boogaart.HelperTrinity;
 

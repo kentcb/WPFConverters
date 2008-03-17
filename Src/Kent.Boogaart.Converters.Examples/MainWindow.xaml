@@ -146,7 +146,7 @@
 				<Expander Header="Example 1" IsExpanded="True">
 					<StackPanel>
 						<TextBlock Style="{StaticResource ExampleHeader}">
-							This example uses an ExpressionConverter to ensure that the blue rectangle is always double the width
+							This example uses an ExpressionConverter to ensure that the blue rectangle is always double the value
 							of the Slider's value. The red rectangle's width is always exactly equal to the Slider's value.
 						</TextBlock>
 						<Slider x:Name="_slider1" Minimum="1" Maximum="{Binding ActualWidth, ElementName=_slider1, Converter={con:ExpressionConverter {}{0} / 2}}"/>

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
@@ -41,7 +40,7 @@ namespace Kent.Boogaart.Converters.Expressions
 				return null;
 			}
 
-			Token token = null;
+			Token token;
 			ReadNextChar();
 			_buffer.Length = 0;
 			_buffer.Append(_currentChar);

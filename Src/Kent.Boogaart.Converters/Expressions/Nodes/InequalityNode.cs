@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
-
 namespace Kent.Boogaart.Converters.Expressions.Nodes
 {
 	//a node to check whether the left node is not equal to the right node
@@ -23,7 +18,7 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
 
 		protected override bool IsSupported(NodeValueType leftNodeValueType, NodeValueType rightNodeValueType)
 		{
-			if (Node.IsNumericalNodeValueType(rightNodeValueType) && Node.IsNumericalNodeValueType(leftNodeValueType))
+			if (IsNumericalNodeValueType(rightNodeValueType) && IsNumericalNodeValueType(leftNodeValueType))
 			{
 				return true;
 			}

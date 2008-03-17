@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace Kent.Boogaart.Converters.Expressions.Nodes
 {
 	//a node to shift an integral value left

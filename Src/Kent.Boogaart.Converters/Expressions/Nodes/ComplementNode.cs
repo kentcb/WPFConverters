@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 using Kent.Boogaart.HelperTrinity;
 
 namespace Kent.Boogaart.Converters.Expressions.Nodes
@@ -17,8 +14,8 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
 		public override object Evaluate(NodeEvaluationContext evaluationContext)
 		{
 			object value = Node.Evaluate(evaluationContext);
-			NodeValueType nodeValueType = Node.GetNodeValueType(value);
-			ExceptionHelper.ThrowIf(!Node.IsIntegralNodeValueType(nodeValueType), "NotIntegralType", nodeValueType);
+			NodeValueType nodeValueType = GetNodeValueType(value);
+			ExceptionHelper.ThrowIf(!IsIntegralNodeValueType(nodeValueType), "NotIntegralType", nodeValueType);
 
 			switch (nodeValueType)
 			{

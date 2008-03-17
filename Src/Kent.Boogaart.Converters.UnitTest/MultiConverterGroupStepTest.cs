@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Data;
 using NUnit.Framework;
 using Kent.Boogaart.Converters;
