@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<topic id="ff366ecc-59bd-4d33-a18e-86818741fbe5" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <section address="Overview">
+      <title>Overview</title>
+      <content>
+        <para>
+        	WPF’s <codeInline>Binding</codeInline> and <codeInline>MultiBinding</codeInline> types define a <codeInline>Converter</codeInline>
+        	property that allows you to provide a converter that will be used during the binding process. If you don’t explicitly specify a
+        	value converter, WPF will use its built-in primitive ones behind the scenes (such as <codeInline>DefaultValueConverter</codeInline>,
+        	<codeInline>ObjectTargetConverter</codeInline> and <codeInline>SystemConvertConverter</codeInline> – all are internal types defined
+        	in the <codeInline>MS.Internal.Data</codeInline> namespace).
+        </para>
+        <para>
+        	If you <legacyItalic>do</legacyItalic> specify a value converter, WPF will invoke methods on your converter during the data binding
+        	process. These methods are:
+			<list class="bullet">
+				<listItem>
+					<para>
+						<codeInline>Convert()</codeInline>. Called to convert a value when propagating it from the binding source to the binding
+						target.
+					</para>
+				</listItem>
+				<listItem>
+					<para>
+						<codeInline>ConvertBack()</codeInline>. Called to convert a value when propagating it from the binding target to the
+						binding source.
+					</para>
+				</listItem>
+			</list>
+        </para>
+        <para>
+        	The following diagram depicts this process:
+          	<mediaLink>
+				<image xlink:href="BindingProcess"/>
+			</mediaLink>
+        </para>
+        <para>
+        	What I have found whilst working with WPF is that value converters (shown in the middle of the above diagram) are often needed to
+        	solve similar problems. This code library seeks to address the most common converter requirements and alleviate the need for a lot
+        	of custom converter code in any WPF (or Silverlight) application.
+        </para>
+        <para>
+        	The following converters are included in this project:
+        </para>
+        
+		<table>
+			<tableHeader>
+				<row>
+					<entry><para>Name</para></entry>
+					<entry><para>Supports Singular Conversions</para></entry>
+					<entry><para>Supports Multiple Conversions (WPF only)</para></entry>
+					<entry><para>Supports Forward Conversions</para></entry>
+					<entry><para>Supports Backward Conversions</para></entry>
+					<entry><para>Has Markup Extension (WPF only)</para></entry>
+				</row>
+			</tableHeader>
+			<row>
+				<entry><para><link xlink:href="0f790919-9ce0-4607-870f-8d20f946f847">CaseConverter</link></para></entry>
+				<entry><para>Yes</para></entry>
+				<entry><para>No</para></entry>
+				<entry><para>Yes</para></entry>
+				<entry><para>No</para></entry>
+				<entry><para>Yes</para></entry>
+			</row>
+			<row>
+				<entry><para><link xlink:href="97b6062e-594b-419c-9dd1-d07264d10ad9">ConverterGroup</link></para></entry>
+				<entry><para>Yes</para></entry>
+				<entry><para>No</para></entry>
+				<entry><para>Yes<superscript>1</superscript></para></entry>
+				<entry><para>Yes<superscript>2</superscript></para></entry>
+				<entry><para>Yes</para></entry>
+			</row>
+			<row>
+				<entry><para><link xlink:href="e15e9869-e742-48c6-a69c-fb1fd73620ae">DateTimeConverter</link></para></entry>
+				<entry><para>Yes</para></entry>
+				<entry><para>No</para></entry>
+				<entry><para>Yes</para></entry>
+				<entry><para>Yes</para></entry>
+				<entry><para>Yes</para></entry>
+			</row>
+			<row>
+				<entry><para><link xlink:href="7874a985-9e29-42ee-aa3e-e8fa0b0c7fdb">ExpressionConverter</link></para></entry>
+				<entry><para>Yes</para></entry>
+				<entry><para>Yes</para></entry>
+				<entry><para>Yes</para></entry>
+				<entry><para>No</para></entry>
+				<entry><para>Yes</para></entry>
+			</row>
+			<row>
+				<entry><para><link xlink:href="7f1d5603-4c11-4831-9795-499066021657">FormatConverter</link></para></entry>
+				<entry><para>Yes</para></entry>
+				<entry><para>Yes</para></entry>
+				<entry><para>Yes</para></entry>
+				<entry><para>Yes<superscript>3</superscript></para></entry>
+				<entry><para>Yes</para></entry>
+			</row>
+			<row>
+				<entry><para><link xlink:href="eecf8a61-37ae-4a02-ad0f-b00356f1d4ad">MapConverter</link></para></entry>
+				<entry><para>Yes</para></entry>
+				<entry><para>No</para></entry>
+				<entry><para>Yes</para></entry>
+				<entry><para>Yes</para></entry>
+				<entry><para>No</para></entry>
+			</row>
+			<row>
+				<entry><para><link xlink:href="fa552dfb-a304-4852-9d0b-3d6d6b9e1455">MultiConverterGroup</link></para></entry>
+				<entry><para>No</para></entry>
+				<entry><para>Yes</para></entry>
+				<entry><para>Yes<superscript>4</superscript></para></entry>
+				<entry><para>Yes<superscript>5</superscript></para></entry>
+				<entry><para>No</para></entry>
+			</row>
+			<row>
+				<entry><para><link xlink:href="ae9b281b-aca2-4e00-8993-0d66d5b6bd1e">TypeConverter</link></para></entry>
+				<entry><para>Yes</para></entry>
+				<entry><para>No</para></entry>
+				<entry><para>Yes</para></entry>
+				<entry><para>Yes</para></entry>
+				<entry><para>Yes</para></entry>
+			</row>
+		</table>
+		<para>			
+			<list class="nobullet">
+				<listItem>
+					<para>
+						<superscript>1</superscript> Assuming all child converters support forward conversions.
+					</para>
+				</listItem>
+				<listItem>
+					<para>
+						<superscript>2</superscript> Assuming all child converters support backward conversions.
+					</para>
+				</listItem>
+				<listItem>
+					<para>
+						<superscript>3</superscript> Only for singular conversions.
+					</para>
+				</listItem>
+				<listItem>
+					<para>
+						<superscript>4</superscript> Assuming all child converters support forward conversions.
+					</para>
+				</listItem>
+				<listItem>
+					<para>
+						<superscript>5</superscript> Assuming all child converters support backward conversions.
+					</para>
+				</listItem>
+			</list>
+		</para>
+      </content>
+    </section>
+  </developerConceptualDocument>
+</topic>

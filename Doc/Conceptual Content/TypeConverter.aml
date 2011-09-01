@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="ae9b281b-aca2-4e00-8993-0d66d5b6bd1e" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <section address="TypeConverter">
+      <title>TypeConverter</title>
+      <content>
+        <para>
+        	The <codeEntityReference>T:Kent.Boogaart.Converters.TypeConverter</codeEntityReference> and
+        	<codeEntityReference>T:Kent.Boogaart.Converters.Markup.TypeConverterExtension</codeEntityReference> classes provide the ability to
+        	convert input values to different types. It is essentially a public implementation of the internal 
+        	<codeInline>DefaultValueConverter</codeInline> and <codeInline>SystemConvertConverter</codeInline> BCL types. It is useful in coercing
+        	a value to required type during a pipeline conversion using <codeInline>ConverterGroup</codeInline>. Using it is straightforward:
+<code language="xaml">
+<![CDATA[
+<Label>
+	<Label.Content>
+		<Binding Path="Dob">
+			<Binding.Converter>
+				<con:ConverterGroup>
+					<con:TypeConverter TargetType="{x:Type sys:DateTime}"/>
+					<con:DateTimeConverter TargetKind="Local"/>
+				</con:ConverterGroup>
+			</Binding.Converter>
+		</Binding>
+	</Label.Content>
+</Label>
+]]>
+</code>
+		</para>
+        <para>
+        	In this highly fabricated example, there is a <codeInline>Dob</codeInline> property that is a <codeInline>string</codeInline> when it
+        	really should be a <codeInline>DateTime</codeInline>. A <codeInline>TypeConverter</codeInline> is used to convert the
+        	<codeInline>string</codeInline> to a <codeInline>DateTime</codeInline> prior to feeding it into a
+        	<codeInline>DateTimeConverter</codeInline>.
+        </para>
+        <para>
+        	The <codeInline>TypeConverter</codeInline> will first attempt to convert data by way of an <codeInline>IConvertible</codeInline>
+        	implementation. If the value does not implement <codeInline>IConvertible</codeInline> then an attempt will be made to use any
+        	<codeInline>System.ComponentModel.TypeConverter</codeInline> implementation type for the class. If all attempts to convert the value
+        	fail, <codeInline>DependencyProperty.UnsetValue</codeInline> will be returned.
+        </para>
+      </content>
+    </section>
+  </developerConceptualDocument>
+</topic>

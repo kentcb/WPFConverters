@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="01e38bce-0632-484a-839b-62ec1934e2fb" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <section address="Converters">
+      <title>Converters</title>
+      <content>
+        <para>
+        	This section discusses all converters provided by the library. Please note that the API documentation for each converter
+        	provides further examples and detail. In order to use the converters in your application, you must:
+        	
+			<list class="ordered">
+				<listItem>
+					<para>
+						Add a reference to the <legacyItalic>Kent.Boogaart.Converters.dll</legacyItalic> assembly.
+					</para>
+				</listItem>
+				<listItem>
+					<para>
+						Declare an XML->CLR namespace mapping to <legacyItalic>http://schemas.kent.boogaart.com/converters</legacyItalic>.
+					</para>
+				</listItem>
+			</list>
+        </para>
+        <para>
+        	All the examples in this section assume a declaration such as:
+<code language="xaml">
+<![CDATA[
+<Window xmlns:con="http://schemas.kent.boogaart.com/converters">
+]]>
+</code>
+        </para>
+      </content>
+    </section>
+  </developerConceptualDocument>
+</topic>
