@@ -18,20 +18,24 @@ namespace Kent.Boogaart.Converters
 		/// </summary>
 		public static readonly DependencyProperty FromProperty = DependencyProperty.Register("From",
 			typeof(object),
-			typeof(Mapping));
+			typeof(Mapping),
+            new PropertyMetadata(null));
 
 		/// <summary>
 		/// Identifies the <see cref="To"/> dependency property.
 		/// </summary>
 		public static readonly DependencyProperty ToProperty = DependencyProperty.Register("To",
 			typeof(object),
-			typeof(Mapping));
+            typeof(Mapping),
+            new PropertyMetadata(null));
 
 		/// <summary>
 		/// Gets or sets the source object for the mapping.
 		/// </summary>
+#if !SILVERLIGHT
 		[ConstructorArgument("from")]
-		public object From
+#endif
+        public object From
 		{
 			get
 			{
@@ -46,7 +50,9 @@ namespace Kent.Boogaart.Converters
 		/// <summary>
 		/// Gets or sets the destination object for the mapping.
 		/// </summary>
+#if !SILVERLIGHT
 		[ConstructorArgument("to")]
+#endif
 		public object To
 		{
 			get

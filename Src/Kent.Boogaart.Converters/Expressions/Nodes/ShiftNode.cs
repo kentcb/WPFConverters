@@ -6,6 +6,8 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
 	//a node from which shift nodes will inherit
 	internal abstract class ShiftNode : BinaryNode
 	{
+        private static readonly ExceptionHelper exceptionHelper = new ExceptionHelper(typeof(ShiftNode));
+
 		public ShiftNode(Node leftNode, Node rightNode)
 			: base(leftNode, rightNode)
 		{
@@ -18,7 +20,7 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
 			NodeValueType leftNodeValueType = GetNodeValueType(leftNodeValue);
 			NodeValueType rightNodeValueType = GetNodeValueType(rightNodeValue);
 			//right operand must always be Int32
-			ExceptionHelper.ThrowIf(!IsNumericalNodeValueType(leftNodeValueType) || rightNodeValueType != NodeValueType.Int32, "NodeValuesNotSupportedTypes", OperatorSymbols, leftNodeValueType, rightNodeValueType);
+			exceptionHelper.ResolveAndThrowIf(!IsNumericalNodeValueType(leftNodeValueType) || rightNodeValueType != NodeValueType.Int32, "NodeValuesNotSupportedTypes", OperatorSymbols, leftNodeValueType, rightNodeValueType);
 
 			switch (leftNodeValueType)
 			{

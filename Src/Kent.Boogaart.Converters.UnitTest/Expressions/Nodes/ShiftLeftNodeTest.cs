@@ -1,9 +1,8 @@
-using NUnit.Framework;
+using Xunit;
 using Kent.Boogaart.Converters.Expressions.Nodes;
 
 namespace Kent.Boogaart.Converters.UnitTest.Expressions.Nodes
 {
-	[TestFixture]
 	public sealed class ShiftLeftNodeTest : UnitTest
 	{
 		private ShiftLeftNode _shiftLeftNode;
@@ -14,34 +13,34 @@ namespace Kent.Boogaart.Converters.UnitTest.Expressions.Nodes
 			_shiftLeftNode = new ShiftLeftNode(new ConstantNode<int>(0), new ConstantNode<int>(0));
 		}
 
-		[Test]
+		[Fact]
 		public void OperatorSymbols_ShouldYieldCorrectOperatorSymbols()
 		{
-			Assert.AreEqual("<<", GetPrivateMemberValue<string>(_shiftLeftNode, "OperatorSymbols"));
+			Assert.Equal("<<", GetPrivateMemberValue<string>(_shiftLeftNode, "OperatorSymbols"));
 		}
 
-		[Test]
+		[Fact]
 		public void DoByte_ShouldShiftLeft()
 		{
-			Assert.AreEqual(4, InvokePrivateMethod<int>(_shiftLeftNode, "DoByte", (byte) 1, 2));
+			Assert.Equal(4, InvokePrivateMethod<int>(_shiftLeftNode, "DoByte", (byte) 1, 2));
 		}
 
-		[Test]
+		[Fact]
 		public void DoInt16_ShouldShiftLeft()
 		{
-			Assert.AreEqual(4, InvokePrivateMethod<int>(_shiftLeftNode, "DoInt16", (short) 1, 2));
+			Assert.Equal(4, InvokePrivateMethod<int>(_shiftLeftNode, "DoInt16", (short) 1, 2));
 		}
 
-		[Test]
+		[Fact]
 		public void DoInt32_ShouldShiftLeft()
 		{
-			Assert.AreEqual(4, InvokePrivateMethod<int>(_shiftLeftNode, "DoInt32", 1, 2));
+			Assert.Equal(4, InvokePrivateMethod<int>(_shiftLeftNode, "DoInt32", 1, 2));
 		}
 
-		[Test]
+		[Fact]
 		public void DoInt64_ShouldShiftLeft()
 		{
-			Assert.AreEqual(4L, InvokePrivateMethod<long>(_shiftLeftNode, "DoInt64", 1L, 2));
+			Assert.Equal(4L, InvokePrivateMethod<long>(_shiftLeftNode, "DoInt64", 1L, 2));
 		}
 	}
 }

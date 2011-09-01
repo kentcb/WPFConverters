@@ -5,6 +5,7 @@ using Kent.Boogaart.HelperTrinity;
 
 namespace Kent.Boogaart.Converters.Markup
 {
+#if !SILVERLIGHT
 	/// <summary>
 	/// Implements a markup extension that allows instances of <see cref="CaseConverter"/> to be easily created.
 	/// </summary>
@@ -73,4 +74,5 @@ namespace Kent.Boogaart.Converters.Markup
 			return new CaseConverter(Casing);
 		}
 	}
+#endif
 }

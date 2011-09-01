@@ -1,55 +1,54 @@
 using System;
-using NUnit.Framework;
+using Xunit;
 using Kent.Boogaart.Converters.Markup;
 
 namespace Kent.Boogaart.Converters.UnitTest.Markup
 {
-	[TestFixture]
-	public sealed class FormatConverterExtensionTest : UnitTest
-	{
-		private FormatConverterExtension _formatConverterExtension;
+    public sealed class FormatConverterExtensionTest : UnitTest
+    {
+        private FormatConverterExtension _formatConverterExtension;
 
-		protected override void SetUpCore()
-		{
-			base.SetUpCore();
-			_formatConverterExtension = new FormatConverterExtension();
-		}
+        protected override void SetUpCore()
+        {
+            base.SetUpCore();
+            _formatConverterExtension = new FormatConverterExtension();
+        }
 
-		[Test]
-		public void Constructor_ShouldSetDefaults()
-		{
-			Assert.IsNull(_formatConverterExtension.FormatString);
-		}
+        [Fact]
+        public void Constructor_ShouldSetDefaults()
+        {
+            Assert.Null(_formatConverterExtension.FormatString);
+        }
 
-		[Test]
-		public void Constructor_FormatString_ShouldSetExpression()
-		{
-			_formatConverterExtension = new FormatConverterExtension("format");
-			Assert.AreEqual("format", _formatConverterExtension.FormatString);
-		}
+        [Fact]
+        public void Constructor_FormatString_ShouldSetExpression()
+        {
+            _formatConverterExtension = new FormatConverterExtension("format");
+            Assert.Equal("format", _formatConverterExtension.FormatString);
+        }
 
-		[Test]
-		public void FormatString_ShouldGetAndSet()
-		{
-			Assert.IsNull(_formatConverterExtension.FormatString);
-			_formatConverterExtension.FormatString = "format";
-			Assert.AreEqual("format", _formatConverterExtension.FormatString);
-		}
+        [Fact]
+        public void FormatString_ShouldGetAndSet()
+        {
+            Assert.Null(_formatConverterExtension.FormatString);
+            _formatConverterExtension.FormatString = "format";
+            Assert.Equal("format", _formatConverterExtension.FormatString);
+        }
 
-		[Test]
-		[ExpectedException(typeof(InvalidOperationException), ExpectedMessage = "No format string has been provided.")]
-		public void ProvideValue_ShouldThrowIfNoFormatString()
-		{
-			_formatConverterExtension.ProvideValue(null);
-		}
+        [Fact]
+        public void ProvideValue_ShouldThrowIfNoFormatString()
+        {
+            var ex = Assert.Throws<InvalidOperationException>(() => _formatConverterExtension.ProvideValue(null));
+            Assert.Equal("No format string has been provided.", ex.Message);
+        }
 
-		[Test]
-		public void ProvideValue_ShouldYieldFormatConverterWithGivenFormatString()
-		{
-			_formatConverterExtension.FormatString = "format";
-			FormatConverter formatConverter = _formatConverterExtension.ProvideValue(null) as FormatConverter;
-			Assert.IsNotNull(formatConverter);
-			Assert.AreEqual("format", formatConverter.FormatString);
-		}
-	}
+        [Fact]
+        public void ProvideValue_ShouldYieldFormatConverterWithGivenFormatString()
+        {
+            _formatConverterExtension.FormatString = "format";
+            FormatConverter formatConverter = _formatConverterExtension.ProvideValue(null) as FormatConverter;
+            Assert.NotNull(formatConverter);
+            Assert.Equal("format", formatConverter.FormatString);
+        }
+    }
 }

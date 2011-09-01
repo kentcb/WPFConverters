@@ -1,55 +1,54 @@
 using System;
-using NUnit.Framework;
+using Xunit;
 using Kent.Boogaart.Converters.Markup;
 
 namespace Kent.Boogaart.Converters.UnitTest.Markup
 {
-	[TestFixture]
-	public sealed class ExpressionConverterExtensionTest : UnitTest
-	{
-		private ExpressionConverterExtension _expressionConverterExtension;
+    public sealed class ExpressionConverterExtensionTest : UnitTest
+    {
+        private ExpressionConverterExtension _expressionConverterExtension;
 
-		protected override void SetUpCore()
-		{
-			base.SetUpCore();
-			_expressionConverterExtension = new ExpressionConverterExtension();
-		}
+        protected override void SetUpCore()
+        {
+            base.SetUpCore();
+            _expressionConverterExtension = new ExpressionConverterExtension();
+        }
 
-		[Test]
-		public void Constructor_ShouldSetDefaults()
-		{
-			Assert.IsNull(_expressionConverterExtension.Expression);
-		}
+        [Fact]
+        public void Constructor_ShouldSetDefaults()
+        {
+            Assert.Null(_expressionConverterExtension.Expression);
+        }
 
-		[Test]
-		public void Constructor_Expression_ShouldSetExpression()
-		{
-			_expressionConverterExtension = new ExpressionConverterExtension("expr");
-			Assert.AreEqual("expr", _expressionConverterExtension.Expression);
-		}
+        [Fact]
+        public void Constructor_Expression_ShouldSetExpression()
+        {
+            _expressionConverterExtension = new ExpressionConverterExtension("expr");
+            Assert.Equal("expr", _expressionConverterExtension.Expression);
+        }
 
-		[Test]
-		public void Expression_ShouldGetAndSet()
-		{
-			Assert.IsNull(_expressionConverterExtension.Expression);
-			_expressionConverterExtension.Expression = "expr";
-			Assert.AreEqual("expr", _expressionConverterExtension.Expression);
-		}
+        [Fact]
+        public void Expression_ShouldGetAndSet()
+        {
+            Assert.Null(_expressionConverterExtension.Expression);
+            _expressionConverterExtension.Expression = "expr";
+            Assert.Equal("expr", _expressionConverterExtension.Expression);
+        }
 
-		[Test]
-		[ExpectedException(typeof(InvalidOperationException), ExpectedMessage="No expression has been provided.")]
-		public void ProvideValue_ShouldThrowIfNoExpression()
-		{
-			_expressionConverterExtension.ProvideValue(null);
-		}
+        [Fact]
+        public void ProvideValue_ShouldThrowIfNoExpression()
+        {
+            var ex = Assert.Throws<InvalidOperationException>(() => _expressionConverterExtension.ProvideValue(null));
+            Assert.Equal("No expression has been provided.", ex.Message);
+        }
 
-		[Test]
-		public void ProvideValue_ShouldYieldExpressionConverterWithGivenExpression()
-		{
-			_expressionConverterExtension.Expression = "324 * 21 / {0}";
-			ExpressionConverter expressionConverter = _expressionConverterExtension.ProvideValue(null) as ExpressionConverter;
-			Assert.IsNotNull(expressionConverter);
-			Assert.AreEqual("324 * 21 / {0}", expressionConverter.Expression);
-		}
-	}
+        [Fact]
+        public void ProvideValue_ShouldYieldExpressionConverterWithGivenExpression()
+        {
+            _expressionConverterExtension.Expression = "324 * 21 / {0}";
+            ExpressionConverter expressionConverter = _expressionConverterExtension.ProvideValue(null) as ExpressionConverter;
+            Assert.NotNull(expressionConverter);
+            Assert.Equal("324 * 21 / {0}", expressionConverter.Expression);
+        }
+    }
 }

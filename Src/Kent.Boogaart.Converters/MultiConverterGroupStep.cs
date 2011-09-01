@@ -5,6 +5,7 @@ using System.Windows.Markup;
 
 namespace Kent.Boogaart.Converters
 {
+#if !SILVERLIGHT
 	/// <summary>
 	/// Represents a single step in a <see cref="MultiConverterGroup"/>.
 	/// </summary>
@@ -44,4 +45,5 @@ namespace Kent.Boogaart.Converters
 			Converters = new Collection<IMultiValueConverter>();
 		}
 	}
+#endif
 }

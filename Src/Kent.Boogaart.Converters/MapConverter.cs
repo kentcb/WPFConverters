@@ -69,27 +69,41 @@ namespace Kent.Boogaart.Converters
 	/// </code>
 	/// </example>
 	[ContentProperty("Mappings")]
+#if !SILVERLIGHT
 	[ValueConversion(typeof(object), typeof(object))]
+#endif
 	public class MapConverter : DependencyObject, IValueConverter
 	{
+#if !SILVERLIGHT
 		private static readonly DependencyPropertyKey _mappingsPropertyKey = DependencyProperty.RegisterReadOnly("Mappings",
 			typeof(Collection<Mapping>),
 			typeof(MapConverter),
-			new FrameworkPropertyMetadata());
+			new PropertyMetadata(null));
+#endif
 
-		/// <summary>
+        /// <summary>
+        /// Identifies the <see cref="Mappings"/> dependency property.
+        /// </summary>
+#if !SILVERLIGHT
+        public static readonly DependencyProperty MappingsProperty = _mappingsPropertyKey.DependencyProperty;
+#else
+        public static readonly DependencyProperty MappingsProperty = DependencyProperty.Register("Mappings",
+            typeof(Collection<Mapping>),
+            typeof(MapConverter),
+            new PropertyMetadata(null));
+#endif
+
+        /// <summary>
 		/// Identifies the <see cref="FallbackBehavior"/> dependency property.
 		/// </summary>
 		public static readonly DependencyProperty FallbackBehaviorProperty = DependencyProperty.Register("FallbackBehavior",
 			typeof(FallbackBehavior),
 			typeof(MapConverter),
-			new FrameworkPropertyMetadata(),
-			ValidateFallbackValue);
-
-		/// <summary>
-		/// Identifies the <see cref="Mappings"/> dependency property.
-		/// </summary>
-		public static readonly DependencyProperty MappingsProperty = _mappingsPropertyKey.DependencyProperty;
+			new PropertyMetadata(FallbackBehavior.ReturnUnsetValue)
+#if !SILVERLIGHT
+            , ValidateFallbackValue
+#endif
+            );
 
 		/// <summary>
 		/// Gets or sets the fallback behavior for this <c>MapConverter</c>.
@@ -137,8 +151,12 @@ namespace Kent.Boogaart.Converters
 			private set
 			{
 				Debug.Assert(Mappings == null);
+#if !SILVERLIGHT
 				SetValue(_mappingsPropertyKey, value);
-			}
+#else
+                SetValue(MappingsProperty, value);
+#endif
+            }
 		}
 
 		/// <summary>

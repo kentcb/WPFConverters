@@ -1,9 +1,8 @@
-using NUnit.Framework;
+using Xunit;
 using Kent.Boogaart.Converters.Expressions.Nodes;
 
 namespace Kent.Boogaart.Converters.UnitTest.Expressions.Nodes
 {
-	[TestFixture]
 	public sealed class ConditionalAndNodeTest : UnitTest
 	{
 		private MockNode _leftNode;
@@ -18,31 +17,31 @@ namespace Kent.Boogaart.Converters.UnitTest.Expressions.Nodes
 			_conditionalAndNode = new ConditionalAndNode(_leftNode, _rightNode);
 		}
 
-		[Test]
+		[Fact]
 		public void OperatorSymbols_ShouldYieldCorrectOperatorSymbols()
 		{
-			Assert.AreEqual("&&", GetPrivateMemberValue<string>(_conditionalAndNode, "OperatorSymbols"));
+			Assert.Equal("&&", GetPrivateMemberValue<string>(_conditionalAndNode, "OperatorSymbols"));
 		}
 
-		[Test]
+		[Fact]
 		public void DetermineResultPreRightEvaluation_ShouldReturnFalseIsLeftIsFalse()
 		{
-			Assert.IsFalse(InvokePrivateMethod<bool?>(_conditionalAndNode, "DetermineResultPreRightEvaluation", false).Value);
+			Assert.False(InvokePrivateMethod<bool?>(_conditionalAndNode, "DetermineResultPreRightEvaluation", false).Value);
 		}
 
-		[Test]
+		[Fact]
 		public void DetermineResultPreRightEvaluation_ShouldReturnNullIsLeftIsTrue()
 		{
-			Assert.IsNull(InvokePrivateMethod<bool?>(_conditionalAndNode, "DetermineResultPreRightEvaluation", true));
+			Assert.Null(InvokePrivateMethod<bool?>(_conditionalAndNode, "DetermineResultPreRightEvaluation", true));
 		}
 
-		[Test]
+		[Fact]
 		public void DetermineResultPostRightEvaluation_ShouldReturnRightNodeValue()
 		{
-			Assert.IsFalse(InvokePrivateMethod<bool>(_conditionalAndNode, "DetermineResultPostRightEvaluation", false, false));
-			Assert.IsFalse(InvokePrivateMethod<bool>(_conditionalAndNode, "DetermineResultPostRightEvaluation", true, false));
-			Assert.IsTrue(InvokePrivateMethod<bool>(_conditionalAndNode, "DetermineResultPostRightEvaluation", false, true));
-			Assert.IsTrue(InvokePrivateMethod<bool>(_conditionalAndNode, "DetermineResultPostRightEvaluation", true, true));
+			Assert.False(InvokePrivateMethod<bool>(_conditionalAndNode, "DetermineResultPostRightEvaluation", false, false));
+			Assert.False(InvokePrivateMethod<bool>(_conditionalAndNode, "DetermineResultPostRightEvaluation", true, false));
+			Assert.True(InvokePrivateMethod<bool>(_conditionalAndNode, "DetermineResultPostRightEvaluation", false, true));
+			Assert.True(InvokePrivateMethod<bool>(_conditionalAndNode, "DetermineResultPostRightEvaluation", true, true));
 		}
 
 		#region Supporting Types

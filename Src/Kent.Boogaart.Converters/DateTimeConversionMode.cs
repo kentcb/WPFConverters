@@ -13,6 +13,7 @@ namespace Kent.Boogaart.Converters
 		/// <see cref="DateTime"/>'s value is adjusted accordingly.
 		/// </summary>
 		DoConversion,
+
 		/// <summary>
 		/// The <see cref="DateTime.SpecifyKind"/> method is used to change the kind of the <see cref="DateTime"/> without affecting
 		/// its value.

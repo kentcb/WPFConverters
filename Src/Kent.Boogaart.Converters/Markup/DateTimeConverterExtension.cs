@@ -4,6 +4,7 @@ using Kent.Boogaart.HelperTrinity;
 
 namespace Kent.Boogaart.Converters.Markup
 {
+#if !SILVERLIGHT
 	/// <summary>
 	/// Implements a markup extension that allows instances of <see cref="DateTimeConverter"/> to be easily created.
 	/// </summary>
@@ -148,4 +149,5 @@ namespace Kent.Boogaart.Converters.Markup
 			return dateTimeConverter;
 		}
 	}
+#endif
 }

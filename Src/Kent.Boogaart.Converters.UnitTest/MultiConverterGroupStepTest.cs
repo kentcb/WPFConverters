@@ -1,43 +1,42 @@
 using System.Windows.Data;
-using NUnit.Framework;
+using Xunit;
 using Kent.Boogaart.Converters;
+using Moq;
 
 namespace Kent.Boogaart.Converters.UnitTest
 {
-	[TestFixture]
-	public sealed class MultiConverterGroupStepTest : UnitTest
-	{
-		private MultiConverterGroupStep _multiConverterGroupStep;
+    public sealed class MultiConverterGroupStepTest : UnitTest
+    {
+        private MultiConverterGroupStep _multiConverterGroupStep;
 
-		protected override void SetUpCore()
-		{
-			base.SetUpCore();
-			_multiConverterGroupStep = new MultiConverterGroupStep();
-		}
+        protected override void SetUpCore()
+        {
+            base.SetUpCore();
+            _multiConverterGroupStep = new MultiConverterGroupStep();
+        }
 
-		[Test]
-		public void Constructor_ShouldSetDefaults()
-		{
-			Assert.IsNotNull(_multiConverterGroupStep.Converters);
-			Assert.AreEqual(0, _multiConverterGroupStep.Converters.Count);
-		}
+        [Fact]
+        public void Constructor_ShouldSetDefaults()
+        {
+            Assert.NotNull(_multiConverterGroupStep.Converters);
+            Assert.Equal(0, _multiConverterGroupStep.Converters.Count);
+        }
 
-		[Test]
-		public void Converters_ShouldAllowManipulationOfConverters()
-		{
-			IMultiValueConverter converter1 = Mocks.DynamicMock<IMultiValueConverter>();
-			IMultiValueConverter converter2 = Mocks.DynamicMock<IMultiValueConverter>();
-			IMultiValueConverter converter3 = Mocks.DynamicMock<IMultiValueConverter>();
-			Mocks.ReplayAll();
+        [Fact]
+        public void Converters_ShouldAllowManipulationOfConverters()
+        {
+            var converterMock1 = new Mock<IMultiValueConverter>();
+            var converterMock2 = new Mock<IMultiValueConverter>();
+            var converterMock3 = new Mock<IMultiValueConverter>();
 
-			_multiConverterGroupStep.Converters.Add(converter1);
-			_multiConverterGroupStep.Converters.Add(converter2);
-			_multiConverterGroupStep.Converters.Add(converter3);
+            _multiConverterGroupStep.Converters.Add(converterMock1.Object);
+            _multiConverterGroupStep.Converters.Add(converterMock2.Object);
+            _multiConverterGroupStep.Converters.Add(converterMock3.Object);
 
-			Assert.AreEqual(3, _multiConverterGroupStep.Converters.Count);
-			Assert.IsTrue(_multiConverterGroupStep.Converters.Contains(converter1));
-			Assert.IsTrue(_multiConverterGroupStep.Converters.Contains(converter2));
-			Assert.IsTrue(_multiConverterGroupStep.Converters.Contains(converter3));
-		}
-	}
+            Assert.Equal(3, _multiConverterGroupStep.Converters.Count);
+            Assert.True(_multiConverterGroupStep.Converters.Contains(converterMock1.Object));
+            Assert.True(_multiConverterGroupStep.Converters.Contains(converterMock2.Object));
+            Assert.True(_multiConverterGroupStep.Converters.Contains(converterMock3.Object));
+        }
+    }
 }

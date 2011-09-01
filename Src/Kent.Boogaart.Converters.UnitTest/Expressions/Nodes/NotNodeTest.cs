@@ -1,38 +1,37 @@
-using NUnit.Framework;
+using Xunit;
 using Kent.Boogaart.Converters.Expressions;
 using Kent.Boogaart.Converters.Expressions.Nodes;
 
 namespace Kent.Boogaart.Converters.UnitTest.Expressions.Nodes
 {
-	[TestFixture]
-	public sealed class NotNodeTest : UnitTest
-	{
-		private NotNode _notNode;
+    public sealed class NotNodeTest : UnitTest
+    {
+        private NotNode _notNode;
 
-		[Test]
-		[ExpectedException(typeof(ParseException), ExpectedMessage = "Operator '!' cannot be applied to operand of type 'Double'.")]
-		public void Evaluate_ShouldThrowIfNotBoolean1()
-		{
-			_notNode = new NotNode(new ConstantNode<double>(1.2));
-			_notNode.Evaluate(NodeEvaluationContext.Empty);
-		}
+        [Fact]
+        public void Evaluate_ShouldThrowIfNotBoolean1()
+        {
+            _notNode = new NotNode(new ConstantNode<double>(1.2));
+            var ex = Assert.Throws<ParseException>(() => _notNode.Evaluate(NodeEvaluationContext.Empty));
+            Assert.Equal("Operator '!' cannot be applied to operand of type 'Double'.", ex.Message);
+        }
 
-		[Test]
-		[ExpectedException(typeof(ParseException), ExpectedMessage = "Operator '!' cannot be applied to operand of type 'Int32'.")]
-		public void Evaluate_ShouldThrowIfNotBoolean2()
-		{
-			_notNode = new NotNode(new ConstantNode<int>(1));
-			_notNode.Evaluate(NodeEvaluationContext.Empty);
-		}
+        [Fact]
+        public void Evaluate_ShouldThrowIfNotBoolean2()
+        {
+            _notNode = new NotNode(new ConstantNode<int>(1));
+            var ex = Assert.Throws<ParseException>(() => _notNode.Evaluate(NodeEvaluationContext.Empty));
+            Assert.Equal("Operator '!' cannot be applied to operand of type 'Int32'.", ex.Message);
+        }
 
-		[Test]
-		public void Evaluate_ShouldNotGivenValue()
-		{
-			_notNode = new NotNode(new ConstantNode<bool>(false));
-			Assert.AreEqual(true, _notNode.Evaluate(NodeEvaluationContext.Empty));
+        [Fact]
+        public void Evaluate_ShouldNotGivenValue()
+        {
+            _notNode = new NotNode(new ConstantNode<bool>(false));
+            Assert.Equal(true, _notNode.Evaluate(NodeEvaluationContext.Empty));
 
-			_notNode = new NotNode(new ConstantNode<bool>(true));
-			Assert.AreEqual(false, _notNode.Evaluate(NodeEvaluationContext.Empty));
-		}
-	}
+            _notNode = new NotNode(new ConstantNode<bool>(true));
+            Assert.Equal(false, _notNode.Evaluate(NodeEvaluationContext.Empty));
+        }
+    }
 }

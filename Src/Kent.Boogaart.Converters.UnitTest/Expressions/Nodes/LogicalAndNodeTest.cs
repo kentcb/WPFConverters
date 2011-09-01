@@ -1,9 +1,8 @@
-using NUnit.Framework;
+using Xunit;
 using Kent.Boogaart.Converters.Expressions.Nodes;
 
 namespace Kent.Boogaart.Converters.UnitTest.Expressions.Nodes
 {
-	[TestFixture]
 	public sealed class LogicalAndNodeTest : UnitTest
 	{
 		private LogicalAndNode _logicalAndNode;
@@ -14,56 +13,56 @@ namespace Kent.Boogaart.Converters.UnitTest.Expressions.Nodes
 			_logicalAndNode = new LogicalAndNode(new ConstantNode<int>(0), new ConstantNode<int>(0));
 		}
 
-		[Test]
+		[Fact]
 		public void OperatorSymbols_ShouldYieldCorrectOperatorSymbols()
 		{
-			Assert.AreEqual("&", GetPrivateMemberValue<string>(_logicalAndNode, "OperatorSymbols"));
+			Assert.Equal("&", GetPrivateMemberValue<string>(_logicalAndNode, "OperatorSymbols"));
 		}
 
-		[Test]
+		[Fact]
 		public void IsSupported_ShouldYieldTrueOnlyIfBothBooleanOrNumericalTypes()
 		{
-			Assert.IsTrue(InvokePrivateMethod<bool>(_logicalAndNode, "IsSupported", NodeValueType.Boolean, NodeValueType.Boolean));
-			Assert.IsTrue(InvokePrivateMethod<bool>(_logicalAndNode, "IsSupported", NodeValueType.Int32, NodeValueType.Int32));
-			Assert.IsTrue(InvokePrivateMethod<bool>(_logicalAndNode, "IsSupported", NodeValueType.Int16, NodeValueType.Int32));
+			Assert.True(InvokePrivateMethod<bool>(_logicalAndNode, "IsSupported", NodeValueType.Boolean, NodeValueType.Boolean));
+			Assert.True(InvokePrivateMethod<bool>(_logicalAndNode, "IsSupported", NodeValueType.Int32, NodeValueType.Int32));
+			Assert.True(InvokePrivateMethod<bool>(_logicalAndNode, "IsSupported", NodeValueType.Int16, NodeValueType.Int32));
 
-			Assert.IsFalse(InvokePrivateMethod<bool>(_logicalAndNode, "IsSupported", NodeValueType.Boolean, NodeValueType.Int16));
-			Assert.IsFalse(InvokePrivateMethod<bool>(_logicalAndNode, "IsSupported", NodeValueType.String, NodeValueType.Int16));
-			Assert.IsFalse(InvokePrivateMethod<bool>(_logicalAndNode, "IsSupported", NodeValueType.String, NodeValueType.String));
-			Assert.IsFalse(InvokePrivateMethod<bool>(_logicalAndNode, "IsSupported", NodeValueType.Single, NodeValueType.Single));
+			Assert.False(InvokePrivateMethod<bool>(_logicalAndNode, "IsSupported", NodeValueType.Boolean, NodeValueType.Int16));
+			Assert.False(InvokePrivateMethod<bool>(_logicalAndNode, "IsSupported", NodeValueType.String, NodeValueType.Int16));
+			Assert.False(InvokePrivateMethod<bool>(_logicalAndNode, "IsSupported", NodeValueType.String, NodeValueType.String));
+			Assert.False(InvokePrivateMethod<bool>(_logicalAndNode, "IsSupported", NodeValueType.Single, NodeValueType.Single));
 		}
 
-		[Test]
+		[Fact]
 		public void DoBoolean_ShouldDoLogic()
 		{
-			Assert.IsTrue(InvokePrivateMethod<bool>(_logicalAndNode, "DoBoolean", true, true));
-			Assert.IsFalse(InvokePrivateMethod<bool>(_logicalAndNode, "DoBoolean", false, true));
-			Assert.IsFalse(InvokePrivateMethod<bool>(_logicalAndNode, "DoBoolean", true, false));
-			Assert.IsFalse(InvokePrivateMethod<bool>(_logicalAndNode, "DoBoolean", false, false));
+			Assert.True(InvokePrivateMethod<bool>(_logicalAndNode, "DoBoolean", true, true));
+			Assert.False(InvokePrivateMethod<bool>(_logicalAndNode, "DoBoolean", false, true));
+			Assert.False(InvokePrivateMethod<bool>(_logicalAndNode, "DoBoolean", true, false));
+			Assert.False(InvokePrivateMethod<bool>(_logicalAndNode, "DoBoolean", false, false));
 		}
 
-		[Test]
+		[Fact]
 		public void DoByte_ShouldDoLogic()
 		{
-			Assert.AreEqual(1, InvokePrivateMethod<int>(_logicalAndNode, "DoByte", (byte) 5, (byte) 3));
+			Assert.Equal(1, InvokePrivateMethod<int>(_logicalAndNode, "DoByte", (byte) 5, (byte) 3));
 		}
 
-		[Test]
+		[Fact]
 		public void DoInt16_ShouldDoLogic()
 		{
-			Assert.AreEqual(1, InvokePrivateMethod<int>(_logicalAndNode, "DoInt16", (short) 5, (short) 3));
+			Assert.Equal(1, InvokePrivateMethod<int>(_logicalAndNode, "DoInt16", (short) 5, (short) 3));
 		}
 
-		[Test]
+		[Fact]
 		public void DoInt32_ShouldDoLogic()
 		{
-			Assert.AreEqual(1, InvokePrivateMethod<int>(_logicalAndNode, "DoInt32", 5, 3));
+			Assert.Equal(1, InvokePrivateMethod<int>(_logicalAndNode, "DoInt32", 5, 3));
 		}
 
-		[Test]
+		[Fact]
 		public void DoInt64_ShouldDoLogic()
 		{
-			Assert.AreEqual(1L, InvokePrivateMethod<long>(_logicalAndNode, "DoInt64", 5L, 3L));
+			Assert.Equal(1L, InvokePrivateMethod<long>(_logicalAndNode, "DoInt64", 5L, 3L));
 		}
 	}
 }

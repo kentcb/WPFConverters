@@ -1,9 +1,8 @@
-using NUnit.Framework;
+using Xunit;
 using Kent.Boogaart.Converters.Expressions.Nodes;
 
 namespace Kent.Boogaart.Converters.UnitTest.Expressions.Nodes
 {
-	[TestFixture]
 	public sealed class DivideNodeTest : UnitTest
 	{
 		private DivideNode _divideNode;
@@ -14,64 +13,64 @@ namespace Kent.Boogaart.Converters.UnitTest.Expressions.Nodes
 			_divideNode = new DivideNode(new ConstantNode<int>(0), new ConstantNode<int>(0));
 		}
 
-		[Test]
+		[Fact]
 		public void OperatorSymbols_ShouldYieldCorrectOperatorSymbols()
 		{
-			Assert.AreEqual("/", GetPrivateMemberValue<string>(_divideNode, "OperatorSymbols"));
+			Assert.Equal("/", GetPrivateMemberValue<string>(_divideNode, "OperatorSymbols"));
 		}
 
-		[Test]
+		[Fact]
 		public void IsSupported_ShouldYieldTrueOnlyForNumericalTypes()
 		{
-			Assert.IsFalse(InvokePrivateMethod<bool>(_divideNode, "IsSupported", NodeValueType.Int16, NodeValueType.Boolean));
-			Assert.IsFalse(InvokePrivateMethod<bool>(_divideNode, "IsSupported", NodeValueType.Int16, NodeValueType.String));
-			Assert.IsFalse(InvokePrivateMethod<bool>(_divideNode, "IsSupported", NodeValueType.String, NodeValueType.Int32));
-			Assert.IsTrue(InvokePrivateMethod<bool>(_divideNode, "IsSupported", NodeValueType.Int16, NodeValueType.Byte));
-			Assert.IsTrue(InvokePrivateMethod<bool>(_divideNode, "IsSupported", NodeValueType.Double, NodeValueType.Byte));
-			Assert.IsTrue(InvokePrivateMethod<bool>(_divideNode, "IsSupported", NodeValueType.Decimal, NodeValueType.Decimal));
-			Assert.IsTrue(InvokePrivateMethod<bool>(_divideNode, "IsSupported", NodeValueType.Int32, NodeValueType.Int32));
+			Assert.False(InvokePrivateMethod<bool>(_divideNode, "IsSupported", NodeValueType.Int16, NodeValueType.Boolean));
+			Assert.False(InvokePrivateMethod<bool>(_divideNode, "IsSupported", NodeValueType.Int16, NodeValueType.String));
+			Assert.False(InvokePrivateMethod<bool>(_divideNode, "IsSupported", NodeValueType.String, NodeValueType.Int32));
+			Assert.True(InvokePrivateMethod<bool>(_divideNode, "IsSupported", NodeValueType.Int16, NodeValueType.Byte));
+			Assert.True(InvokePrivateMethod<bool>(_divideNode, "IsSupported", NodeValueType.Double, NodeValueType.Byte));
+			Assert.True(InvokePrivateMethod<bool>(_divideNode, "IsSupported", NodeValueType.Decimal, NodeValueType.Decimal));
+			Assert.True(InvokePrivateMethod<bool>(_divideNode, "IsSupported", NodeValueType.Int32, NodeValueType.Int32));
 		}
 
-		[Test]
+		[Fact]
 		public void DoByte_ShouldDoSubtraction()
 		{
-			Assert.AreEqual(2, InvokePrivateMethod<int>(_divideNode, "DoByte", (byte) 4, (byte) 2));
+			Assert.Equal(2, InvokePrivateMethod<int>(_divideNode, "DoByte", (byte) 4, (byte) 2));
 		}
 
-		[Test]
+		[Fact]
 		public void DoInt16_ShouldDoSubtraction()
 		{
-			Assert.AreEqual(2, InvokePrivateMethod<int>(_divideNode, "DoInt16", (short) 4, (short) 2));
+			Assert.Equal(2, InvokePrivateMethod<int>(_divideNode, "DoInt16", (short) 4, (short) 2));
 		}
 
-		[Test]
+		[Fact]
 		public void DoInt32_ShouldDoSubtraction()
 		{
-			Assert.AreEqual(2, InvokePrivateMethod<int>(_divideNode, "DoInt32", 4, 2));
+			Assert.Equal(2, InvokePrivateMethod<int>(_divideNode, "DoInt32", 4, 2));
 		}
 
-		[Test]
+		[Fact]
 		public void DoInt64_ShouldDoSubtraction()
 		{
-			Assert.AreEqual(2L, InvokePrivateMethod<long>(_divideNode, "DoInt64", 4L, 2L));
+			Assert.Equal(2L, InvokePrivateMethod<long>(_divideNode, "DoInt64", 4L, 2L));
 		}
 
-		[Test]
+		[Fact]
 		public void DoSingle_ShouldDoSubtraction()
 		{
-			Assert.AreEqual(2f, InvokePrivateMethod<float>(_divideNode, "DoSingle", 4f, 2f));
+			Assert.Equal(2f, InvokePrivateMethod<float>(_divideNode, "DoSingle", 4f, 2f));
 		}
 
-		[Test]
+		[Fact]
 		public void DoDouble_ShouldDoSubtraction()
 		{
-			Assert.AreEqual(2d, InvokePrivateMethod<double>(_divideNode, "DoDouble", 4d, 2d));
+			Assert.Equal(2d, InvokePrivateMethod<double>(_divideNode, "DoDouble", 4d, 2d));
 		}
 
-		[Test]
+		[Fact]
 		public void DoDecimal_ShouldDoSubtraction()
 		{
-			Assert.AreEqual(2m, InvokePrivateMethod<decimal>(_divideNode, "DoDecimal", 4m, 2m));
+			Assert.Equal(2m, InvokePrivateMethod<decimal>(_divideNode, "DoDecimal", 4m, 2m));
 		}
 	}
 }

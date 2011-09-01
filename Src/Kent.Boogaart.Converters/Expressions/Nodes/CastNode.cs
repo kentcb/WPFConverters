@@ -7,6 +7,7 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
 	//a node to cast a value to another type
 	internal sealed class CastNode : UnaryNode
 	{
+        private static readonly ExceptionHelper exceptionHelper = new ExceptionHelper(typeof(CastNode));
 		private readonly NodeValueType _targetType;
 
 		public CastNode(Node node, NodeValueType targetType)
@@ -24,7 +25,7 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
 			bool canCast = (IsNumericalNodeValueType(nodeValueType) && IsNumericalNodeValueType(_targetType)) ||
 							(nodeValueType == NodeValueType.Boolean && _targetType == NodeValueType.Boolean) ||
 							(nodeValueType == NodeValueType.String && _targetType == NodeValueType.String);
-			ExceptionHelper.ThrowIf(!canCast, "CannotCast", nodeValueType, _targetType);
+			exceptionHelper.ResolveAndThrowIf(!canCast, "CannotCast", nodeValueType, _targetType);
 
 			switch (nodeValueType)
 			{

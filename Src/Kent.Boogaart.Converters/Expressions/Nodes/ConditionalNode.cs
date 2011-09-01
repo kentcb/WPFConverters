@@ -5,6 +5,8 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
 	//a node from which conditional nodes will inherit
 	internal abstract class ConditionalNode : BinaryNode
 	{
+        private static readonly ExceptionHelper exceptionHelper = new ExceptionHelper(typeof(ConditionalNode));
+
 		protected ConditionalNode(Node leftNode, Node rightNode)
 			: base(leftNode, rightNode)
 		{
@@ -28,7 +30,7 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
 
 			object rightNodeValue = RightNode.Evaluate(evaluationContext);
 			NodeValueType rightNodeValueType = GetNodeValueType(rightNodeValue);
-			ExceptionHelper.ThrowIf(leftNodeValueType != NodeValueType.Boolean || rightNodeValueType != NodeValueType.Boolean, "OperandsNotBoolean", OperatorSymbols, leftNodeValueType, rightNodeValueType);
+			exceptionHelper.ResolveAndThrowIf(leftNodeValueType != NodeValueType.Boolean || rightNodeValueType != NodeValueType.Boolean, "OperandsNotBoolean", OperatorSymbols, leftNodeValueType, rightNodeValueType);
 
 			return DetermineResultPostRightEvaluation((bool) leftNodeValue, (bool) rightNodeValue);
 		}

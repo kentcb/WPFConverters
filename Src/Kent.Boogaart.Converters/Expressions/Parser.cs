@@ -7,6 +7,7 @@ namespace Kent.Boogaart.Converters.Expressions
 {
 	internal sealed class Parser : IDisposable
 	{
+        private static readonly ExceptionHelper exceptionHelper = new ExceptionHelper(typeof(Parser));
 		private readonly Tokenizer _tokenizer;
 		private Token _currentToken;
 
@@ -36,7 +37,7 @@ namespace Kent.Boogaart.Converters.Expressions
 
 			if (AreMoreTokens)
 			{
-				ExceptionHelper.Throw("UnexpectedInput", _currentToken.Value);
+				throw exceptionHelper.Resolve("UnexpectedInput", _currentToken.Value);
 			}
 
 			return expression;
@@ -360,8 +361,7 @@ namespace Kent.Boogaart.Converters.Expressions
 						return new VariableNode(integerConstant.Value);
 					}
 
-					ExceptionHelper.Throw("ExpressionExpected");
-					break;
+					throw exceptionHelper.Resolve("ExpressionExpected");
 			}
 
 			Debug.Assert(false);
@@ -411,7 +411,7 @@ namespace Kent.Boogaart.Converters.Expressions
 			}
 			else
 			{
-				ExceptionHelper.Throw("CannotCastToType", targetTypeStr);
+				throw exceptionHelper.Resolve("CannotCastToType", targetTypeStr);
 			}
 
 			ReadNextToken();
@@ -478,11 +478,11 @@ namespace Kent.Boogaart.Converters.Expressions
 				numberStr = numberStr.Substring(2);
 			}
 
-			ExceptionHelper.ThrowIf(numberStr.Length == 0, "InvalidNumber", _currentToken.Value);
+			exceptionHelper.ResolveAndThrowIf(numberStr.Length == 0, "InvalidNumber", _currentToken.Value);
 
 			foreach (char c in numberStr)
 			{
-				ExceptionHelper.ThrowIf(!Uri.IsHexDigit(c), "InvalidNumber", _currentToken.Value);
+				exceptionHelper.ResolveAndThrowIf(!Uri.IsHexDigit(c), "InvalidNumber", _currentToken.Value);
 			}
 
 			ReadNextToken();
@@ -511,7 +511,7 @@ namespace Kent.Boogaart.Converters.Expressions
 			if (isLong)
 			{
 				long val;
-				ExceptionHelper.ThrowIf(!long.TryParse(numberStr, out val), "InvalidNumber", _currentToken.Value);
+				exceptionHelper.ResolveAndThrowIf(!long.TryParse(numberStr, out val), "InvalidNumber", _currentToken.Value);
 				ReadNextToken();
 				return new ConstantNode<long>(val);
 			}
@@ -524,7 +524,7 @@ namespace Kent.Boogaart.Converters.Expressions
 		private ConstantNode<int> ParseInt32()
 		{
 			int val;
-			ExceptionHelper.ThrowIf(!int.TryParse(_currentToken.Value, out val), "InvalidNumber", _currentToken.Value);
+			exceptionHelper.ResolveAndThrowIf(!int.TryParse(_currentToken.Value, out val), "InvalidNumber", _currentToken.Value);
 			ReadNextToken();
 			return new ConstantNode<int>(val);
 		}
@@ -554,21 +554,21 @@ namespace Kent.Boogaart.Converters.Expressions
 				case RealType.Double:
 					{
 						double val;
-						ExceptionHelper.ThrowIf(!double.TryParse(numberStr, out val), "InvalidNumber", _currentToken.Value);
+						exceptionHelper.ResolveAndThrowIf(!double.TryParse(numberStr, out val), "InvalidNumber", _currentToken.Value);
 						ReadNextToken();
 						return new ConstantNode<double>(val);
 					}
 				case RealType.Single:
 					{
 						float val;
-						ExceptionHelper.ThrowIf(!float.TryParse(numberStr, out val), "InvalidNumber", _currentToken.Value);
+						exceptionHelper.ResolveAndThrowIf(!float.TryParse(numberStr, out val), "InvalidNumber", _currentToken.Value);
 						ReadNextToken();
 						return new ConstantNode<float>(val);
 					}
 				case RealType.Decimal:
 					{
 						decimal val;
-						ExceptionHelper.ThrowIf(!decimal.TryParse(numberStr, out val), "InvalidNumber", _currentToken.Value);
+						exceptionHelper.ResolveAndThrowIf(!decimal.TryParse(numberStr, out val), "InvalidNumber", _currentToken.Value);
 						ReadNextToken();
 						return new ConstantNode<decimal>(val);
 					}
@@ -586,8 +586,7 @@ namespace Kent.Boogaart.Converters.Expressions
 				return NullNode.Instance;
 			}
 
-			ExceptionHelper.Throw("UnexpectedInput", _currentToken.Value);
-			return null;
+			throw exceptionHelper.Resolve("UnexpectedInput", _currentToken.Value);
 		}
 
 		#endregion
@@ -600,13 +599,13 @@ namespace Kent.Boogaart.Converters.Expressions
 		private void SkipExpectedToken(TokenType type, string value)
 		{
 			EnsureMoreTokens();
-			ExceptionHelper.ThrowIf(!_currentToken.Equals(type, value), "UnexpectedToken", _currentToken.Value, value);
+			exceptionHelper.ResolveAndThrowIf(!_currentToken.Equals(type, value), "UnexpectedToken", _currentToken.Value, value);
 			ReadNextToken();
 		}
 
 		private void EnsureMoreTokens()
 		{
-			ExceptionHelper.ThrowIf(!AreMoreTokens, "UnexpectedEndOfInput");
+			exceptionHelper.ResolveAndThrowIf(!AreMoreTokens, "UnexpectedEndOfInput");
 		}
 
 		private static bool EqualsAny(string value, params string[] acceptableValues)

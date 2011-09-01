@@ -2,7 +2,6 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Windows.Markup;
 
 [assembly: AssemblyTitle("WPF Converters Unit Tests")]
 [assembly: AssemblyDescription("Unit tests for the WPF converters.")]

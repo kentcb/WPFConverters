@@ -1,28 +1,27 @@
-using NUnit.Framework;
+using Xunit;
 using Kent.Boogaart.Converters.Expressions.Nodes;
 
 namespace Kent.Boogaart.Converters.UnitTest.Expressions.Nodes
 {
-	[TestFixture]
 	public sealed class ConstantNodeTest : UnitTest
 	{
 		private ConstantNode<int> _intConstantNode;
 		private ConstantNode<float> _floatConstantNode;
 
-		[Test]
+		[Fact]
 		public void Value_ShouldYieldAssignedValue()
 		{
 			CreateNodes(3, 3.8f);
-			Assert.AreEqual(3, _intConstantNode.Value);
-			Assert.AreEqual(3.8f, _floatConstantNode.Value);
+			Assert.Equal(3, _intConstantNode.Value);
+			Assert.Equal(3.8f, _floatConstantNode.Value);
 		}
 
-		[Test]
+		[Fact]
 		public void Evaluate_ShouldReturnAssignedValue()
 		{
 			CreateNodes(3, 3.8f);
-			Assert.AreEqual(3, _intConstantNode.Evaluate(NodeEvaluationContext.Empty));
-			Assert.AreEqual(3.8f, _floatConstantNode.Evaluate(NodeEvaluationContext.Empty));
+			Assert.Equal(3, _intConstantNode.Evaluate(NodeEvaluationContext.Empty));
+			Assert.Equal(3.8f, _floatConstantNode.Evaluate(NodeEvaluationContext.Empty));
 		}
 
 		#region Helper methods

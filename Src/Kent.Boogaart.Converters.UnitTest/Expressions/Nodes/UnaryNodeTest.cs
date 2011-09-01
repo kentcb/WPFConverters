@@ -1,9 +1,8 @@
-using NUnit.Framework;
+using Xunit;
 using Kent.Boogaart.Converters.Expressions.Nodes;
 
 namespace Kent.Boogaart.Converters.UnitTest.Expressions.Nodes
 {
-	[TestFixture]
 	public sealed class UnaryNodeTest : UnitTest
 	{
 		private MockUnaryNode _unaryNode;
@@ -16,10 +15,10 @@ namespace Kent.Boogaart.Converters.UnitTest.Expressions.Nodes
 			_unaryNode = new MockUnaryNode(_child);
 		}
 
-		[Test]
+		[Fact]
 		public void Node_ShouldYieldGivenNode()
 		{
-			Assert.AreSame(_child, _unaryNode.Node);
+			Assert.Same(_child, _unaryNode.Node);
 		}
 
 		#region Supporting Types

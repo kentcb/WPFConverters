@@ -6,8 +6,10 @@ namespace Kent.Boogaart.Converters.Expressions
 	/// <summary>
 	/// Exception thrown when the <see cref="Parser"/> encounters any errors.
 	/// </summary>
+#if !SILVERLIGHT
 	[Serializable]
-	public class ParseException : Exception
+#endif
+    public class ParseException : Exception
 	{
 		/// <summary>
 		/// Constructs an instance of the <c>ParseException</c> class.
@@ -41,6 +43,7 @@ namespace Kent.Boogaart.Converters.Expressions
 		{
 		}
 
+#if !SILVERLIGHT
 		/// <summary>
 		/// Constructs a new instance of <c>ParseException</c> with information read from the provided serialization information.
 		/// </summary>
@@ -54,5 +57,6 @@ namespace Kent.Boogaart.Converters.Expressions
 			: base(info, context)
 		{
 		}
+#endif
 	}
 }

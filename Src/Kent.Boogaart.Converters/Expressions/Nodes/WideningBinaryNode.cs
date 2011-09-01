@@ -7,6 +7,8 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
 	//a node that automatically widens one value to match the width of the other if necessary
 	internal abstract class WideningBinaryNode : BinaryNode
 	{
+        private static readonly ExceptionHelper exceptionHelper = new ExceptionHelper(typeof(WideningBinaryNode));
+
 		protected WideningBinaryNode(Node leftNode, Node rightNode)
 			: base(leftNode, rightNode)
 		{
@@ -20,7 +22,7 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
 			NodeValueType rightNodeValueType = GetNodeValueType(rightNodeValue);
 
 			//base class determines whether the operation is supported
-			ExceptionHelper.ThrowIf(!IsSupported(leftNodeValueType, rightNodeValueType), "OperatorNotSupportedWithOperands", OperatorSymbols, leftNodeValueType, rightNodeValueType);
+			exceptionHelper.ResolveAndThrowIf(!IsSupported(leftNodeValueType, rightNodeValueType), "OperatorNotSupportedWithOperands", OperatorSymbols, leftNodeValueType, rightNodeValueType);
 
 			//determine the type to which we will need to widen any narrower value
 			NodeValueType maxNodeValueType = (NodeValueType) Math.Max((int) leftNodeValueType, (int) rightNodeValueType);

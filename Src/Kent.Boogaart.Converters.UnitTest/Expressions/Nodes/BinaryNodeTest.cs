@@ -1,9 +1,8 @@
-using NUnit.Framework;
+using Xunit;
 using Kent.Boogaart.Converters.Expressions.Nodes;
 
 namespace Kent.Boogaart.Converters.UnitTest.Expressions.Nodes
 {
-	[TestFixture]
 	public sealed class BinaryNodeTest : UnitTest
 	{
 		private MockBinaryNode _binaryNode;
@@ -18,16 +17,16 @@ namespace Kent.Boogaart.Converters.UnitTest.Expressions.Nodes
 			_binaryNode = new MockBinaryNode(_leftNode, _rightNode);
 		}
 
-		[Test]
+		[Fact]
 		public void Left_ShouldYieldGivenNode()
 		{
-			Assert.AreSame(_leftNode, _binaryNode.LeftNode);
+			Assert.Same(_leftNode, _binaryNode.LeftNode);
 		}
 
-		[Test]
+		[Fact]
 		public void Right_ShouldYieldGivenNode()
 		{
-			Assert.AreSame(_rightNode, _binaryNode.RightNode);
+			Assert.Same(_rightNode, _binaryNode.RightNode);
 		}
 
 		#region Supporting Types
