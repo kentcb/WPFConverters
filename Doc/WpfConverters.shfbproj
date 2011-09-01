@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <!-- The configuration and platform will be used to determine which
+         assemblies to include from solution and project documentation
+         sources -->
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{875651eb-17e7-40c8-87bf-1ca148cec0e5}</ProjectGuid>
+    <SHFBSchemaVersion>1.9.3.0</SHFBSchemaVersion>
+    <!-- AssemblyName, Name, and RootNamespace are not used by SHFB but Visual
+         Studio adds them anyway -->
+    <AssemblyName>Documentation</AssemblyName>
+    <RootNamespace>Documentation</RootNamespace>
+    <Name>Documentation</Name>
+    <!-- SHFB properties -->
+    <OutputPath>..\Gen\Documentation\</OutputPath>
+    <HtmlHelpName>WPF Converters</HtmlHelpName>
+    <DocumentationSources>
+      <DocumentationSource sourceFile="..\Src\Kent.Boogaart.Converters\bin\FX40 Release\Kent.Boogaart.Converters.dll" />
+      <DocumentationSource sourceFile="..\Src\Kent.Boogaart.Converters\bin\FX40 Release\Kent.Boogaart.Converters.xml" />
+    </DocumentationSources>
+    <FrameworkVersion>.NET 4.0.30319</FrameworkVersion>
+    <HelpTitle>WPF Converters</HelpTitle>
+    <RootNamespaceContainer>True</RootNamespaceContainer>
+    <RootNamespaceTitle>API Documentation</RootNamespaceTitle>
+    <MissingTags>Summary, Parameter, Returns, Namespace, TypeParameter</MissingTags>
+    <NamespaceSummaries>
+      <NamespaceSummaryItem name="(global)" isDocumented="False" />
+    </NamespaceSummaries>
+    <VisibleItems>Attributes, ExplicitInterfaceImplementations, InheritedMembers, InheritedFrameworkMembers, Protected, SealedProtected</VisibleItems>
+    <Preliminary>False</Preliminary>
+    <SdkLinkTarget>Blank</SdkLinkTarget>
+  </PropertyGroup>
+  <!-- There are no properties for these two groups but they need to appear in
+       order for Visual Studio to perform the build. -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+  </PropertyGroup>
+  <ItemGroup>
+    <ContentLayout Include="Content Layout.content" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Conceptual Content\Converters.aml" />
+    <None Include="Conceptual Content\Converters.aml" />
+    <None Include="Conceptual Content\Converters.aml" />
+    <None Include="Conceptual Content\Overview.aml" />
+    <None Include="Conceptual Content\TypeConverter.aml" />
+    <None Include="Conceptual Content\MultiConverterGroup.aml" />
+    <None Include="Conceptual Content\MultiConverterGroup.aml" />
+    <None Include="Conceptual Content\MapConverter.aml" />
+    <None Include="Conceptual Content\FormatConverter.aml" />
+    <None Include="Conceptual Content\ExpressionConverter.aml" />
+    <None Include="Conceptual Content\DateTimeConverter.aml" />
+    <None Include="Conceptual Content\ConverterGroup.aml" />
+    <None Include="Conceptual Content\CaseConverter.aml" />
+    <None Include="Conceptual Content\TypeConverter.aml" />
+    <None Include="Conceptual Content\MultiConverterGroup.aml" />
+    <None Include="Conceptual Content\MapConverter.aml" />
+    <None Include="Conceptual Content\FormatConverter.aml" />
+    <None Include="Conceptual Content\ExpressionConverter.aml" />
+    <None Include="Conceptual Content\DateTimeConverter.aml" />
+    <None Include="Conceptual Content\ConverterGroup.aml" />
+    <None Include="Conceptual Content\CaseConverter.aml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Tokens Include="Tokens.tokens" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Conceptual Content\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Conceptual Content\MultiConverterGroup.png">
+      <ImageId>MultiConverterGroup</ImageId>
+      <AlternateText>Multi Converter Group</AlternateText>
+    </Image>
+    <Image Include="Conceptual Content\BindingProcess.png">
+      <ImageId>BindingProcess</ImageId>
+      <AlternateText>Binding Process</AlternateText>
+    </Image>
+  </ItemGroup>
+  <!-- Import the SHFB build targets -->
+  <Import Project="$(SHFBROOT)\SandcastleHelpFileBuilder.targets" />
+</Project>
