@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Project ToolsVersion="4.0" DefaultTargets="All" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <GenDir>$(MSBuildThisFileDirectory)..\..\Gen</GenDir>
+        <LibDir>$(MSBuildThisFileDirectory)..\..\Lib</LibDir>
+        <DocDir>$(MSBuildThisFileDirectory)..\..\Doc</DocDir>
+        <SrcDir>$(MSBuildThisFileDirectory)..\</SrcDir>
+        <MSBuildCommunityTasksPath>.</MSBuildCommunityTasksPath>
+        <Configuration Condition=" $(Configuration) == '' ">Release</Configuration>
+    </PropertyGroup>
+
+    <Import Project="$(LibDir)\MSBuild Community Tasks\MSBuild.Community.Tasks.Targets" />
+    <UsingTask AssemblyFile="$(LibDir)\xUnit\xunit.runner.msbuild.dll" TaskName="Xunit.Runner.MSBuild.xunit" />
+
+    <Target Name="All" DependsOnTargets="Clean;Build;Test;GenerateDocumentation;CreateArchives;CreateNuGetPackages"/>
+
+    <Target Name="Clean">
+        <MSBuild Projects="$(SrcDir)\WpfConverters.sln" Properties="Configuration=SL40 $(Configuration)" Targets="Clean" BuildInParallel="True"/>
+        <MSBuild Projects="$(SrcDir)\WpfConverters.sln" Properties="Configuration=FX35 $(Configuration)" Targets="Clean" BuildInParallel="True"/>
+        <MSBuild Projects="$(SrcDir)\WpfConverters.sln" Properties="Configuration=FX40 $(Configuration)" Targets="Clean" BuildInParallel="True"/>
+
+        <RemoveDir Directories="$(GenDir)" />
+    </Target>
+
+    <Target Name="Build">
+        <!--
+        order is very important here, for reasons I haven't investigated fully. If the Silverlight solution is built second, it is not
+        a valid Silverlight binary. It seems that building the standard solution results in some properties being set that then affect
+        the Silverlight build.
+        -->
+        <MSBuild Projects="$(SrcDir)\WpfConverters.sln" Properties="Configuration=SL40 $(Configuration)" Targets="Build" BuildInParallel="True"/>
+        <MSBuild Projects="$(SrcDir)\WpfConverters.sln" Properties="Configuration=FX35 $(Configuration)" Targets="Build" BuildInParallel="True"/>
+        <MSBuild Projects="$(SrcDir)\WpfConverters.sln" Properties="Configuration=FX40 $(Configuration)" Targets="Build" BuildInParallel="True"/>
+    </Target>
+
+    <Target Name="Test">
+        <MakeDir Directories="$(GenDir)\Tests" />
+        <xunit Assembly="$(SrcDir)\Kent.Boogaart.Converters.UnitTest\bin\FX40 $(Configuration)\Kent.Boogaart.Converters.UnitTest.dll" Xml="$(GenDir)\Tests\Kent.Boogaart.Converters.UnitTest.xml" />
+    </Target>
+
+    <Target Name="GenerateDocumentation">
+        <MakeDir Directories="$(GenDir)\Documentation" />
+
+        <!--
+        Build documentation. This relies on the following components being installed:
+         - Latest Sandcastle (http://sandcastle.codeplex.com/)
+         - Latest Sandcastle Help File Builder (http://shfb.codeplex.com/)
+         - Any relevant updates to styles from Sandcastle Styles (http://sandcastlestyles.codeplex.com/)
+        -->
+        <MSBuild Projects="$(DocDir)\WpfConverters.shfbproj"/>
+        <OnError ExecuteTargets="GenerateDocumentationFailed"/>
+    </Target>
+
+    <Target Name="GenerateDocumentationFailed">
+        <Error Text="Building documentation failed. Please ensure you have the following components installed: Latest Sandcastle (http://sandcastle.codeplex.com/), latest Sandcastle Help File Builder (http://shfb.codeplex.com/), any relevant updates to styles from Sandcastle Styles (http://sandcastlestyles.codeplex.com/). You may also need to log out and back in."/>
+    </Target>
+
+    <Target Name="CreateArchives">
+        <GetAssemblyIdentity AssemblyFiles="$(SrcDir)\Kent.Boogaart.Converters\bin\FX40 $(Configuration)\Kent.Boogaart.Converters.dll">
+            <Output TaskParameter="Assemblies" ItemName="AssemblyIdentity" />
+        </GetAssemblyIdentity>
+        <CreateProperty Condition="$(Version) == ''" Value="@(AssemblyIdentity -> '%(Version)')">
+            <Output TaskParameter="Value" PropertyName="Version" />
+        </CreateProperty>
+
+        <MakeDir Directories="$(GenDir)" Condition="!Exists('$(GenDir)')" />
+        <RemoveDir Directories="$(GenDir)\Temp" />
+        <MakeDir Directories="$(GenDir)\Temp" Condition="!Exists('$(GenDir)\Temp')" />
+
+        <!-- zip source -->
+        <CreateItem Include="..\..\**\*.*" Exclude="..\..\**\*.suo;..\..\**\*.csproj.user;..\..\**\*.gpState;..\..\**\bin\**;..\..\**\obj\**;..\..\**\.svn\**;..\..\Gen\**">
+            <Output ItemName="Source" TaskParameter="Include" />
+        </CreateItem>
+        <Zip ZipFileName="$(GenDir)\WpfConverters-$(Version)-src.zip" WorkingDirectory="..\..\" ZipLevel="9" Files="@(Source)" />
+
+        <!-- zip documentation -->
+        <CreateItem Include="$(GenDir)\Documentation\WPF Converters.chm">
+            <Output ItemName="DocFiles" TaskParameter="Include" />
+        </CreateItem>
+        <Zip ZipFileName="$(GenDir)\WpfConverters-$(Version)-doc.zip" WorkingDirectory="$(GenDir)\Documentation\" ZipLevel="9" Files="@(DocFiles)" />
+
+        <!-- zip binaries -->
+        <CreateItem Include="$(SrcDir)\Kent.Boogaart.Converters\bin\FX35 $(Configuration)\*.*">
+            <Output ItemName="FX35Files" TaskParameter="Include" />
+        </CreateItem>
+        <Copy SourceFiles="@(FX35Files)" DestinationFolder="$(GenDir)\Temp\FX35" />
+        <CreateItem Include="$(GenDir)\Temp\FX35\*.*">
+            <Output ItemName="FX35Binaries" TaskParameter="Include" />
+        </CreateItem>
+        <Zip ZipFileName="$(GenDir)\WpfConverters-$(Version)-FX35-bin.zip" WorkingDirectory="$(GenDir)\Temp\FX35\" ZipLevel="9" Files="@(FX35Binaries)" />
+
+        <CreateItem Include="$(SrcDir)\Kent.Boogaart.Converters\bin\FX40 $(Configuration)\*.*">
+            <Output ItemName="FX40Files" TaskParameter="Include" />
+        </CreateItem>
+        <Copy SourceFiles="@(FX40Files)" DestinationFolder="$(GenDir)\Temp\FX40" />
+        <CreateItem Include="$(GenDir)\Temp\FX40\*.*">
+            <Output ItemName="FX40Binaries" TaskParameter="Include" />
+        </CreateItem>
+        <Zip ZipFileName="$(GenDir)\WpfConverters-$(Version)-FX40-bin.zip" WorkingDirectory="$(GenDir)\Temp\FX40\" ZipLevel="9" Files="@(FX40Binaries)" />
+
+        <CreateItem Include="$(SrcDir)\Kent.Boogaart.Converters\bin\SL40 $(Configuration)\*.*" Exclude="$(SrcDir)\Kent.Boogaart.Converters\bin\SL40 $(Configuration)\Coverage.log">
+            <Output ItemName="SL40Files" TaskParameter="Include" />
+        </CreateItem>
+        <Copy SourceFiles="@(SL40Files)" DestinationFolder="$(GenDir)\Temp\SL40" />
+        <CreateItem Include="$(GenDir)\Temp\SL40\*.*">
+            <Output ItemName="SL40Binaries" TaskParameter="Include" />
+        </CreateItem>
+        <Zip ZipFileName="$(GenDir)\WpfConverters-$(Version)-SL40-bin.zip" WorkingDirectory="$(GenDir)\Temp\SL40\" ZipLevel="9" Files="@(SL40Binaries)" />
+    </Target>
+    
+    <Target Name="CreateNuGetPackages">
+        <MakeDir Directories="$(GenDir)\NuGet"/>
+
+        <GetAssemblyIdentity AssemblyFiles="$(SrcDir)\Kent.Boogaart.Converters\bin\FX40 $(Configuration)\Kent.Boogaart.Converters.dll">
+            <Output TaskParameter="Assemblies" ItemName="AssemblyIdentity" />
+        </GetAssemblyIdentity>
+        <CreateProperty Condition="$(Version) == ''" Value="@(AssemblyIdentity -> '%(Version)')">
+            <Output TaskParameter="Value" PropertyName="Version" />
+        </CreateProperty>
+
+        <ItemGroup>
+            <Tokens Include="Version">
+                <ReplacementValue>$(Version)</ReplacementValue>
+            </Tokens>
+        </ItemGroup>
+
+        <!-- generate nuspec file from the template -->
+        <TemplateFile Template="$(SrcDir)\WpfConverters.nuspec.template" OutputFileName="$(GenDir)\NuGet\Kent.Boogaart.Converters.nuspec" Tokens="@(Tokens)"/>
+
+        <!-- copy files into the appropriate locations -->
+        <CreateItem Include="$(SrcDir)\Kent.Boogaart.Converters\bin\FX35 $(Configuration)\*.*">
+            <Output ItemName="FX35_Files" TaskParameter="Include" />
+        </CreateItem>
+        <Copy SourceFiles="@(FX35_Files)" DestinationFolder="$(GenDir)\NuGet\lib\net35" />
+        <CreateItem Include="$(SrcDir)\Kent.Boogaart.Converters\bin\FX40 $(Configuration)\*.*">
+            <Output ItemName="FX40_Files" TaskParameter="Include" />
+        </CreateItem>
+        <Copy SourceFiles="@(FX40_Files)" DestinationFolder="$(GenDir)\NuGet\lib\net40" />
+        <CreateItem Include="$(SrcDir)\Kent.Boogaart.Converters\bin\SL40 $(Configuration)\*.*">
+            <Output ItemName="SL40_Files" TaskParameter="Include" />
+        </CreateItem>
+        <Copy SourceFiles="@(SL40_Files)" DestinationFolder="$(GenDir)\NuGet\lib\sl40" />
+        <CreateItem Include="$(SrcDir)\**\*.*" Exclude="$(SrcDir)\**\*.suo;$(SrcDir)\**\*.csproj.user;$(SrcDir)\**\*.gpState;$(SrcDir)\**\bin\**;$(SrcDir)\**\obj\**;$(SrcDir)\**\.svn\**">
+            <Output ItemName="Source_Files" TaskParameter="Include" />
+        </CreateItem>
+        <Copy SourceFiles="@(Source_Files)" DestinationFolder="$(GenDir)\NuGet\src\%(RecursiveDir)"/>
+
+        <!-- pack the nugets -->
+        <Exec Command='"$(LibDir)\NuGet\NuGet.exe" pack -symbols "$(GenDir)\NuGet\Kent.Boogaart.Converters.nuspec"' WorkingDirectory="$(GenDir)\NuGet"/>
+
+        <Message Text="NuGet packages created but not published. Type 'msbuild Build.targets /t:PublishNuGetPackages' to publish." Importance="High"/>
+    </Target>
+
+    <!--
+    this target does not execute automatically - it must be done explicitly
+    -->
+    <Target Name="PublishNuGetPackages">
+        <GetAssemblyIdentity AssemblyFiles="$(SrcDir)\Kent.Boogaart.Converters\bin\FX40 $(Configuration)\Kent.Boogaart.Converters.dll">
+            <Output TaskParameter="Assemblies" ItemName="AssemblyIdentity" />
+        </GetAssemblyIdentity>
+        <CreateProperty Condition="$(Version) == ''" Value="@(AssemblyIdentity -> '%(Version)')">
+            <Output TaskParameter="Value" PropertyName="Version" />
+        </CreateProperty>
+
+        <!-- symbols package is automatically pushed too -->
+        <Exec Command='"$(LibDir)\NuGet\NuGet.exe" push "$(GenDir)\NuGet\Kent.Boogaart.Converters.$(Version).nupkg"'/>
+    </Target>
+</Project>
