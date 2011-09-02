@@ -37,6 +37,8 @@ namespace Kent.Boogaart.Converters.UnitTest
             Assert.Equal(FallbackBehavior.ReturnOriginalValue, _mapConverter.FallbackBehavior);
             _mapConverter.FallbackBehavior = FallbackBehavior.ReturnUnsetValue;
             Assert.Equal(FallbackBehavior.ReturnUnsetValue, _mapConverter.FallbackBehavior);
+            _mapConverter.FallbackBehavior = FallbackBehavior.ReturnFallbackValue;
+            Assert.Equal(FallbackBehavior.ReturnFallbackValue, _mapConverter.FallbackBehavior);
         }
 
         [Fact]
@@ -61,6 +63,13 @@ namespace Kent.Boogaart.Converters.UnitTest
             Assert.Null(_mapConverter.Convert(null, null, null, null));
             Assert.Same("abc", _mapConverter.Convert("abc", null, null, null));
             Assert.Equal(123, _mapConverter.Convert(123, null, null, null));
+
+            _mapConverter.FallbackBehavior = FallbackBehavior.ReturnFallbackValue;
+            _mapConverter.FallbackValue = "my fallback value";
+
+            Assert.Equal("my fallback value", _mapConverter.Convert(null, null, null, null));
+            Assert.Equal("my fallback value", _mapConverter.Convert("abc", null, null, null));
+            Assert.Equal("my fallback value", _mapConverter.Convert(123, null, null, null));
         }
 
         [Fact]
@@ -101,6 +110,29 @@ namespace Kent.Boogaart.Converters.UnitTest
             Assert.Same("from", _mapConverter.ConvertBack("to", null, null, null));
             Assert.Null(_mapConverter.ConvertBack("NULL", null, null, null));
             Assert.Equal(123, _mapConverter.ConvertBack(123.5d, null, null, null));
+        }
+
+        [Fact]
+        public void ConvertBack_ShouldHonourFallbackBehaviorIfConversionFails()
+        {
+            _mapConverter.Mappings.Add(new Mapping("from", "to"));
+
+            Assert.Same(DependencyProperty.UnsetValue, _mapConverter.ConvertBack(null, null, null, null));
+            Assert.Same(DependencyProperty.UnsetValue, _mapConverter.ConvertBack("abc", null, null, null));
+            Assert.Same(DependencyProperty.UnsetValue, _mapConverter.ConvertBack(123, null, null, null));
+
+            _mapConverter.FallbackBehavior = FallbackBehavior.ReturnOriginalValue;
+
+            Assert.Null(_mapConverter.ConvertBack(null, null, null, null));
+            Assert.Same("abc", _mapConverter.ConvertBack("abc", null, null, null));
+            Assert.Equal(123, _mapConverter.ConvertBack(123, null, null, null));
+
+            _mapConverter.FallbackBehavior = FallbackBehavior.ReturnFallbackValue;
+            _mapConverter.FallbackValue = "my fallback value";
+
+            Assert.Equal("my fallback value", _mapConverter.ConvertBack(null, null, null, null));
+            Assert.Equal("my fallback value", _mapConverter.ConvertBack("abc", null, null, null));
+            Assert.Equal("my fallback value", _mapConverter.ConvertBack(123, null, null, null));
         }
     }
 }

@@ -79,7 +79,7 @@
         </exception>
     </exceptionGroup>
 
-    <exceptionGroup type="Kent.Boogaart.Converters.Expressions.Nodes.ConditionalNode">
+    <exceptionGroup type="Kent.Boogaart.Converters.Expressions.Nodes.ConditionalBinaryNode">
         <exception key="OperandsNotBoolean" type="Kent.Boogaart.Converters.Expressions.ParseException, Kent.Boogaart.Converters">
             Operator '{0}' cannot be applied to operands of type '{1}' and '{2}'.
         </exception>
@@ -119,5 +119,11 @@
         <exception key="NoFormatString" type="System.InvalidOperationException">
             No format string has been provided.
         </exception>
-    </exceptionGroup>	
+    </exceptionGroup>
+
+    <exceptionGroup type="Kent.Boogaart.Converters.Expressions.Nodes.TernaryConditionalNode">
+        <exception key="FirstNodeMustBeBoolean" type="Kent.Boogaart.Converters.Expressions.ParseException, Kent.Boogaart.Converters">
+            Operator '{0}' requires that the first node be of type Boolean, but it is of type '{1}'.
+        </exception>
+    </exceptionGroup>
 </exceptionHelper>

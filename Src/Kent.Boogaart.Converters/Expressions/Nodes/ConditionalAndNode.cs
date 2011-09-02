@@ -1,7 +1,7 @@
 namespace Kent.Boogaart.Converters.Expressions.Nodes
 {
 	//a node to a conditional and between the left and right nodes
-	internal sealed class ConditionalAndNode : ConditionalNode
+	internal sealed class ConditionalAndNode : ConditionalBinaryNode
 	{
 		protected override string OperatorSymbols
 		{

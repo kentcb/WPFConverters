@@ -99,7 +99,7 @@
         </CreateItem>
         <Zip ZipFileName="$(GenDir)\WpfConverters-$(Version)-FX40-bin.zip" WorkingDirectory="$(GenDir)\Temp\FX40\" ZipLevel="9" Files="@(FX40Binaries)" />
 
-        <CreateItem Include="$(SrcDir)\Kent.Boogaart.Converters\bin\SL40 $(Configuration)\*.*" Exclude="$(SrcDir)\Kent.Boogaart.Converters\bin\SL40 $(Configuration)\Coverage.log">
+        <CreateItem Include="$(SrcDir)\Kent.Boogaart.Converters\bin\SL40 $(Configuration)\*.*" Exclude="$(SrcDir)\Kent.Boogaart.Converters\bin\SL40 $(Configuration)\Coverage.log;$(SrcDir)\Kent.Boogaart.Converters\bin\SL40 $(Configuration)\System.*">
             <Output ItemName="SL40Files" TaskParameter="Include" />
         </CreateItem>
         <Copy SourceFiles="@(SL40Files)" DestinationFolder="$(GenDir)\Temp\SL40" />
@@ -129,15 +129,15 @@
         <TemplateFile Template="$(SrcDir)\WpfConverters.nuspec.template" OutputFileName="$(GenDir)\NuGet\Kent.Boogaart.Converters.nuspec" Tokens="@(Tokens)"/>
 
         <!-- copy files into the appropriate locations -->
-        <CreateItem Include="$(SrcDir)\Kent.Boogaart.Converters\bin\FX35 $(Configuration)\*.*">
+        <CreateItem Include="$(SrcDir)\Kent.Boogaart.Converters\bin\FX35 $(Configuration)\Kent.Boogaart.Converters.*">
             <Output ItemName="FX35_Files" TaskParameter="Include" />
         </CreateItem>
         <Copy SourceFiles="@(FX35_Files)" DestinationFolder="$(GenDir)\NuGet\lib\net35" />
-        <CreateItem Include="$(SrcDir)\Kent.Boogaart.Converters\bin\FX40 $(Configuration)\*.*">
+        <CreateItem Include="$(SrcDir)\Kent.Boogaart.Converters\bin\FX40 $(Configuration)\Kent.Boogaart.Converters.*">
             <Output ItemName="FX40_Files" TaskParameter="Include" />
         </CreateItem>
         <Copy SourceFiles="@(FX40_Files)" DestinationFolder="$(GenDir)\NuGet\lib\net40" />
-        <CreateItem Include="$(SrcDir)\Kent.Boogaart.Converters\bin\SL40 $(Configuration)\*.*">
+        <CreateItem Include="$(SrcDir)\Kent.Boogaart.Converters\bin\SL40 $(Configuration)\Kent.Boogaart.Converters.*">
             <Output ItemName="SL40_Files" TaskParameter="Include" />
         </CreateItem>
         <Copy SourceFiles="@(SL40_Files)" DestinationFolder="$(GenDir)\NuGet\lib\sl40" />

@@ -161,7 +161,7 @@
     <Compile Include="Expressions\Nodes\AddNode.cs" />
     <Compile Include="Expressions\Nodes\CastNode.cs" />
     <Compile Include="Expressions\Nodes\ConditionalAndNode.cs" />
-    <Compile Include="Expressions\Nodes\ConditionalNode.cs" />
+    <Compile Include="Expressions\Nodes\ConditionalBinaryNode.cs" />
     <Compile Include="Expressions\Nodes\ConditionalOrNode.cs" />
     <Compile Include="Expressions\Nodes\EqualityNode.cs" />
     <Compile Include="Expressions\Nodes\GreaterThanNode.cs" />
@@ -183,7 +183,10 @@
     <Compile Include="Expressions\Nodes\NodeEvaluationContext.cs" />
     <Compile Include="Expressions\Nodes\NodeValueType.cs" />
     <Compile Include="Expressions\Nodes\NotNode.cs" />
+    <Compile Include="Expressions\Nodes\NullCoalescingNode.cs" />
     <Compile Include="Expressions\Nodes\NullNode.cs" />
+    <Compile Include="Expressions\Nodes\TernaryConditionalNode.cs" />
+    <Compile Include="Expressions\Nodes\TernaryNode.cs" />
     <Compile Include="Expressions\Nodes\WideningBinaryNode.cs" />
     <Compile Include="Expressions\Nodes\ShiftLeftNode.cs" />
     <Compile Include="Expressions\Nodes\ShiftNode.cs" />

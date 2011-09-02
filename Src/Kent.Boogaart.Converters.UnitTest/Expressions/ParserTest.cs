@@ -11,6 +11,40 @@ namespace Kent.Boogaart.Converters.UnitTest.Expressions
         private Parser _parser;
 
         [Fact]
+        public void ParseExpression_NullCoalescingSimple()
+        {
+            CreateParser(@"null ?? ""foo""");
+            AssertEvaluation("foo");
+            CreateParser(@"""bar"" ?? ""foo""");
+            AssertEvaluation("bar");
+        }
+
+        [Fact]
+        public void ParseExpression_NullCoalescingComplex()
+        {
+            CreateParser(@"null ?? null ?? null ?? null ?? null ?? ""finally""");
+            AssertEvaluation("finally");
+            CreateParser(@"null ?? ""foo"" ?? null");
+            AssertEvaluation("foo");
+        }
+
+        [Fact]
+        public void ParseExpression_TernaryConditionalSimple()
+        {
+            CreateParser(@"true ? ""yes"" : ""no""");
+            AssertEvaluation("yes");
+            CreateParser(@"false ? ""yes"" : ""no""");
+            AssertEvaluation("no");
+        }
+
+        [Fact]
+        public void ParseExpression_TernaryConditionalComplex()
+        {
+            CreateParser(@"(1 == 1 + 1) ? ""madness"" : (1 == 2 - 1) ? ""sanity"" : ""madness""");
+            AssertEvaluation("sanity");
+        }
+
+        [Fact]
         public void ParseExpression_ConditionalAnd_Simple()
         {
             CreateParser("true && true");
@@ -306,6 +340,12 @@ namespace Kent.Boogaart.Converters.UnitTest.Expressions
             CreateParser("~{0} * -{1} / {2}");
             AssertEvaluation(177m, new NodeEvaluationContext(new object[] { 235, 3m, 4 }));
             AssertEvaluation(-279, new NodeEvaluationContext(new object[] { -32, 18, 2 }));
+
+            CreateParser(@"{0} > 100 ? ({1} ?? {2} ?? ""default"") : ""small number""");
+            AssertEvaluation("small number", new NodeEvaluationContext(new object[] { 99, "first", "second" }));
+            AssertEvaluation("first", new NodeEvaluationContext(new object[] { 101, "first", "second" }));
+            AssertEvaluation("second", new NodeEvaluationContext(new object[] { 101, null, "second" }));
+            AssertEvaluation("default", new NodeEvaluationContext(new object[] { 101, null, null }));
         }
 
         #region Supporting Methods
