@@ -3,6 +3,7 @@ using Kent.Boogaart.Converters.Expressions;
 using Kent.Boogaart.Converters.Expressions.Nodes;
 using Moq;
 using Xunit;
+using System;
 
 namespace Kent.Boogaart.Converters.UnitTest.Expressions
 {
@@ -346,6 +347,18 @@ namespace Kent.Boogaart.Converters.UnitTest.Expressions
             AssertEvaluation("first", new NodeEvaluationContext(new object[] { 101, "first", "second" }));
             AssertEvaluation("second", new NodeEvaluationContext(new object[] { 101, null, "second" }));
             AssertEvaluation("default", new NodeEvaluationContext(new object[] { 101, null, null }));
+
+            CreateParser(@"{0} == {1}");
+            AssertEvaluation(true, new NodeEvaluationContext(new object[] { ConsoleKey.A, ConsoleKey.A }));
+            AssertEvaluation(true, new NodeEvaluationContext(new object[] { ConsoleKey.A, (int)ConsoleKey.A }));
+            AssertEvaluation(false, new NodeEvaluationContext(new object[] { ConsoleKey.A, ConsoleKey.B }));
+            AssertEvaluation(true, new NodeEvaluationContext(new object[] { this, this }));
+            AssertEvaluation(false, new NodeEvaluationContext(new object[] { this, this._expression }));
+
+            CreateParser(@"{0} != null && {1} == {2}");
+            AssertEvaluation(true, new NodeEvaluationContext(new object[] { this, ConsoleKey.A, ConsoleKey.A }));
+            AssertEvaluation(false, new NodeEvaluationContext(new object[] { null, ConsoleKey.A, ConsoleKey.A }));
+            AssertEvaluation(false, new NodeEvaluationContext(new object[] { null, ConsoleKey.A, ConsoleKey.B }));
         }
 
         #region Supporting Methods

@@ -13,7 +13,7 @@ namespace Kent.Boogaart.Converters.UnitTest.Expressions.Nodes
         {
             _shiftNode = new MockShiftNode(new ConstantNode<int>(1), new ConstantNode<short>(1));
             var ex = Assert.Throws<ParseException>(() => _shiftNode.Evaluate(NodeEvaluationContext.Empty));
-            Assert.Equal("Operator 'op' cannot be applied to operands of type 'Int32' and 'Int16'.", ex.Message);
+            Assert.Equal("Operator 'op' cannot be applied to operands of type 'Int32' and 'Int16' because the left node is non-numerical or because the right node isn't an Int32.", ex.Message);
         }
 
         [Fact]

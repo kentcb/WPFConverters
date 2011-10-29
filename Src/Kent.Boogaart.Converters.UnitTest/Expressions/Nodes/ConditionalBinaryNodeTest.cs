@@ -13,7 +13,7 @@ namespace Kent.Boogaart.Converters.UnitTest.Expressions.Nodes
         {
             _conditionalBinaryNode = new MockConditionalBinaryNode(new ConstantNode<bool>(false), new ConstantNode<int>(0));
             var ex = Assert.Throws<ParseException>(() => _conditionalBinaryNode.Evaluate(NodeEvaluationContext.Empty));
-            Assert.Equal("Operator 'op' cannot be applied to operands of type 'Boolean' and 'Int32'.", ex.Message);
+            Assert.Equal("Operator 'op' cannot be applied to operands of type 'Boolean' and 'Int32' because at least one is non-boolean.", ex.Message);
         }
 
         [Fact]
@@ -21,7 +21,7 @@ namespace Kent.Boogaart.Converters.UnitTest.Expressions.Nodes
         {
             _conditionalBinaryNode = new MockConditionalBinaryNode(new ConstantNode<int>(1), new ConstantNode<bool>(false));
             var ex = Assert.Throws<ParseException>(() => _conditionalBinaryNode.Evaluate(NodeEvaluationContext.Empty));
-            Assert.Equal("Operator 'op' cannot be applied to operands of type 'Int32' and 'Boolean'.", ex.Message);
+            Assert.Equal("Operator 'op' cannot be applied to operands of type 'Int32' and 'Boolean' because at least one is non-boolean.", ex.Message);
         }
 
         [Fact]

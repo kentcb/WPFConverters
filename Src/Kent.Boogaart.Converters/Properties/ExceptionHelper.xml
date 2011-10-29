@@ -81,13 +81,13 @@
 
     <exceptionGroup type="Kent.Boogaart.Converters.Expressions.Nodes.ConditionalBinaryNode">
         <exception key="OperandsNotBoolean" type="Kent.Boogaart.Converters.Expressions.ParseException, Kent.Boogaart.Converters">
-            Operator '{0}' cannot be applied to operands of type '{1}' and '{2}'.
+            Operator '{0}' cannot be applied to operands of type '{1}' and '{2}' because at least one is non-boolean.
         </exception>
     </exceptionGroup>
 
     <exceptionGroup type="Kent.Boogaart.Converters.Expressions.Nodes.ShiftNode">
         <exception key="NodeValuesNotSupportedTypes" type="Kent.Boogaart.Converters.Expressions.ParseException, Kent.Boogaart.Converters">
-            Operator '{0}' cannot be applied to operands of type '{1}' and '{2}'.
+            Operator '{0}' cannot be applied to operands of type '{1}' and '{2}' because the left node is non-numerical or because the right node isn't an Int32.
         </exception>
     </exceptionGroup>
 

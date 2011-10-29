@@ -53,6 +53,10 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
                     return DoDouble(convertibleLeftNodeValue.ToDouble(null), convertibleRightNodeValue.ToDouble(null));
                 case NodeValueType.Decimal:
                     return DoDecimal(convertibleLeftNodeValue.ToDecimal(null), convertibleRightNodeValue.ToDecimal(null));
+                case NodeValueType.ValueType:
+                    return DoValueType(leftNodeValue, rightNodeValue);
+                case NodeValueType.ReferenceType:
+                    return DoReferenceType(leftNodeValue, rightNodeValue);
             }
 
             Debug.Assert(false);
@@ -110,6 +114,18 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
         }
 
         protected virtual object DoDecimal(decimal value1, decimal value2)
+        {
+            Debug.Assert(false);
+            return null;
+        }
+
+        protected virtual object DoValueType(object value1, object value2)
+        {
+            Debug.Assert(false);
+            return null;
+        }
+
+        protected virtual object DoReferenceType(object value1, object value2)
         {
             Debug.Assert(false);
             return null;
