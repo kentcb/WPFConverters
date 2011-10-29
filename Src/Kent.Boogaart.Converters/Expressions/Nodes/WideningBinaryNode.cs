@@ -21,9 +21,6 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
             NodeValueType leftNodeValueType = GetNodeValueType(leftNodeValue);
             NodeValueType rightNodeValueType = GetNodeValueType(rightNodeValue);
 
-            //base class determines whether the operation is supported
-            exceptionHelper.ResolveAndThrowIf(!IsSupported(leftNodeValueType, rightNodeValueType), "OperatorNotSupportedWithOperands", OperatorSymbols, leftNodeValueType, rightNodeValueType);
-
             //determine the type to which we will need to widen any narrower value
             NodeValueType maxNodeValueType = (NodeValueType) Math.Max((int) leftNodeValueType, (int) rightNodeValueType);
 
@@ -33,102 +30,114 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
             Debug.Assert(convertibleLeftNodeValue != null || maxNodeValueType == NodeValueType.String);
             Debug.Assert(convertibleRightNodeValue != null || maxNodeValueType == NodeValueType.String);
 
+            var succeeded = false;
+            object result = null;
+
             switch (maxNodeValueType)
             {
                 case NodeValueType.String:
-                    return DoString(convertibleLeftNodeValue == null ? null : convertibleLeftNodeValue.ToString(null), convertibleRightNodeValue == null ? null : convertibleRightNodeValue.ToString(null));
+                    succeeded = DoString(convertibleLeftNodeValue == null ? null : convertibleLeftNodeValue.ToString(null), convertibleRightNodeValue == null ? null : convertibleRightNodeValue.ToString(null), out result);
+                    break;
                 case NodeValueType.Boolean:
-                    return DoBoolean(convertibleLeftNodeValue.ToBoolean(null), convertibleRightNodeValue.ToBoolean(null));
+                    succeeded = DoBoolean(convertibleLeftNodeValue.ToBoolean(null), convertibleRightNodeValue.ToBoolean(null), out result);
+                    break;
                 case NodeValueType.Byte:
-                    return DoByte(convertibleLeftNodeValue.ToByte(null), convertibleRightNodeValue.ToByte(null));
+                    succeeded = DoByte(convertibleLeftNodeValue.ToByte(null), convertibleRightNodeValue.ToByte(null), out result);
+                    break;
                 case NodeValueType.Int16:
-                    return DoInt16(convertibleLeftNodeValue.ToInt16(null), convertibleRightNodeValue.ToInt16(null));
+                    succeeded = DoInt16(convertibleLeftNodeValue.ToInt16(null), convertibleRightNodeValue.ToInt16(null), out result);
+                    break;
                 case NodeValueType.Int32:
-                    return DoInt32(convertibleLeftNodeValue.ToInt32(null), convertibleRightNodeValue.ToInt32(null));
+                    succeeded = DoInt32(convertibleLeftNodeValue.ToInt32(null), convertibleRightNodeValue.ToInt32(null), out result);
+                    break;
                 case NodeValueType.Int64:
-                    return DoInt64(convertibleLeftNodeValue.ToInt64(null), convertibleRightNodeValue.ToInt64(null));
+                    succeeded = DoInt64(convertibleLeftNodeValue.ToInt64(null), convertibleRightNodeValue.ToInt64(null), out result);
+                    break;
                 case NodeValueType.Single:
-                    return DoSingle(convertibleLeftNodeValue.ToSingle(null), convertibleRightNodeValue.ToSingle(null));
+                    succeeded = DoSingle(convertibleLeftNodeValue.ToSingle(null), convertibleRightNodeValue.ToSingle(null), out result);
+                    break;
                 case NodeValueType.Double:
-                    return DoDouble(convertibleLeftNodeValue.ToDouble(null), convertibleRightNodeValue.ToDouble(null));
+                    succeeded = DoDouble(convertibleLeftNodeValue.ToDouble(null), convertibleRightNodeValue.ToDouble(null), out result);
+                    break;
                 case NodeValueType.Decimal:
-                    return DoDecimal(convertibleLeftNodeValue.ToDecimal(null), convertibleRightNodeValue.ToDecimal(null));
+                    succeeded = DoDecimal(convertibleLeftNodeValue.ToDecimal(null), convertibleRightNodeValue.ToDecimal(null), out result);
+                    break;
                 case NodeValueType.ValueType:
-                    return DoValueType(leftNodeValue, rightNodeValue);
+                    succeeded = DoValueType(leftNodeValue, rightNodeValue, out result);
+                    break;
                 case NodeValueType.ReferenceType:
-                    return DoReferenceType(leftNodeValue, rightNodeValue);
+                    succeeded = DoReferenceType(leftNodeValue, rightNodeValue, out result);
+                    break;
             }
 
-            Debug.Assert(false);
-            return null;
+            exceptionHelper.ResolveAndThrowIf(!succeeded, "OperatorNotSupportedWithOperands", OperatorSymbols, leftNodeValueType, rightNodeValueType);
+            return result;
         }
 
-        protected abstract bool IsSupported(NodeValueType leftNodeValueType, NodeValueType rightNodeValueType);
-
-        protected virtual object DoString(string value1, string value2)
+        protected virtual bool DoString(string value1, string value2, out object result)
         {
-            Debug.Assert(false);
-            return null;
+            result = null;
+            return false;
         }
 
-        protected virtual object DoBoolean(bool value1, bool value2)
+        protected virtual bool DoBoolean(bool value1, bool value2, out object result)
         {
-            Debug.Assert(false);
-            return null;
+            result = null;
+            return false;
         }
 
-        protected virtual object DoByte(byte value1, byte value2)
+        protected virtual bool DoByte(byte value1, byte value2, out object result)
         {
-            Debug.Assert(false);
-            return null;
+            result = null;
+            return false;
         }
 
-        protected virtual object DoInt16(short value1, short value2)
+        protected virtual bool DoInt16(short value1, short value2, out object result)
         {
-            Debug.Assert(false);
-            return null;
+            result = null;
+            return false;
         }
 
-        protected virtual object DoInt32(int value1, int value2)
+        protected virtual bool DoInt32(int value1, int value2, out object result)
         {
-            Debug.Assert(false);
-            return null;
+            result = null;
+            return false;
         }
 
-        protected virtual object DoInt64(long value1, long value2)
+        protected virtual bool DoInt64(long value1, long value2, out object result)
         {
-            Debug.Assert(false);
-            return null;
+            result = null;
+            return false;
         }
 
-        protected virtual object DoSingle(float value1, float value2)
+        protected virtual bool DoSingle(float value1, float value2, out object result)
         {
-            Debug.Assert(false);
-            return null;
+            result = null;
+            return false;
         }
 
-        protected virtual object DoDouble(double value1, double value2)
+        protected virtual bool DoDouble(double value1, double value2, out object result)
         {
-            Debug.Assert(false);
-            return null;
+            result = null;
+            return false;
         }
 
-        protected virtual object DoDecimal(decimal value1, decimal value2)
+        protected virtual bool DoDecimal(decimal value1, decimal value2, out object result)
         {
-            Debug.Assert(false);
-            return null;
+            result = null;
+            return false;
         }
 
-        protected virtual object DoValueType(object value1, object value2)
+        protected virtual bool DoValueType(object value1, object value2, out object result)
         {
-            Debug.Assert(false);
-            return null;
+            result = null;
+            return false;
         }
 
-        protected virtual object DoReferenceType(object value1, object value2)
+        protected virtual bool DoReferenceType(object value1, object value2, out object result)
         {
-            Debug.Assert(false);
-            return null;
+            result = null;
+            return false;
         }
     }
 }

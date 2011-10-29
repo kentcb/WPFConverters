@@ -16,64 +16,70 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
         {
         }
 
-        protected override bool IsSupported(NodeValueType leftNodeValueType, NodeValueType rightNodeValueType)
+        protected override bool DoString(string value1, string value2, out object result)
         {
+            result = value1 == value2;
             return true;
         }
 
-        protected override object DoString(string value1, string value2)
+        protected override bool DoBoolean(bool value1, bool value2, out object result)
         {
-            return value1 == value2;
+            result = value1 == value2;
+            return true;
         }
 
-        protected override object DoBoolean(bool value1, bool value2)
+        protected override bool DoByte(byte value1, byte value2, out object result)
         {
-            return value1 == value2;
+            result = value1 == value2;
+            return true;
         }
 
-        protected override object DoByte(byte value1, byte value2)
+        protected override bool DoInt16(short value1, short value2, out object result)
         {
-            return value1 == value2;
+            result = value1 == value2;
+            return true;
         }
 
-        protected override object DoInt16(short value1, short value2)
+        protected override bool DoInt32(int value1, int value2, out object result)
         {
-            return value1 == value2;
+            result = value1 == value2;
+            return true;
         }
 
-        protected override object DoInt32(int value1, int value2)
+        protected override bool DoInt64(long value1, long value2, out object result)
         {
-            return value1 == value2;
+            result = value1 == value2;
+            return true;
         }
 
-        protected override object DoInt64(long value1, long value2)
+        protected override bool DoSingle(float value1, float value2, out object result)
         {
-            return value1 == value2;
+            result = value1 == value2;
+            return true;
         }
 
-        protected override object DoSingle(float value1, float value2)
+        protected override bool DoDouble(double value1, double value2, out object result)
         {
-            return value1 == value2;
+            result = value1 == value2;
+            return true;
         }
 
-        protected override object DoDouble(double value1, double value2)
+        protected override bool DoDecimal(decimal value1, decimal value2, out object result)
         {
-            return value1 == value2;
+            result = value1 == value2;
+            return true;
         }
 
-        protected override object DoDecimal(decimal value1, decimal value2)
+        protected override bool DoValueType(object value1, object value2, out object result)
         {
-            return value1 == value2;
+            result = object.Equals(value1, value2);
+            return true;
         }
 
-        protected override object DoValueType(object value1, object value2)
+        protected override bool DoReferenceType(object value1, object value2, out object result)
         {
-            return object.Equals(value1, value2);
-        }
-
-        protected override object DoReferenceType(object value1, object value2)
-        {
-            return object.ReferenceEquals(value1, value2);
+            result = object.ReferenceEquals(value1, value2);
+            return true;
         }
     }
 }

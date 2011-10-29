@@ -1,60 +1,61 @@
 namespace Kent.Boogaart.Converters.Expressions.Nodes
 {
-	//a node to divide the left node by the right node
-	internal sealed class DivideNode : WideningBinaryNode
-	{
-		protected override string OperatorSymbols
-		{
-			get
-			{
-				return "/";
-			}
-		}
+    //a node to divide the left node by the right node
+    internal sealed class DivideNode : WideningBinaryNode
+    {
+        protected override string OperatorSymbols
+        {
+            get
+            {
+                return "/";
+            }
+        }
 
-		public DivideNode(Node leftNode, Node rightNode)
-			: base(leftNode, rightNode)
-		{
-		}
+        public DivideNode(Node leftNode, Node rightNode)
+            : base(leftNode, rightNode)
+        {
+        }
 
-		protected override bool IsSupported(NodeValueType leftNodeValueType, NodeValueType rightNodeValueType)
-		{
-			return IsNumericalNodeValueType(leftNodeValueType) && Node.IsNumericalNodeValueType(rightNodeValueType);
-		}
+        protected override bool DoByte(byte value1, byte value2, out object result)
+        {
+            result = value1 / value2;
+            return true;
+        }
 
-		protected override object DoByte(byte value1, byte value2)
-		{
-			return value1 / value2;
-		}
+        protected override bool DoInt16(short value1, short value2, out object result)
+        {
+            result = value1 / value2;
+            return true;
+        }
 
-		protected override object DoInt16(short value1, short value2)
-		{
-			return value1 / value2;
-		}
+        protected override bool DoInt32(int value1, int value2, out object result)
+        {
+            result = value1 / value2;
+            return true;
+        }
 
-		protected override object DoInt32(int value1, int value2)
-		{
-			return value1 / value2;
-		}
+        protected override bool DoInt64(long value1, long value2, out object result)
+        {
+            result = value1 / value2;
+            return true;
+        }
 
-		protected override object DoInt64(long value1, long value2)
-		{
-			return value1 / value2;
-		}
+        protected override bool DoSingle(float value1, float value2, out object result)
+        {
+            result = value1 / value2;
+            return true;
+        }
 
-		protected override object DoSingle(float value1, float value2)
-		{
-			return value1 / value2;
-		}
+        protected override bool DoDouble(double value1, double value2, out object result)
+        {
+            result = value1 / value2;
+            return true;
+        }
 
-		protected override object DoDouble(double value1, double value2)
-		{
-			return value1 / value2;
-		}
-
-		protected override object DoDecimal(decimal value1, decimal value2)
-		{
-			return value1 / value2;
-		}
-	}
-
+        protected override bool DoDecimal(decimal value1, decimal value2, out object result)
+        {
+            result = value1 / value2;
+            return true;
+        }
+    }
 }

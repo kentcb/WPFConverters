@@ -1,6 +1,7 @@
-using Xunit;
+using System;
 using Kent.Boogaart.Converters.Expressions;
 using Kent.Boogaart.Converters.Expressions.Nodes;
+using Xunit;
 
 namespace Kent.Boogaart.Converters.UnitTest.Expressions.Nodes
 {
@@ -97,6 +98,22 @@ namespace Kent.Boogaart.Converters.UnitTest.Expressions.Nodes
             Assert.True(_wideningBinaryNode.DoDecimalCalled);
         }
 
+        [Fact]
+        public void Evaluate_ReferenceType_ShouldCallDoReferenceType()
+        {
+            _wideningBinaryNode = new MockWideningBinaryNode(new ConstantNode<object>(null), new ConstantNode<object>(null));
+            _wideningBinaryNode.Evaluate(NodeEvaluationContext.Empty);
+            Assert.True(_wideningBinaryNode.DoReferenceTypeCalled);
+        }
+
+        [Fact]
+        public void Evaluate_ValueType_ShouldCallDoValueType()
+        {
+            _wideningBinaryNode = new MockWideningBinaryNode(new ConstantNode<DateTime>(DateTime.UtcNow), new ConstantNode<DateTime>(DateTime.UtcNow));
+            _wideningBinaryNode.Evaluate(NodeEvaluationContext.Empty);
+            Assert.True(_wideningBinaryNode.DoValueTypeCalled);
+        }
+
         #region Supporting Types
 
         //cannot mock because WideningBinaryNode is internal
@@ -112,6 +129,8 @@ namespace Kent.Boogaart.Converters.UnitTest.Expressions.Nodes
             public bool DoSingleCalled;
             public bool DoDoubleCalled;
             public bool DoDecimalCalled;
+            public bool DoReferenceTypeCalled;
+            public bool DoValueTypeCalled;
 
             protected override string OperatorSymbols
             {
@@ -126,63 +145,81 @@ namespace Kent.Boogaart.Converters.UnitTest.Expressions.Nodes
             {
             }
 
-            protected override bool IsSupported(NodeValueType leftNodeValueType, NodeValueType rightNodeValueType)
+            protected override bool DoBoolean(bool value1, bool value2, out object result)
             {
+                DoBooleanCalled = true;
+                result = null;
                 return IsSupportedValue;
             }
 
-            protected override object DoBoolean(bool value1, bool value2)
-            {
-                DoBooleanCalled = true;
-                return false;
-            }
-
-            protected override object DoString(string value1, string value2)
+            protected override bool DoString(string value1, string value2, out object result)
             {
                 DoStringCalled = true;
-                return "";
+                result = null;
+                return IsSupportedValue;
             }
 
-            protected override object DoByte(byte value1, byte value2)
+            protected override bool DoByte(byte value1, byte value2, out object result)
             {
                 DoByteCalled = true;
-                return 0;
+                result = null;
+                return IsSupportedValue;
             }
 
-            protected override object DoInt16(short value1, short value2)
+            protected override bool DoInt16(short value1, short value2, out object result)
             {
                 DoInt16Called = true;
-                return 0;
+                result = null;
+                return IsSupportedValue;
             }
 
-            protected override object DoInt32(int value1, int value2)
+            protected override bool DoInt32(int value1, int value2, out object result)
             {
                 DoInt32Called = true;
-                return 0;
+                result = null;
+                return IsSupportedValue;
             }
 
-            protected override object DoInt64(long value1, long value2)
+            protected override bool DoInt64(long value1, long value2, out object result)
             {
                 DoInt64Called = true;
-                return 0;
+                result = null;
+                return IsSupportedValue;
             }
 
-            protected override object DoSingle(float value1, float value2)
+            protected override bool DoSingle(float value1, float value2, out object result)
             {
                 DoSingleCalled = true;
-                return 0;
+                result = null;
+                return IsSupportedValue;
             }
 
-            protected override object DoDouble(double value1, double value2)
+            protected override bool DoDouble(double value1, double value2, out object result)
             {
                 DoDoubleCalled = true;
-                return 0;
+                result = null;
+                return IsSupportedValue;
             }
 
-            protected override object DoDecimal(decimal value1, decimal value2)
+            protected override bool DoDecimal(decimal value1, decimal value2, out object result)
             {
                 DoDecimalCalled = true;
-                return 0;
+                result = null;
+                return IsSupportedValue;
+            }
+
+            protected override bool DoReferenceType(object value1, object value2, out object result)
+            {
+                DoReferenceTypeCalled = true;
+                result = null;
+                return IsSupportedValue;
+            }
+
+            protected override bool DoValueType(object value1, object value2, out object result)
+            {
+                DoValueTypeCalled = true;
+                result = null;
+                return IsSupportedValue;
             }
         }
 

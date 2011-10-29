@@ -193,6 +193,7 @@
     <Compile Include="Expressions\Nodes\TernaryConditionalNodeTest.cs" />
     <Compile Include="Expressions\Nodes\NullCoalescingNodeTest.cs" />
     <Compile Include="Expressions\Nodes\TernaryNodeTest.cs" />
+    <Compile Include="Expressions\Nodes\WideningBinaryNodeTestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

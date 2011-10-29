@@ -16,35 +16,34 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
 		{
 		}
 
-		protected override bool IsSupported(NodeValueType leftNodeValueType, NodeValueType rightNodeValueType)
+		protected override bool DoBoolean(bool value1, bool value2, out object result)
 		{
-			//both boolean or both integral
-			return (leftNodeValueType == NodeValueType.Boolean && rightNodeValueType == NodeValueType.Boolean) || (IsIntegralNodeValueType(leftNodeValueType) && IsIntegralNodeValueType(rightNodeValueType));
+			result = value1 ^ value2;
+            return true;
 		}
 
-		protected override object DoBoolean(bool value1, bool value2)
+		protected override bool DoByte(byte value1, byte value2, out object result)
 		{
-			return value1 ^ value2;
-		}
+            result = value1 ^ value2;
+            return true;
+        }
 
-		protected override object DoByte(byte value1, byte value2)
+		protected override bool DoInt16(short value1, short value2, out object result)
 		{
-			return value1 ^ value2;
-		}
+            result = value1 ^ value2;
+            return true;
+        }
 
-		protected override object DoInt16(short value1, short value2)
+		protected override bool DoInt32(int value1, int value2, out object result)
 		{
-			return value1 ^ value2;
-		}
+            result = value1 ^ value2;
+            return true;
+        }
 
-		protected override object DoInt32(int value1, int value2)
+		protected override bool DoInt64(long value1, long value2, out object result)
 		{
-			return value1 ^ value2;
-		}
-
-		protected override object DoInt64(long value1, long value2)
-		{
-			return value1 ^ value2;
-		}
+            result = value1 ^ value2;
+            return true;
+        }
 	}
 }
