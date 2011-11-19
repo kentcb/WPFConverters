@@ -5,149 +5,140 @@ using Kent.Boogaart.HelperTrinity;
 namespace Kent.Boogaart.Converters.Markup
 {
 #if !SILVERLIGHT
-	/// <summary>
-	/// Implements a markup extension that allows instances of <see cref="DateTimeConverter"/> to be easily created.
-	/// </summary>
-	/// <remarks>
-	/// This markup extension allows instance of <see cref="DateTimeConverter"/> to be easily created inline in a XAML binding.
-	/// See the example below.
-	/// </remarks>
-	/// <example>
-	/// The following shows how to use the <c>DateTimeConverterExtension</c> inside a binding to convert values to local time:
-	/// <code lang="xml">
-	/// <![CDATA[
-	/// <Label Content="{Binding StartTime, Converter={DateTimeConverter TargetKind=Local}}"/>
-	/// ]]>
-	/// </code>
-	/// </example>
-	public sealed class DateTimeConverterExtension : MarkupExtension
-	{
-		private DateTimeKind _sourceKind;
-		private DateTimeKind _targetKind;
-		private DateTimeConversionMode _conversionMode;
-		private TimeSpan _sourceAdjustment;
-		private TimeSpan _targetAdjustment;
+    /// <summary>
+    /// Implements a markup extension that allows instances of <see cref="DateTimeConverter"/> to be easily created.
+    /// </summary>
+    /// <remarks>
+    /// This markup extension allows instance of <see cref="DateTimeConverter"/> to be easily created inline in a XAML binding.
+    /// See the example below.
+    /// </remarks>
+    /// <example>
+    /// The following shows how to use the <c>DateTimeConverterExtension</c> inside a binding to convert values to local time:
+    /// <code lang="xml">
+    /// <![CDATA[
+    /// <Label Content="{Binding StartTime, Converter={DateTimeConverter TargetKind=Local}}"/>
+    /// ]]>
+    /// </code>
+    /// </example>
+    public sealed class DateTimeConverterExtension : MarkupExtension
+    {
+        private DateTimeKind sourceKind;
+        private DateTimeKind targetKind;
+        private DateTimeConversionMode conversionMode;
+        private TimeSpan sourceAdjustment;
+        private TimeSpan targetAdjustment;
 
-		/// <summary>
-		/// Gets or sets the source kind for the <see cref="DateTimeConverter"/>.
-		/// </summary>
-		[ConstructorArgument("sourceKind")]
-		public DateTimeKind SourceKind
-		{
-			get
-			{
-				return _sourceKind;
-			}
-			set
-			{
-				ArgumentHelper.AssertEnumMember(value, "value");
-				_sourceKind = value;
-			}
-		}
+        /// <summary>
+        /// Gets or sets the source kind for the <see cref="DateTimeConverter"/>.
+        /// </summary>
+        [ConstructorArgument("sourceKind")]
+        public DateTimeKind SourceKind
+        {
+            get
+            {
+                return this.sourceKind;
+            }
 
-		/// <summary>
-		/// Gets or sets the target kind for the <see cref="DateTimeConverter"/>.
-		/// </summary>
-		[ConstructorArgument("targetKind")]
-		public DateTimeKind TargetKind
-		{
-			get
-			{
-				return _targetKind;
-			}
-			set
-			{
-				ArgumentHelper.AssertEnumMember(value, "value");
-				_targetKind = value;
-			}
-		}
+            set
+            {
+                ArgumentHelper.AssertEnumMember(value, "value");
+                this.sourceKind = value;
+            }
+        }
 
-		/// <summary>
-		/// Gets or sets the conversion mode for the <see cref="DateTimeConverter"/>.
-		/// </summary>
-		public DateTimeConversionMode ConversionMode
-		{
-			get
-			{
-				return _conversionMode;
-			}
-			set
-			{
-				ArgumentHelper.AssertEnumMember(value, "value");
-				_conversionMode = value;
-			}
-		}
+        /// <summary>
+        /// Gets or sets the target kind for the <see cref="DateTimeConverter"/>.
+        /// </summary>
+        [ConstructorArgument("targetKind")]
+        public DateTimeKind TargetKind
+        {
+            get
+            {
+                return this.targetKind;
+            }
 
-		/// <summary>
-		/// Gets or sets the source adjustment for the <see cref="DateTimeConverter"/>.
-		/// </summary>
-		public TimeSpan SourceAdjustment
-		{
-			get
-			{
-				return _sourceAdjustment;
-			}
-			set
-			{
-				_sourceAdjustment = value;
-			}
-		}
+            set
+            {
+                ArgumentHelper.AssertEnumMember(value, "value");
+                this.targetKind = value;
+            }
+        }
 
-		/// <summary>
-		/// Gets or sets the target adjustment for the <see cref="DateTimeConverter"/>.
-		/// </summary>
-		public TimeSpan TargetAdjustment
-		{
-			get
-			{
-				return _targetAdjustment;
-			}
-			set
-			{
-				_targetAdjustment = value;
-			}
-		}
+        /// <summary>
+        /// Gets or sets the conversion mode for the <see cref="DateTimeConverter"/>.
+        /// </summary>
+        public DateTimeConversionMode ConversionMode
+        {
+            get
+            {
+                return this.conversionMode;
+            }
 
-		/// <summary>
-		/// Constructs a default instance of <c>DateTimeConverterExtension</c>.
-		/// </summary>
-		public DateTimeConverterExtension()
-		{
-		}
+            set
+            {
+                ArgumentHelper.AssertEnumMember(value, "value");
+                this.conversionMode = value;
+            }
+        }
 
-		/// <summary>
-		/// Constructs an instance of <c>DateTimeConverterExtension</c> with the specified source and target kinds.
-		/// </summary>
-		/// <param name="sourceKind">
-		/// The source kind for the <see cref="DateTimeConverter"/>.
-		/// </param>
-		/// <param name="targetKind">
-		/// The target kind for the <see cref="DateTimeConverter"/>.
-		/// </param>
-		public DateTimeConverterExtension(DateTimeKind sourceKind, DateTimeKind targetKind)
-		{
-			SourceKind = sourceKind;
-			TargetKind = targetKind;
-		}
+        /// <summary>
+        /// Gets or sets the source adjustment for the <see cref="DateTimeConverter"/>.
+        /// </summary>
+        public TimeSpan SourceAdjustment
+        {
+            get { return this.sourceAdjustment; }
+            set { this.sourceAdjustment = value; }
+        }
 
-		/// <summary>
-		/// Provides an instance of <see cref="DateTimeConverter"/> based on this <c>DateTimeConverterExtension</c>.
-		/// </summary>
-		/// <param name="serviceProvider">
-		/// An object that can provide services.
-		/// </param>
-		/// <returns>
-		/// The instance of <see cref="DateTimeConverter"/>.
-		/// </returns>
-		public override object ProvideValue(IServiceProvider serviceProvider)
-		{
-			DateTimeConverter dateTimeConverter = new DateTimeConverter(SourceKind, TargetKind);
-			dateTimeConverter.ConversionMode = ConversionMode;
-			dateTimeConverter.SourceAdjustment = SourceAdjustment;
-			dateTimeConverter.TargetAdjustment = TargetAdjustment;
+        /// <summary>
+        /// Gets or sets the target adjustment for the <see cref="DateTimeConverter"/>.
+        /// </summary>
+        public TimeSpan TargetAdjustment
+        {
+            get { return this.targetAdjustment; }
+            set { this.targetAdjustment = value; }
+        }
 
-			return dateTimeConverter;
-		}
-	}
+        /// <summary>
+        /// Initializes a new instance of the DateTimeConverterExtension class.
+        /// </summary>
+        public DateTimeConverterExtension()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the DateTimeConverterExtension class with the specified source and target kinds.
+        /// </summary>
+        /// <param name="sourceKind">
+        /// The source kind for the <see cref="DateTimeConverter"/>.
+        /// </param>
+        /// <param name="targetKind">
+        /// The target kind for the <see cref="DateTimeConverter"/>.
+        /// </param>
+        public DateTimeConverterExtension(DateTimeKind sourceKind, DateTimeKind targetKind)
+        {
+            this.SourceKind = sourceKind;
+            this.TargetKind = targetKind;
+        }
+
+        /// <summary>
+        /// Provides an instance of <see cref="DateTimeConverter"/> based on this <c>DateTimeConverterExtension</c>.
+        /// </summary>
+        /// <param name="serviceProvider">
+        /// An object that can provide services.
+        /// </param>
+        /// <returns>
+        /// The instance of <see cref="DateTimeConverter"/>.
+        /// </returns>
+        public override object ProvideValue(IServiceProvider serviceProvider)
+        {
+            var dateTimeConverter = new DateTimeConverter(this.SourceKind, this.TargetKind);
+            dateTimeConverter.ConversionMode = this.ConversionMode;
+            dateTimeConverter.SourceAdjustment = this.SourceAdjustment;
+            dateTimeConverter.TargetAdjustment = this.TargetAdjustment;
+
+            return dateTimeConverter;
+        }
+    }
 #endif
 }

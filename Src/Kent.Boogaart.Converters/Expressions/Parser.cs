@@ -8,36 +8,34 @@ namespace Kent.Boogaart.Converters.Expressions
     internal sealed class Parser : IDisposable
     {
         private static readonly ExceptionHelper exceptionHelper = new ExceptionHelper(typeof(Parser));
-        private readonly Tokenizer _tokenizer;
-        private Token _currentToken;
+        private readonly Tokenizer tokenizer;
+        private Token currentToken;
 
         private bool AreMoreTokens
         {
-            get
-            {
-                return (_currentToken != null);
-            }
+            get { return this.currentToken != null; }
         }
 
         public Parser(Tokenizer tokenizer)
         {
             Debug.Assert(tokenizer != null);
-            _tokenizer = tokenizer;
-            ReadNextToken();
+
+            this.tokenizer = tokenizer;
+            this.ReadNextToken();
         }
 
         public void Dispose()
         {
-            _tokenizer.Dispose();
+            this.tokenizer.Dispose();
         }
 
         public Node ParseExpression()
         {
-            Node expression = ParseNullCoalescing();
+            var expression = this.ParseNullCoalescing();
 
-            if (AreMoreTokens)
+            if (this.AreMoreTokens)
             {
-                throw exceptionHelper.Resolve("UnexpectedInput", _currentToken.Value);
+                throw exceptionHelper.Resolve("UnexpectedInput", this.currentToken.Value);
             }
 
             return expression;
@@ -45,18 +43,18 @@ namespace Kent.Boogaart.Converters.Expressions
 
         #region Implementation of Parse Methods
 
-        //what follows below are the various parse methods in increasing order of precedence
+        /* what follows below are the various parse methods in increasing order of precedence */
 
         private Node ParseNullCoalescing()
         {
-            Node lNode = ParseTernaryConditional();
+            var lNode = this.ParseTernaryConditional();
 
-            while (AreMoreTokens)
+            while (this.AreMoreTokens)
             {
-                if (_currentToken.Equals(TokenType.Symbol, "??"))
+                if (this.currentToken.Equals(TokenType.Symbol, "??"))
                 {
-                    ReadNextToken();
-                    lNode = new NullCoalescingNode(lNode, ParseTernaryConditional());
+                    this.ReadNextToken();
+                    lNode = new NullCoalescingNode(lNode, this.ParseTernaryConditional());
                 }
                 else
                 {
@@ -69,16 +67,16 @@ namespace Kent.Boogaart.Converters.Expressions
 
         private Node ParseTernaryConditional()
         {
-            Node lNode = ParseConditionalOr();
+            var lNode = this.ParseConditionalOr();
 
-            while (AreMoreTokens)
+            while (this.AreMoreTokens)
             {
-                if (_currentToken.Equals(TokenType.Symbol, "?"))
+                if (this.currentToken.Equals(TokenType.Symbol, "?"))
                 {
-                    ReadNextToken();
-                    var secondNode = ParseConditionalOr();
-                    SkipExpectedToken(TokenType.Symbol, ":");
-                    var thirdNode = ParseConditionalOr();
+                    this.ReadNextToken();
+                    var secondNode = this.ParseConditionalOr();
+                    this.SkipExpectedToken(TokenType.Symbol, ":");
+                    var thirdNode = this.ParseConditionalOr();
                     lNode = new TernaryConditionalNode(lNode, secondNode, thirdNode);
                 }
                 else
@@ -89,16 +87,17 @@ namespace Kent.Boogaart.Converters.Expressions
 
             return lNode;
         }
+
         private Node ParseConditionalOr()
         {
-            Node lNode = ParseConditionalAnd();
+            var lNode = this.ParseConditionalAnd();
 
-            while (AreMoreTokens)
+            while (this.AreMoreTokens)
             {
-                if (_currentToken.Equals(TokenType.Symbol, "||"))
+                if (this.currentToken.Equals(TokenType.Symbol, "||"))
                 {
-                    ReadNextToken();
-                    lNode = new ConditionalOrNode(lNode, ParseConditionalAnd());
+                    this.ReadNextToken();
+                    lNode = new ConditionalOrNode(lNode, this.ParseConditionalAnd());
                 }
                 else
                 {
@@ -111,14 +110,14 @@ namespace Kent.Boogaart.Converters.Expressions
 
         private Node ParseConditionalAnd()
         {
-            Node lNode = ParseLogicalOr();
+            var lNode = this.ParseLogicalOr();
 
-            while (AreMoreTokens)
+            while (this.AreMoreTokens)
             {
-                if (_currentToken.Equals(TokenType.Symbol, "&&"))
+                if (this.currentToken.Equals(TokenType.Symbol, "&&"))
                 {
-                    ReadNextToken();
-                    lNode = new ConditionalAndNode(lNode, ParseLogicalOr());
+                    this.ReadNextToken();
+                    lNode = new ConditionalAndNode(lNode, this.ParseLogicalOr());
                 }
                 else
                 {
@@ -131,14 +130,14 @@ namespace Kent.Boogaart.Converters.Expressions
 
         private Node ParseLogicalOr()
         {
-            Node lNode = ParseLogicalXor();
+            var lNode = this.ParseLogicalXor();
 
-            while (AreMoreTokens)
+            while (this.AreMoreTokens)
             {
-                if (_currentToken.Equals(TokenType.Symbol, "|"))
+                if (this.currentToken.Equals(TokenType.Symbol, "|"))
                 {
-                    ReadNextToken();
-                    lNode = new LogicalOrNode(lNode, ParseLogicalXor());
+                    this.ReadNextToken();
+                    lNode = new LogicalOrNode(lNode, this.ParseLogicalXor());
                 }
                 else
                 {
@@ -151,14 +150,14 @@ namespace Kent.Boogaart.Converters.Expressions
 
         private Node ParseLogicalXor()
         {
-            Node lNode = ParseLogicalAnd();
+            var lNode = this.ParseLogicalAnd();
 
-            while (AreMoreTokens)
+            while (this.AreMoreTokens)
             {
-                if (_currentToken.Equals(TokenType.Symbol, "^"))
+                if (this.currentToken.Equals(TokenType.Symbol, "^"))
                 {
-                    ReadNextToken();
-                    lNode = new LogicalXorNode(lNode, ParseLogicalAnd());
+                    this.ReadNextToken();
+                    lNode = new LogicalXorNode(lNode, this.ParseLogicalAnd());
                 }
                 else
                 {
@@ -171,14 +170,14 @@ namespace Kent.Boogaart.Converters.Expressions
 
         private Node ParseLogicalAnd()
         {
-            Node lNode = ParseEquality();
+            var lNode = this.ParseEquality();
 
-            while (AreMoreTokens)
+            while (this.AreMoreTokens)
             {
-                if (_currentToken.Equals(TokenType.Symbol, "&"))
+                if (this.currentToken.Equals(TokenType.Symbol, "&"))
                 {
-                    ReadNextToken();
-                    lNode = new LogicalAndNode(lNode, ParseEquality());
+                    this.ReadNextToken();
+                    lNode = new LogicalAndNode(lNode, this.ParseEquality());
                 }
                 else
                 {
@@ -191,19 +190,19 @@ namespace Kent.Boogaart.Converters.Expressions
 
         private Node ParseEquality()
         {
-            Node lNode = ParseRelational();
+            var lNode = this.ParseRelational();
 
-            while (AreMoreTokens)
+            while (this.AreMoreTokens)
             {
-                if (_currentToken.Equals(TokenType.Symbol, "=="))
+                if (this.currentToken.Equals(TokenType.Symbol, "=="))
                 {
-                    ReadNextToken();
-                    lNode = new EqualityNode(lNode, ParseRelational());
+                    this.ReadNextToken();
+                    lNode = new EqualityNode(lNode, this.ParseRelational());
                 }
-                else if (_currentToken.Equals(TokenType.Symbol, "!="))
+                else if (this.currentToken.Equals(TokenType.Symbol, "!="))
                 {
-                    ReadNextToken();
-                    lNode = new InequalityNode(lNode, ParseRelational());
+                    this.ReadNextToken();
+                    lNode = new InequalityNode(lNode, this.ParseRelational());
                 }
                 else
                 {
@@ -216,29 +215,29 @@ namespace Kent.Boogaart.Converters.Expressions
 
         private Node ParseRelational()
         {
-            Node lNode = ParseShift();
+            var lNode = this.ParseShift();
 
-            while (AreMoreTokens)
+            while (this.AreMoreTokens)
             {
-                if (_currentToken.Equals(TokenType.Symbol, "<="))
+                if (this.currentToken.Equals(TokenType.Symbol, "<="))
                 {
-                    ReadNextToken();
-                    return new LessThanOrEqualNode(lNode, ParseShift());
+                    this.ReadNextToken();
+                    return new LessThanOrEqualNode(lNode, this.ParseShift());
                 }
-                else if (_currentToken.Equals(TokenType.Symbol, "<"))
+                else if (this.currentToken.Equals(TokenType.Symbol, "<"))
                 {
-                    ReadNextToken();
-                    return new LessThanNode(lNode, ParseShift());
+                    this.ReadNextToken();
+                    return new LessThanNode(lNode, this.ParseShift());
                 }
-                else if (_currentToken.Equals(TokenType.Symbol, ">="))
+                else if (this.currentToken.Equals(TokenType.Symbol, ">="))
                 {
-                    ReadNextToken();
-                    return new GreaterThanOrEqualNode(lNode, ParseShift());
+                    this.ReadNextToken();
+                    return new GreaterThanOrEqualNode(lNode, this.ParseShift());
                 }
-                else if (_currentToken.Equals(TokenType.Symbol, ">"))
+                else if (this.currentToken.Equals(TokenType.Symbol, ">"))
                 {
-                    ReadNextToken();
-                    return new GreaterThanNode(lNode, ParseShift());
+                    this.ReadNextToken();
+                    return new GreaterThanNode(lNode, this.ParseShift());
                 }
                 else
                 {
@@ -251,19 +250,19 @@ namespace Kent.Boogaart.Converters.Expressions
 
         private Node ParseShift()
         {
-            Node lNode = ParseAdditive();
+            var lNode = this.ParseAdditive();
 
-            while (AreMoreTokens)
+            while (this.AreMoreTokens)
             {
-                if (_currentToken.Equals(TokenType.Symbol, "<<"))
+                if (this.currentToken.Equals(TokenType.Symbol, "<<"))
                 {
-                    ReadNextToken();
-                    lNode = new ShiftLeftNode(lNode, ParseAdditive());
+                    this.ReadNextToken();
+                    lNode = new ShiftLeftNode(lNode, this.ParseAdditive());
                 }
-                else if (_currentToken.Equals(TokenType.Symbol, ">>"))
+                else if (this.currentToken.Equals(TokenType.Symbol, ">>"))
                 {
-                    ReadNextToken();
-                    lNode = new ShiftRightNode(lNode, ParseAdditive());
+                    this.ReadNextToken();
+                    lNode = new ShiftRightNode(lNode, this.ParseAdditive());
                 }
                 else
                 {
@@ -276,19 +275,19 @@ namespace Kent.Boogaart.Converters.Expressions
 
         private Node ParseAdditive()
         {
-            Node lNode = ParseMultiplicative();
+            var lNode = this.ParseMultiplicative();
 
-            while (AreMoreTokens)
+            while (this.AreMoreTokens)
             {
-                if (_currentToken.Equals(TokenType.Symbol, "+"))
+                if (this.currentToken.Equals(TokenType.Symbol, "+"))
                 {
-                    ReadNextToken();
-                    lNode = new AddNode(lNode, ParseMultiplicative());
+                    this.ReadNextToken();
+                    lNode = new AddNode(lNode, this.ParseMultiplicative());
                 }
-                else if (_currentToken.Equals(TokenType.Symbol, "-"))
+                else if (this.currentToken.Equals(TokenType.Symbol, "-"))
                 {
-                    ReadNextToken();
-                    lNode = new SubtractNode(lNode, ParseMultiplicative());
+                    this.ReadNextToken();
+                    lNode = new SubtractNode(lNode, this.ParseMultiplicative());
                 }
                 else
                 {
@@ -301,24 +300,24 @@ namespace Kent.Boogaart.Converters.Expressions
 
         private Node ParseMultiplicative()
         {
-            Node lNode = ParseUnary();
+            var lNode = this.ParseUnary();
 
-            while (AreMoreTokens)
+            while (this.AreMoreTokens)
             {
-                if (_currentToken.Equals(TokenType.Symbol, "*"))
+                if (this.currentToken.Equals(TokenType.Symbol, "*"))
                 {
-                    ReadNextToken();
-                    lNode = new MultiplyNode(lNode, ParseUnary());
+                    this.ReadNextToken();
+                    lNode = new MultiplyNode(lNode, this.ParseUnary());
                 }
-                else if (_currentToken.Equals(TokenType.Symbol, "/"))
+                else if (this.currentToken.Equals(TokenType.Symbol, "/"))
                 {
-                    ReadNextToken();
-                    lNode = new DivideNode(lNode, ParseUnary());
+                    this.ReadNextToken();
+                    lNode = new DivideNode(lNode, this.ParseUnary());
                 }
-                else if (_currentToken.Equals(TokenType.Symbol, "%"))
+                else if (this.currentToken.Equals(TokenType.Symbol, "%"))
                 {
-                    ReadNextToken();
-                    lNode = new ModulusNode(lNode, ParseUnary());
+                    this.ReadNextToken();
+                    lNode = new ModulusNode(lNode, this.ParseUnary());
                 }
                 else
                 {
@@ -331,75 +330,75 @@ namespace Kent.Boogaart.Converters.Expressions
 
         private Node ParseUnary()
         {
-            EnsureMoreTokens();
+            this.EnsureMoreTokens();
 
-            if (_currentToken.Equals(TokenType.Symbol, "-"))
+            if (this.currentToken.Equals(TokenType.Symbol, "-"))
             {
-                ReadNextToken();
-                return new NegateNode(ParseBase());
+                this.ReadNextToken();
+                return new NegateNode(this.ParseBase());
             }
-            else if (_currentToken.Equals(TokenType.Symbol, "+"))
+            else if (this.currentToken.Equals(TokenType.Symbol, "+"))
             {
-                //discard superfluous "+"
-                ReadNextToken();
+                // discard superfluous "+"
+                this.ReadNextToken();
             }
-            else if (_currentToken.Equals(TokenType.Symbol, "!"))
+            else if (this.currentToken.Equals(TokenType.Symbol, "!"))
             {
-                ReadNextToken();
-                return new NotNode(ParseUnary());
+                this.ReadNextToken();
+                return new NotNode(this.ParseUnary());
             }
-            else if (_currentToken.Equals(TokenType.Symbol, "~"))
+            else if (this.currentToken.Equals(TokenType.Symbol, "~"))
             {
-                ReadNextToken();
-                return new ComplementNode(ParseUnary());
+                this.ReadNextToken();
+                return new ComplementNode(this.ParseUnary());
             }
-            else if (_currentToken.Equals(TokenType.Word, "true"))
+            else if (this.currentToken.Equals(TokenType.Word, "true"))
             {
-                ReadNextToken();
+                this.ReadNextToken();
                 return new ConstantNode<bool>(true);
             }
-            else if (_currentToken.Equals(TokenType.Word, "false"))
+            else if (this.currentToken.Equals(TokenType.Word, "false"))
             {
-                ReadNextToken();
+                this.ReadNextToken();
                 return new ConstantNode<bool>(false);
             }
 
-            return ParseBase();
+            return this.ParseBase();
         }
 
         private Node ParseBase()
         {
-            EnsureMoreTokens();
+            this.EnsureMoreTokens();
 
-            switch (_currentToken.Type)
+            switch (this.currentToken.Type)
             {
                 case TokenType.Number:
-                    return ParseNumber();
+                    return this.ParseNumber();
                 case TokenType.String:
-                    string str = _currentToken.Value;
-                    ReadNextToken();
+                    string str = this.currentToken.Value;
+                    this.ReadNextToken();
                     return new ConstantNode<string>(str);
                 case TokenType.Word:
-                    return ParseKeyword();
+                    return this.ParseKeyword();
                 case TokenType.Symbol:
-                    if (_currentToken.Value == "(")
+                    if (this.currentToken.Value == "(")
                     {
-                        ReadNextToken();
+                        this.ReadNextToken();
 
-                        if (_currentToken.Type == TokenType.Word)
+                        if (this.currentToken.Type == TokenType.Word)
                         {
-                            return ParseCast();
+                            return this.ParseCast();
                         }
                         else
                         {
-                            return ParseGroup();
+                            return this.ParseGroup();
                         }
                     }
-                    else if (_currentToken.Value == "{")
+                    else if (this.currentToken.Value == "{")
                     {
-                        ReadNextToken();
-                        ConstantNode<int> integerConstant = ParseInt32();
-                        SkipExpectedToken(TokenType.Symbol, "}");
+                        this.ReadNextToken();
+                        ConstantNode<int> integerConstant = this.ParseInt32();
+                        this.SkipExpectedToken(TokenType.Symbol, "}");
                         return new VariableNode(integerConstant.Value);
                     }
 
@@ -412,8 +411,8 @@ namespace Kent.Boogaart.Converters.Expressions
 
         private CastNode ParseCast()
         {
-            string targetTypeStr = _currentToken.Value;
-            NodeValueType targetType = NodeValueType.Unknown;
+            var targetTypeStr = this.currentToken.Value;
+            var targetType = NodeValueType.Unknown;
 
             if (EqualsAny(targetTypeStr, "bool", "Boolean", "System.Boolean"))
             {
@@ -456,59 +455,62 @@ namespace Kent.Boogaart.Converters.Expressions
                 throw exceptionHelper.Resolve("CannotCastToType", targetTypeStr);
             }
 
-            ReadNextToken();
-            SkipExpectedToken(TokenType.Symbol, ")");
+            this.ReadNextToken();
+            this.SkipExpectedToken(TokenType.Symbol, ")");
 
-            return new CastNode(ParseUnary(), targetType);
+            return new CastNode(this.ParseUnary(), targetType);
         }
 
         private Node ParseGroup()
         {
-            Node lNode = ParseNullCoalescing();
-            //skip the ')' that closes the group expression
-            SkipExpectedToken(TokenType.Symbol, ")");
+            var lNode = this.ParseNullCoalescing();
+
+            // skip the ')' that closes the group expression
+            this.SkipExpectedToken(TokenType.Symbol, ")");
 
             return lNode;
         }
 
         private Node ParseNumber()
         {
-            //Suffixes:- l/L for long
-            //         - f/F for float
-            //         - d/D for double
-            //         - m/M for decimal
-            //
-            //Prefixes:- 0x for hex
-            //
-            //Examples:- 0x384
-            //         - 0x384L (long)
-            //         - 34.3 (double)
-            //         - 34.3F (float)
-            //         - 93L (long)
-            //         - 4.33E29 (double)
-            //         - 4.433E29F (float)
-            //         - 4M (decimal)
+            /*
+             * Suffixes:- l/L for long
+             *          - f/F for float
+             *          - d/D for double
+             *          - m/M for decimal
+             * 
+             * Prefixes:- 0x for hex
+             * 
+             * Examples:- 0x384
+             *          - 0x384L (long)
+             *          - 34.3 (double)
+             *          - 34.3F (float)
+             *          - 93L (long)
+             *          - 4.33E29 (double)
+             *          - 4.433E29F (float)
+             *          - 4M (decimal)
+             */
 
-            string numberStr = _currentToken.Value;
+            var numberStr = this.currentToken.Value;
 
             if (numberStr.StartsWith("0x"))
             {
-                return ParseHexadecimalConstant();
+                return this.ParseHexadecimalConstant();
             }
             else if (numberStr.IndexOfAny(new char[] { '.', 'e', 'E', 'f', 'F', 'd', 'D', 'm', 'M' }) != -1)
             {
-                return ParseReal();
+                return this.ParseReal();
             }
             else
             {
-                return ParseIntegral();
+                return this.ParseIntegral();
             }
         }
 
         private Node ParseHexadecimalConstant()
         {
-            string numberStr = _currentToken.Value;
-            bool isLong = false;
+            var numberStr = this.currentToken.Value;
+            var isLong = false;
 
             if (numberStr[numberStr.Length - 1] == 'l' || numberStr[numberStr.Length - 1] == 'L')
             {
@@ -520,14 +522,14 @@ namespace Kent.Boogaart.Converters.Expressions
                 numberStr = numberStr.Substring(2);
             }
 
-            exceptionHelper.ResolveAndThrowIf(numberStr.Length == 0, "InvalidNumber", _currentToken.Value);
+            exceptionHelper.ResolveAndThrowIf(numberStr.Length == 0, "InvalidNumber", this.currentToken.Value);
 
-            foreach (char c in numberStr)
+            foreach (var c in numberStr)
             {
-                exceptionHelper.ResolveAndThrowIf(!Uri.IsHexDigit(c), "InvalidNumber", _currentToken.Value);
+                exceptionHelper.ResolveAndThrowIf(!Uri.IsHexDigit(c), "InvalidNumber", this.currentToken.Value);
             }
 
-            ReadNextToken();
+            this.ReadNextToken();
 
             if (isLong)
             {
@@ -541,8 +543,8 @@ namespace Kent.Boogaart.Converters.Expressions
 
         private Node ParseIntegral()
         {
-            string numberStr = _currentToken.Value;
-            bool isLong = false;
+            var numberStr = this.currentToken.Value;
+            var isLong = false;
 
             if (numberStr[numberStr.Length - 1] == 'l' || numberStr[numberStr.Length - 1] == 'L')
             {
@@ -553,28 +555,28 @@ namespace Kent.Boogaart.Converters.Expressions
             if (isLong)
             {
                 long val;
-                exceptionHelper.ResolveAndThrowIf(!long.TryParse(numberStr, out val), "InvalidNumber", _currentToken.Value);
-                ReadNextToken();
+                exceptionHelper.ResolveAndThrowIf(!long.TryParse(numberStr, out val), "InvalidNumber", this.currentToken.Value);
+                this.ReadNextToken();
                 return new ConstantNode<long>(val);
             }
             else
             {
-                return ParseInt32();
+                return this.ParseInt32();
             }
         }
 
         private ConstantNode<int> ParseInt32()
         {
             int val;
-            exceptionHelper.ResolveAndThrowIf(!int.TryParse(_currentToken.Value, out val), "InvalidNumber", _currentToken.Value);
-            ReadNextToken();
+            exceptionHelper.ResolveAndThrowIf(!int.TryParse(this.currentToken.Value, out val), "InvalidNumber", this.currentToken.Value);
+            this.ReadNextToken();
             return new ConstantNode<int>(val);
         }
 
         private Node ParseReal()
         {
-            string numberStr = _currentToken.Value;
-            RealType realType = RealType.Double;
+            var numberStr = this.currentToken.Value;
+            var realType = RealType.Double;
 
             if (numberStr[numberStr.Length - 1] == 'd' || numberStr[numberStr.Length - 1] == 'D')
             {
@@ -596,22 +598,24 @@ namespace Kent.Boogaart.Converters.Expressions
                 case RealType.Double:
                     {
                         double val;
-                        exceptionHelper.ResolveAndThrowIf(!double.TryParse(numberStr, out val), "InvalidNumber", _currentToken.Value);
-                        ReadNextToken();
+                        exceptionHelper.ResolveAndThrowIf(!double.TryParse(numberStr, out val), "InvalidNumber", this.currentToken.Value);
+                        this.ReadNextToken();
                         return new ConstantNode<double>(val);
                     }
+
                 case RealType.Single:
                     {
                         float val;
-                        exceptionHelper.ResolveAndThrowIf(!float.TryParse(numberStr, out val), "InvalidNumber", _currentToken.Value);
-                        ReadNextToken();
+                        exceptionHelper.ResolveAndThrowIf(!float.TryParse(numberStr, out val), "InvalidNumber", this.currentToken.Value);
+                        this.ReadNextToken();
                         return new ConstantNode<float>(val);
                     }
+
                 case RealType.Decimal:
                     {
                         decimal val;
-                        exceptionHelper.ResolveAndThrowIf(!decimal.TryParse(numberStr, out val), "InvalidNumber", _currentToken.Value);
-                        ReadNextToken();
+                        exceptionHelper.ResolveAndThrowIf(!decimal.TryParse(numberStr, out val), "InvalidNumber", this.currentToken.Value);
+                        this.ReadNextToken();
                         return new ConstantNode<decimal>(val);
                     }
             }
@@ -622,37 +626,37 @@ namespace Kent.Boogaart.Converters.Expressions
 
         private Node ParseKeyword()
         {
-            if (_currentToken.Equals(TokenType.Word, "null"))
+            if (this.currentToken.Equals(TokenType.Word, "null"))
             {
-                ReadNextToken();
+                this.ReadNextToken();
                 return NullNode.Instance;
             }
 
-            throw exceptionHelper.Resolve("UnexpectedInput", _currentToken.Value);
+            throw exceptionHelper.Resolve("UnexpectedInput", this.currentToken.Value);
         }
 
         #endregion
 
         private void ReadNextToken()
         {
-            _currentToken = _tokenizer.ReadNextToken();
+            this.currentToken = this.tokenizer.ReadNextToken();
         }
 
         private void SkipExpectedToken(TokenType type, string value)
         {
-            EnsureMoreTokens();
-            exceptionHelper.ResolveAndThrowIf(!_currentToken.Equals(type, value), "UnexpectedToken", _currentToken.Value, value);
-            ReadNextToken();
+            this.EnsureMoreTokens();
+            exceptionHelper.ResolveAndThrowIf(!this.currentToken.Equals(type, value), "UnexpectedToken", this.currentToken.Value, value);
+            this.ReadNextToken();
         }
 
         private void EnsureMoreTokens()
         {
-            exceptionHelper.ResolveAndThrowIf(!AreMoreTokens, "UnexpectedEndOfInput");
+            exceptionHelper.ResolveAndThrowIf(!this.AreMoreTokens, "UnexpectedEndOfInput");
         }
 
         private static bool EqualsAny(string value, params string[] acceptableValues)
         {
-            foreach (string acceptableValue in acceptableValues)
+            foreach (var acceptableValue in acceptableValues)
             {
                 if (string.Equals(acceptableValue, value, StringComparison.Ordinal))
                 {

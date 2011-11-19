@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace Kent.Boogaart.Converters.Expressions.Nodes
 {
-    //base class for all AST nodes.
+    // base class for all AST nodes.
     internal abstract class Node
     {
         public abstract object Evaluate(NodeEvaluationContext evaluationContext);

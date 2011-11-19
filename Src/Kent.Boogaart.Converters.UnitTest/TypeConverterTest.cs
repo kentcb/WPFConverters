@@ -3,194 +3,193 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Windows;
 using Xunit;
-using Kent.Boogaart.Converters;
 
 namespace Kent.Boogaart.Converters.UnitTest
 {
     public sealed class TypeConverterTest : UnitTest
     {
-        private TypeConverter _typeConverter;
+        private TypeConverter typeConverter;
 
         protected override void SetUpCore()
         {
             base.SetUpCore();
-            _typeConverter = new TypeConverter();
+            this.typeConverter = new TypeConverter();
         }
 
         [Fact]
         public void Constructor_ShouldSetDefaults()
         {
-            Assert.Null(_typeConverter.SourceType);
-            Assert.Null(_typeConverter.TargetType);
+            Assert.Null(this.typeConverter.SourceType);
+            Assert.Null(this.typeConverter.TargetType);
         }
 
         [Fact]
         public void Constructor_SourceAndTargetType_ShouldSetSourceAndTargetType()
         {
-            _typeConverter = new TypeConverter(typeof(int), typeof(string));
-            Assert.Same(typeof(int), _typeConverter.SourceType);
-            Assert.Same(typeof(string), _typeConverter.TargetType);
-            _typeConverter = new TypeConverter(typeof(double), typeof(float));
-            Assert.Same(typeof(double), _typeConverter.SourceType);
-            Assert.Same(typeof(float), _typeConverter.TargetType);
+            this.typeConverter = new TypeConverter(typeof(int), typeof(string));
+            Assert.Same(typeof(int), this.typeConverter.SourceType);
+            Assert.Same(typeof(string), this.typeConverter.TargetType);
+            this.typeConverter = new TypeConverter(typeof(double), typeof(float));
+            Assert.Same(typeof(double), this.typeConverter.SourceType);
+            Assert.Same(typeof(float), this.typeConverter.TargetType);
         }
 
         [Fact]
         public void SourceType_ShouldGetAndSetSourceType()
         {
-            Assert.Null(_typeConverter.SourceType);
-            _typeConverter.SourceType = typeof(int);
-            Assert.Same(typeof(int), _typeConverter.SourceType);
-            _typeConverter.SourceType = typeof(double);
-            Assert.Same(typeof(double), _typeConverter.SourceType);
+            Assert.Null(this.typeConverter.SourceType);
+            this.typeConverter.SourceType = typeof(int);
+            Assert.Same(typeof(int), this.typeConverter.SourceType);
+            this.typeConverter.SourceType = typeof(double);
+            Assert.Same(typeof(double), this.typeConverter.SourceType);
         }
 
         [Fact]
         public void TargetType_ShouldGetAndSetTargetType()
         {
-            Assert.Null(_typeConverter.TargetType);
-            _typeConverter.TargetType = typeof(int);
-            Assert.Same(typeof(int), _typeConverter.TargetType);
-            _typeConverter.TargetType = typeof(double);
-            Assert.Same(typeof(double), _typeConverter.TargetType);
+            Assert.Null(this.typeConverter.TargetType);
+            this.typeConverter.TargetType = typeof(int);
+            Assert.Same(typeof(int), this.typeConverter.TargetType);
+            this.typeConverter.TargetType = typeof(double);
+            Assert.Same(typeof(double), this.typeConverter.TargetType);
         }
 
         [Fact]
         public void Convert_ShouldThrowIfTargetTypeIsNull()
         {
-            _typeConverter.SourceType = typeof(int);
-            var ex = Assert.Throws<InvalidOperationException>(() => _typeConverter.Convert("123", null, null, null));
+            this.typeConverter.SourceType = typeof(int);
+            var ex = Assert.Throws<InvalidOperationException>(() => this.typeConverter.Convert("123", null, null, null));
             Assert.Equal("No TargetType has been specified.", ex.Message);
         }
 
         [Fact]
         public void Convert_ShouldReturnNullIfConvertingNull()
         {
-            _typeConverter.SourceType = typeof(Type1);
-            _typeConverter.TargetType = typeof(Type2);
-            Assert.Null(_typeConverter.Convert(null, null, null, null));
+            this.typeConverter.SourceType = typeof(Type1);
+            this.typeConverter.TargetType = typeof(Type2);
+            Assert.Null(this.typeConverter.Convert(null, null, null, null));
         }
 
         [Fact]
         public void Convert_ShouldAttemptToConvertToTargetType()
         {
-            _typeConverter.SourceType = typeof(int);
-            _typeConverter.TargetType = typeof(string);
-            Assert.Equal("123", _typeConverter.Convert(123, null, null, null));
+            this.typeConverter.SourceType = typeof(int);
+            this.typeConverter.TargetType = typeof(string);
+            Assert.Equal("123", this.typeConverter.Convert(123, null, null, null));
 
-            _typeConverter.SourceType = typeof(string);
-            _typeConverter.TargetType = typeof(int);
-            Assert.Equal(123, _typeConverter.Convert("123", null, null, null));
+            this.typeConverter.SourceType = typeof(string);
+            this.typeConverter.TargetType = typeof(int);
+            Assert.Equal(123, this.typeConverter.Convert("123", null, null, null));
         }
 
         [Fact]
         public void Convert_ShouldUseSpecifiedCultureDuringConversion()
         {
             CultureInfo cultureInfo = new CultureInfo("de-DE");
-            _typeConverter.SourceType = typeof(double);
-            _typeConverter.TargetType = typeof(string);
-            Assert.Equal("123,1", _typeConverter.Convert(123.1, null, null, cultureInfo));
+            this.typeConverter.SourceType = typeof(double);
+            this.typeConverter.TargetType = typeof(string);
+            Assert.Equal("123,1", this.typeConverter.Convert(123.1, null, null, cultureInfo));
 
-            _typeConverter.SourceType = typeof(string);
-            _typeConverter.TargetType = typeof(double);
-            Assert.Equal(123.1, _typeConverter.Convert("123,1", null, null, cultureInfo));
+            this.typeConverter.SourceType = typeof(string);
+            this.typeConverter.TargetType = typeof(double);
+            Assert.Equal(123.1, this.typeConverter.Convert("123,1", null, null, cultureInfo));
         }
 
         [Fact]
         public void Convert_ShouldUseTypeConvertersIfNecessary()
         {
-            _typeConverter.SourceType = typeof(Type1);
-            _typeConverter.TargetType = typeof(Type2);
-            Assert.True(_typeConverter.Convert(new Type1(), null, null, null) is Type2);
+            this.typeConverter.SourceType = typeof(Type1);
+            this.typeConverter.TargetType = typeof(Type2);
+            Assert.True(this.typeConverter.Convert(new Type1(), null, null, null) is Type2);
 
-            _typeConverter.SourceType = typeof(Type2);
-            _typeConverter.TargetType = typeof(Type1);
-            Assert.True(_typeConverter.Convert(new Type2(), null, null, null) is Type1);
+            this.typeConverter.SourceType = typeof(Type2);
+            this.typeConverter.TargetType = typeof(Type1);
+            Assert.True(this.typeConverter.Convert(new Type2(), null, null, null) is Type1);
         }
 
         [Fact]
         public void Convert_ShouldReturnUnsetValueIfConversionIsNotSupported()
         {
-            _typeConverter.SourceType = typeof(TypeConverterTest);
-            _typeConverter.TargetType = typeof(TypeCode);
-            Assert.Same(DependencyProperty.UnsetValue, _typeConverter.Convert(new TypeConverterTest(), null, null, null));
+            this.typeConverter.SourceType = typeof(TypeConverterTest);
+            this.typeConverter.TargetType = typeof(TypeCode);
+            Assert.Same(DependencyProperty.UnsetValue, this.typeConverter.Convert(new TypeConverterTest(), null, null, null));
         }
 
         [Fact]
         public void Convert_ShouldReturnUnsetValueIfConversionFails()
         {
-            _typeConverter.SourceType = typeof(string);
-            _typeConverter.TargetType = typeof(int);
-            Assert.Same(DependencyProperty.UnsetValue, _typeConverter.Convert("", null, null,null));
+            this.typeConverter.SourceType = typeof(string);
+            this.typeConverter.TargetType = typeof(int);
+            Assert.Same(DependencyProperty.UnsetValue, this.typeConverter.Convert(string.Empty, null, null, null));
         }
 
         [Fact]
         public void ConvertBack_ShouldThrowIfTargetTypeIsNull()
         {
-            _typeConverter.TargetType = typeof(int);
-            var ex = Assert.Throws<InvalidOperationException>(() => _typeConverter.ConvertBack("123", null, null, null));
+            this.typeConverter.TargetType = typeof(int);
+            var ex = Assert.Throws<InvalidOperationException>(() => this.typeConverter.ConvertBack("123", null, null, null));
             Assert.Equal("No SourceType has been specified.", ex.Message);
         }
 
         [Fact]
         public void ConvertBack_ShouldReturnNullIfConvertingNull()
         {
-            _typeConverter.SourceType = typeof(Type2);
-            _typeConverter.TargetType = typeof(Type1);
-            Assert.Null(_typeConverter.ConvertBack(null, null, null, null));
+            this.typeConverter.SourceType = typeof(Type2);
+            this.typeConverter.TargetType = typeof(Type1);
+            Assert.Null(this.typeConverter.ConvertBack(null, null, null, null));
         }
 
         [Fact]
         public void ConvertBack_ShouldAttemptToConvertToSourceType()
         {
-            _typeConverter.SourceType = typeof(string);
-            _typeConverter.TargetType = typeof(int);
-            Assert.Equal("123", _typeConverter.ConvertBack(123, null, null, null));
+            this.typeConverter.SourceType = typeof(string);
+            this.typeConverter.TargetType = typeof(int);
+            Assert.Equal("123", this.typeConverter.ConvertBack(123, null, null, null));
 
-            _typeConverter.SourceType = typeof(int);
-            _typeConverter.TargetType = typeof(string);
-            Assert.Equal(123, _typeConverter.ConvertBack("123", null, null, null));
+            this.typeConverter.SourceType = typeof(int);
+            this.typeConverter.TargetType = typeof(string);
+            Assert.Equal(123, this.typeConverter.ConvertBack("123", null, null, null));
         }
 
         [Fact]
         public void ConvertBack_ShouldUseSpecifiedCultureDuringConversion()
         {
             CultureInfo cultureInfo = new CultureInfo("de-DE");
-            _typeConverter.SourceType = typeof(string);
-            _typeConverter.TargetType = typeof(double);
-            Assert.Equal("123,1", _typeConverter.ConvertBack(123.1, null, null, cultureInfo));
+            this.typeConverter.SourceType = typeof(string);
+            this.typeConverter.TargetType = typeof(double);
+            Assert.Equal("123,1", this.typeConverter.ConvertBack(123.1, null, null, cultureInfo));
 
-            _typeConverter.SourceType = typeof(double);
-            _typeConverter.TargetType = typeof(string);
-            Assert.Equal(123.1, _typeConverter.ConvertBack("123,1", null, null, cultureInfo));
+            this.typeConverter.SourceType = typeof(double);
+            this.typeConverter.TargetType = typeof(string);
+            Assert.Equal(123.1, this.typeConverter.ConvertBack("123,1", null, null, cultureInfo));
         }
 
         [Fact]
         public void ConvertBack_ShouldUseTypeConvertersIfNecessary()
         {
-            _typeConverter.SourceType = typeof(Type2);
-            _typeConverter.TargetType = typeof(Type1);
-            Assert.True(_typeConverter.ConvertBack(new Type1(), null, null, null) is Type2);
+            this.typeConverter.SourceType = typeof(Type2);
+            this.typeConverter.TargetType = typeof(Type1);
+            Assert.True(this.typeConverter.ConvertBack(new Type1(), null, null, null) is Type2);
 
-            _typeConverter.SourceType = typeof(Type1);
-            _typeConverter.TargetType = typeof(Type2);
-            Assert.True(_typeConverter.ConvertBack(new Type2(), null, null, null) is Type1);
+            this.typeConverter.SourceType = typeof(Type1);
+            this.typeConverter.TargetType = typeof(Type2);
+            Assert.True(this.typeConverter.ConvertBack(new Type2(), null, null, null) is Type1);
         }
 
         [Fact]
         public void ConvertBack_ShouldReturnUnsetValueIfConversionIsNotSupported()
         {
-            _typeConverter.SourceType = typeof(TypeCode);
-            _typeConverter.TargetType = typeof(TypeConverterTest);
-            Assert.Same(DependencyProperty.UnsetValue, _typeConverter.ConvertBack(new TypeConverterTest(), null, null, null));
+            this.typeConverter.SourceType = typeof(TypeCode);
+            this.typeConverter.TargetType = typeof(TypeConverterTest);
+            Assert.Same(DependencyProperty.UnsetValue, this.typeConverter.ConvertBack(new TypeConverterTest(), null, null, null));
         }
 
         [Fact]
         public void ConvertBack_ShouldReturnUnsetValueIfConversionFails()
         {
-            _typeConverter.SourceType = typeof(string);
-            _typeConverter.TargetType = typeof(int);
-            Assert.Same(DependencyProperty.UnsetValue, _typeConverter.Convert("", null, null, null));
+            this.typeConverter.SourceType = typeof(string);
+            this.typeConverter.TargetType = typeof(int);
+            Assert.Same(DependencyProperty.UnsetValue, this.typeConverter.Convert(string.Empty, null, null, null));
         }
 
         #region Supporting Types

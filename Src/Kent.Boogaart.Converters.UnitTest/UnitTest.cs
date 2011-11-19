@@ -1,6 +1,5 @@
 using System;
 using System.Reflection;
-using Xunit;
 using Kent.Boogaart.HelperTrinity;
 
 namespace Kent.Boogaart.Converters.UnitTest
@@ -12,12 +11,12 @@ namespace Kent.Boogaart.Converters.UnitTest
     {
         protected UnitTest()
         {
-            SetUpCore();
+            this.SetUpCore();
         }
 
         public void Dispose()
         {
-            TearDownCore();
+            this.TearDownCore();
         }
 
         /// <summary>
@@ -53,12 +52,13 @@ namespace Kent.Boogaart.Converters.UnitTest
         {
             ArgumentHelper.AssertNotNull(instance, "instance");
             ArgumentHelper.AssertNotNull(methodName, "methodName");
-            //may need to support method overloads at some stage
+
+            // may need to support method overloads at some stage
             MethodInfo methodInfo = instance.GetType().GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance);
 
             try
             {
-                return (T) methodInfo.Invoke(instance, args);
+                return (T)methodInfo.Invoke(instance, args);
             }
             catch (TargetInvocationException e)
             {
@@ -110,11 +110,11 @@ namespace Kent.Boogaart.Converters.UnitTest
             {
                 if (memberInfos[0] is FieldInfo)
                 {
-                    return (T) (memberInfos[0] as FieldInfo).GetValue(instance);
+                    return (T)(memberInfos[0] as FieldInfo).GetValue(instance);
                 }
                 else if (memberInfos[0] is PropertyInfo)
                 {
-                    return (T) (memberInfos[0] as PropertyInfo).GetValue(instance, null);
+                    return (T)(memberInfos[0] as PropertyInfo).GetValue(instance, null);
                 }
                 else
                 {

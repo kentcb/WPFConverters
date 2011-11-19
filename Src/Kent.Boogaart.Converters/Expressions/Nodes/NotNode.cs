@@ -1,8 +1,9 @@
+using System.Windows;
 using Kent.Boogaart.HelperTrinity;
 
 namespace Kent.Boogaart.Converters.Expressions.Nodes
 {
-    //a node to negate a boolean value
+    // a node to negate a boolean value
     internal sealed class NotNode : UnaryNode
     {
         private static readonly ExceptionHelper exceptionHelper = new ExceptionHelper(typeof(NotNode));
@@ -14,10 +15,16 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
 
         public override object Evaluate(NodeEvaluationContext evaluationContext)
         {
-            object value = Node.Evaluate(evaluationContext);
-            NodeValueType nodeValueType = GetNodeValueType(value);
+            var value = Node.Evaluate(evaluationContext);
+
+            if (value == DependencyProperty.UnsetValue)
+            {
+                return DependencyProperty.UnsetValue;
+            }
+
+            var nodeValueType = GetNodeValueType(value);
             exceptionHelper.ResolveAndThrowIf(nodeValueType != NodeValueType.Boolean, "NotBooleanType", nodeValueType);
-            return !((bool) value);
+            return !((bool)value);
         }
     }
 }

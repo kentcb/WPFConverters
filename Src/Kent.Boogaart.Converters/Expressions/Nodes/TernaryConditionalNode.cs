@@ -1,4 +1,5 @@
-﻿using Kent.Boogaart.HelperTrinity;
+﻿using System.Windows;
+using Kent.Boogaart.HelperTrinity;
 
 namespace Kent.Boogaart.Converters.Expressions.Nodes
 {
@@ -22,6 +23,12 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
         public override object Evaluate(NodeEvaluationContext evaluationContext)
         {
             var firstNodeValue = this.FirstNode.Evaluate(evaluationContext);
+
+            if (firstNodeValue == DependencyProperty.UnsetValue)
+            {
+                return DependencyProperty.UnsetValue;
+            }
+
             var firstNodeValueType = GetNodeValueType(firstNodeValue);
 
             exceptionHelper.ResolveAndThrowIf(firstNodeValueType != NodeValueType.Boolean, "FirstNodeMustBeBoolean", this.OperatorSymbols, firstNodeValueType);

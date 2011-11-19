@@ -1,6 +1,6 @@
 namespace Kent.Boogaart.Converters.Expressions.Nodes
 {
-    //a node to multiply the left node and the right node
+    // a node to multiply the left node and the right node
     internal sealed class MultiplyNode : WideningBinaryNode
     {
         protected override string OperatorSymbols

@@ -1,6 +1,6 @@
 namespace Kent.Boogaart.Converters.Expressions.Nodes
 {
-    //a node to calculate the remainder after diving the left node by the right node
+    // a node to calculate the remainder after diving the left node by the right node
     internal sealed class ModulusNode : WideningBinaryNode
     {
         protected override string OperatorSymbols

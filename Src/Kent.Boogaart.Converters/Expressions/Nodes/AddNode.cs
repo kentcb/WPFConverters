@@ -1,6 +1,6 @@
 namespace Kent.Boogaart.Converters.Expressions.Nodes
 {
-    //a node to add the left node to the right node
+    // a node to add the left node to the right node
     internal sealed class AddNode : WideningBinaryNode
     {
         protected override string OperatorSymbols

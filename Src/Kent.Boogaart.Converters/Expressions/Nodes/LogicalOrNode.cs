@@ -1,6 +1,6 @@
 namespace Kent.Boogaart.Converters.Expressions.Nodes
 {
-    //a node that performs a logical or between the left and right nodes
+    // a node that performs a logical or between the left and right nodes
     internal sealed class LogicalOrNode : WideningBinaryNode
     {
         protected override string OperatorSymbols

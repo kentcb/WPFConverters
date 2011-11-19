@@ -65,7 +65,8 @@ namespace Kent.Boogaart.Converters
         /// <summary>
         /// Identifies the <see cref="SourceKind"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty SourceKindProperty = DependencyProperty.Register("SourceKind",
+        public static readonly DependencyProperty SourceKindProperty = DependencyProperty.Register(
+            "SourceKind",
             typeof(DateTimeKind),
             typeof(DateTimeConverter),
             new PropertyMetadata(DateTimeKind.Unspecified)
@@ -77,31 +78,34 @@ namespace Kent.Boogaart.Converters
         /// <summary>
         /// Identifies the <see cref="TargetKind"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty TargetKindProperty = DependencyProperty.Register("TargetKind",
+        public static readonly DependencyProperty TargetKindProperty = DependencyProperty.Register(
+            "TargetKind",
             typeof(DateTimeKind),
             typeof(DateTimeConverter),
             new PropertyMetadata(DateTimeKind.Unspecified)
 #if !SILVERLIGHT
             , ValidateDateTimeKind
 #endif
-);
+            );
 
         /// <summary>
         /// Identifies the <see cref="ConversionMode"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty ConversionModeProperty = DependencyProperty.Register("ConversionMode",
+        public static readonly DependencyProperty ConversionModeProperty = DependencyProperty.Register(
+            "ConversionMode",
             typeof(DateTimeConversionMode),
             typeof(DateTimeConverter),
             new PropertyMetadata(DateTimeConversionMode.DoConversion)
 #if !SILVERLIGHT
             , ValidateDateTimeConversionMode
 #endif
-);
+            );
 
         /// <summary>
         /// Identifies the <see cref="SourceAdjustment"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty SourceAdjustmentProperty = DependencyProperty.Register("SourceAdjustment",
+        public static readonly DependencyProperty SourceAdjustmentProperty = DependencyProperty.Register(
+            "SourceAdjustment",
             typeof(TimeSpan),
             typeof(DateTimeConverter),
             new PropertyMetadata(TimeSpan.Zero));
@@ -109,7 +113,8 @@ namespace Kent.Boogaart.Converters
         /// <summary>
         /// Identifies the <see cref="TargetAdjustment"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty TargetAdjustmentProperty = DependencyProperty.Register("TargetAdjustment",
+        public static readonly DependencyProperty TargetAdjustmentProperty = DependencyProperty.Register(
+            "TargetAdjustment",
             typeof(TimeSpan),
             typeof(DateTimeConverter),
             new PropertyMetadata(TimeSpan.Zero));
@@ -128,14 +133,8 @@ namespace Kent.Boogaart.Converters
 #endif
         public DateTimeKind SourceKind
         {
-            get
-            {
-                return (DateTimeKind) GetValue(SourceKindProperty);
-            }
-            set
-            {
-                SetValue(SourceKindProperty, value);
-            }
+            get { return (DateTimeKind)GetValue(SourceKindProperty); }
+            set { SetValue(SourceKindProperty, value); }
         }
 
         /// <summary>
@@ -152,14 +151,8 @@ namespace Kent.Boogaart.Converters
 #endif
         public DateTimeKind TargetKind
         {
-            get
-            {
-                return (DateTimeKind) GetValue(TargetKindProperty);
-            }
-            set
-            {
-                SetValue(TargetKindProperty, value);
-            }
+            get { return (DateTimeKind)GetValue(TargetKindProperty); }
+            set { SetValue(TargetKindProperty, value); }
         }
 
         /// <summary>
@@ -177,14 +170,8 @@ namespace Kent.Boogaart.Converters
         /// </remarks>
         public DateTimeConversionMode ConversionMode
         {
-            get
-            {
-                return (DateTimeConversionMode) GetValue(ConversionModeProperty);
-            }
-            set
-            {
-                SetValue(ConversionModeProperty, value);
-            }
+            get { return (DateTimeConversionMode)GetValue(ConversionModeProperty); }
+            set { SetValue(ConversionModeProperty, value); }
         }
 
         /// <summary>
@@ -198,14 +185,8 @@ namespace Kent.Boogaart.Converters
         /// </remarks>
         public TimeSpan SourceAdjustment
         {
-            get
-            {
-                return (TimeSpan) GetValue(SourceAdjustmentProperty);
-            }
-            set
-            {
-                SetValue(SourceAdjustmentProperty, value);
-            }
+            get { return (TimeSpan)GetValue(SourceAdjustmentProperty); }
+            set { SetValue(SourceAdjustmentProperty, value); }
         }
 
         /// <summary>
@@ -219,25 +200,19 @@ namespace Kent.Boogaart.Converters
         /// </remarks>
         public TimeSpan TargetAdjustment
         {
-            get
-            {
-                return (TimeSpan) GetValue(TargetAdjustmentProperty);
-            }
-            set
-            {
-                SetValue(TargetAdjustmentProperty, value);
-            }
+            get { return (TimeSpan)GetValue(TargetAdjustmentProperty); }
+            set { SetValue(TargetAdjustmentProperty, value); }
         }
 
         /// <summary>
-        /// Constructs an instance of <c>DateTimeConverter</c>.
+        /// Initializes a new instance of the DateTimeConverter class
         /// </summary>
         public DateTimeConverter()
         {
         }
 
         /// <summary>
-        /// Constructs an instance of <c>DateTimeConverter</c> with the specified source and target kinds.
+        /// Initializes a new instance of the DateTimeConverter class with the specified source and target kinds.
         /// </summary>
         /// <param name="sourceKind">
         /// The source kind for converted <see cref="DateTime"/>s.
@@ -247,8 +222,8 @@ namespace Kent.Boogaart.Converters
         /// </param>
         public DateTimeConverter(DateTimeKind sourceKind, DateTimeKind targetKind)
         {
-            SourceKind = sourceKind;
-            TargetKind = targetKind;
+            this.SourceKind = sourceKind;
+            this.TargetKind = targetKind;
         }
 
         /// <summary>
@@ -273,7 +248,7 @@ namespace Kent.Boogaart.Converters
         {
             if (value is DateTime)
             {
-                return DoConversion(ConversionMode, (DateTime) value, TargetKind, TargetAdjustment);
+                return DoConversion(this.ConversionMode, (DateTime)value, this.TargetKind, this.TargetAdjustment);
             }
 
             return DependencyProperty.UnsetValue;
@@ -301,7 +276,7 @@ namespace Kent.Boogaart.Converters
         {
             if (value is DateTime)
             {
-                return DoConversion(ConversionMode, (DateTime) value, SourceKind, SourceAdjustment);
+                return DoConversion(this.ConversionMode, (DateTime)value, this.SourceKind, this.SourceAdjustment);
             }
 
             return DependencyProperty.UnsetValue;
@@ -338,7 +313,7 @@ namespace Kent.Boogaart.Converters
 
             try
             {
-                ArgumentHelper.AssertEnumMember((DateTimeKind) value, "value");
+                ArgumentHelper.AssertEnumMember((DateTimeKind)value, "value");
             }
             catch (ArgumentException)
             {
@@ -354,7 +329,7 @@ namespace Kent.Boogaart.Converters
 
             try
             {
-                ArgumentHelper.AssertEnumMember((DateTimeConversionMode) value, "value");
+                ArgumentHelper.AssertEnumMember((DateTimeConversionMode)value, "value");
             }
             catch (ArgumentException)
             {

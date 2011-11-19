@@ -23,7 +23,7 @@ namespace Kent.Boogaart.Converters.Markup
     public sealed class FormatConverterExtension : MarkupExtension
     {
         private static readonly ExceptionHelper exceptionHelper = new ExceptionHelper(typeof(FormatConverterExtension));
-        private string _formatString;
+        private string formatString;
 
         /// <summary>
         /// Gets or sets the format string for the <see cref="FormatConverter"/>.
@@ -31,32 +31,26 @@ namespace Kent.Boogaart.Converters.Markup
         [ConstructorArgument("formatString")]
         public string FormatString
         {
-            get
-            {
-                return _formatString;
-            }
-            set
-            {
-                _formatString = value;
-            }
+            get { return this.formatString; }
+            set { this.formatString = value; }
         }
 
         /// <summary>
-        /// Constructs a default instance of <c>FormatConverterExtension</c>.
+        /// Initializes a new instance of the FormatConverterExtension class.
         /// </summary>
         public FormatConverterExtension()
         {
         }
 
         /// <summary>
-        /// Constructs an instance of <c>FormatConverterExtension</c> with the specified format string.
+        /// Initializes a new instance of the FormatConverterExtension class with the specified format string.
         /// </summary>
         /// <param name="formatString">
         /// The format string for the <see cref="FormatConverter"/>.
         /// </param>
         public FormatConverterExtension(string formatString)
         {
-            _formatString = formatString;
+            this.formatString = formatString;
         }
 
         /// <summary>
@@ -70,8 +64,8 @@ namespace Kent.Boogaart.Converters.Markup
         /// </returns>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            exceptionHelper.ResolveAndThrowIf(FormatString == null, "NoFormatString");
-            return new FormatConverter(FormatString);
+            exceptionHelper.ResolveAndThrowIf(this.FormatString == null, "NoFormatString");
+            return new FormatConverter(this.FormatString);
         }
     }
 #endif

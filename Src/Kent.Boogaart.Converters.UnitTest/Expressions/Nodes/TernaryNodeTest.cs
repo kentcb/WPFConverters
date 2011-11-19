@@ -5,41 +5,41 @@ namespace Kent.Boogaart.Converters.UnitTest.Expressions.Nodes
 {
     public class TernaryNodeTest : UnitTest
     {
-        private MockTernaryNode _ternaryNode;
-        private Node _firstNode;
-        private Node _secondNode;
-        private Node _thirdNode;
+        private MockTernaryNode ternaryNode;
+        private Node firstNode;
+        private Node secondNode;
+        private Node thirdNode;
 
         protected override void SetUpCore()
         {
             base.SetUpCore();
-            _firstNode = new ConstantNode<int>(0);
-            _secondNode = new ConstantNode<int>(0);
-            _thirdNode = new ConstantNode<int>(0);
-            _ternaryNode = new MockTernaryNode(_firstNode, _secondNode, _thirdNode);
+            this.firstNode = new ConstantNode<int>(0);
+            this.secondNode = new ConstantNode<int>(0);
+            this.thirdNode = new ConstantNode<int>(0);
+            this.ternaryNode = new MockTernaryNode(this.firstNode, this.secondNode, this.thirdNode);
         }
 
         [Fact]
         public void First_ShouldYieldGivenNode()
         {
-            Assert.Same(_firstNode, _ternaryNode.FirstNode);
+            Assert.Same(this.firstNode, this.ternaryNode.FirstNode);
         }
 
         [Fact]
         public void Second_ShouldYieldGivenNode()
         {
-            Assert.Same(_secondNode, _ternaryNode.SecondNode);
+            Assert.Same(this.secondNode, this.ternaryNode.SecondNode);
         }
 
         [Fact]
         public void Third_ShouldYieldGivenNode()
         {
-            Assert.Same(_thirdNode, _ternaryNode.ThirdNode);
+            Assert.Same(this.thirdNode, this.ternaryNode.ThirdNode);
         }
 
         #region Supporting Types
 
-        //cannot mock because TernaryNode is internal
+        // cannot mock because TernaryNode is internal
         private sealed class MockTernaryNode : TernaryNode
         {
             protected override string OperatorSymbols

@@ -2,39 +2,33 @@ using System.Diagnostics;
 
 namespace Kent.Boogaart.Converters.Expressions.Nodes
 {
-	//a node containing two children
-	internal abstract class BinaryNode : Node
-	{
-		private readonly Node _leftNode;
-		private readonly Node _rightNode;
+    // a node containing two children
+    internal abstract class BinaryNode : Node
+    {
+        private readonly Node leftNode;
+        private readonly Node rightNode;
 
-		public Node LeftNode
-		{
-			get
-			{
-				return _leftNode;
-			}
-		}
+        public Node LeftNode
+        {
+            get { return this.leftNode; }
+        }
 
-		public Node RightNode
-		{
-			get
-			{
-				return _rightNode;
-			}
-		}
+        public Node RightNode
+        {
+            get { return this.rightNode; }
+        }
 
-		protected abstract string OperatorSymbols
-		{
-			get;
-		}
+        protected abstract string OperatorSymbols
+        {
+            get;
+        }
 
-		protected BinaryNode(Node leftNode, Node rightNode)
-		{
-			Debug.Assert(leftNode != null);
-			Debug.Assert(rightNode != null);
-			_leftNode = leftNode;
-			_rightNode = rightNode;
-		}
-	}
+        protected BinaryNode(Node leftNode, Node rightNode)
+        {
+            Debug.Assert(leftNode != null);
+            Debug.Assert(rightNode != null);
+            this.leftNode = leftNode;
+            this.rightNode = rightNode;
+        }
+    }
 }

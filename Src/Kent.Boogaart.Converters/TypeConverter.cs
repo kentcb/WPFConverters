@@ -45,7 +45,8 @@ namespace Kent.Boogaart.Converters
         /// <summary>
         /// Identifies the <see cref="SourceType"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty SourceTypeProperty = DependencyProperty.Register("SourceType",
+        public static readonly DependencyProperty SourceTypeProperty = DependencyProperty.Register(
+            "SourceType",
             typeof(Type),
             typeof(TypeConverter),
             new PropertyMetadata(null));
@@ -53,7 +54,8 @@ namespace Kent.Boogaart.Converters
         /// <summary>
         /// Identifies the <see cref="TargetType"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty TargetTypeProperty = DependencyProperty.Register("TargetType",
+        public static readonly DependencyProperty TargetTypeProperty = DependencyProperty.Register(
+            "TargetType",
             typeof(Type),
             typeof(TypeConverter),
             new PropertyMetadata(null));
@@ -66,14 +68,8 @@ namespace Kent.Boogaart.Converters
 #endif
         public Type SourceType
         {
-            get
-            {
-                return GetValue(SourceTypeProperty) as Type;
-            }
-            set
-            {
-                SetValue(SourceTypeProperty, value);
-            }
+            get { return GetValue(SourceTypeProperty) as Type; }
+            set { SetValue(SourceTypeProperty, value); }
         }
 
         /// <summary>
@@ -84,25 +80,19 @@ namespace Kent.Boogaart.Converters
 #endif
         public Type TargetType
         {
-            get
-            {
-                return GetValue(TargetTypeProperty) as Type;
-            }
-            set
-            {
-                SetValue(TargetTypeProperty, value);
-            }
+            get { return GetValue(TargetTypeProperty) as Type; }
+            set { SetValue(TargetTypeProperty, value); }
         }
 
         /// <summary>
-        /// Constructs an instance of <c>TypeConverter</c>.
+        /// Initializes a new instance of the TypeConverter class.
         /// </summary>
         public TypeConverter()
         {
         }
 
         /// <summary>
-        /// Constructs an instance of <c>TypeConverter</c> with the specified source and target types.
+        /// Initializes a new instance of the TypeConverter class with the specified source and target types.
         /// </summary>
         /// <param name="sourceType">
         /// The source type (see <see cref="SourceType"/>).
@@ -112,8 +102,8 @@ namespace Kent.Boogaart.Converters
         /// </param>
         public TypeConverter(Type sourceType, Type targetType)
         {
-            SourceType = sourceType;
-            TargetType = targetType;
+            this.SourceType = sourceType;
+            this.TargetType = targetType;
         }
 
         /// <summary>
@@ -136,8 +126,8 @@ namespace Kent.Boogaart.Converters
         /// </returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            exceptionHelper.ResolveAndThrowIf(TargetType == null, "NoTargetType");
-            return DoConversion(value, TargetType, culture);
+            exceptionHelper.ResolveAndThrowIf(this.TargetType == null, "NoTargetType");
+            return DoConversion(value, this.TargetType, culture);
         }
 
         /// <summary>
@@ -160,8 +150,8 @@ namespace Kent.Boogaart.Converters
         /// </returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            exceptionHelper.ResolveAndThrowIf(SourceType == null, "NoSourceType");
-            return DoConversion(value, SourceType, culture);
+            exceptionHelper.ResolveAndThrowIf(this.SourceType == null, "NoSourceType");
+            return DoConversion(value, this.SourceType, culture);
         }
 
         private static object DoConversion(object value, Type toType, CultureInfo culture)
@@ -180,7 +170,7 @@ namespace Kent.Boogaart.Converters
 #if !SILVERLIGHT
             else
             {
-                System.ComponentModel.TypeConverter typeConverter = TypeDescriptor.GetConverter(value);
+                var typeConverter = TypeDescriptor.GetConverter(value);
 
                 if (typeConverter.CanConvertTo(toType))
                 {

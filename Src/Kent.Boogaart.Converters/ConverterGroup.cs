@@ -24,17 +24,17 @@ namespace Kent.Boogaart.Converters
     /// <code lang="xml">
     /// <![CDATA[
     /// <Label>
-    ///		<Label.Content>
-    ///			<Binding Path="StartDateTime">
-    ///				<Binding.Converter>
-    ///					<ConverterGroup>
-    /// 					<DateTimeConverter TargetKind="Local"/>
-    /// 					<FormatConverter FormatString="{0:t}"/>
-    ///					</ConverterGroup>
-    ///				</Binding.Converter>
-    ///			</Binding>
-    ///		</Label.Content>
-    ///	</Label>
+    ///     <Label.Content>
+    ///         <Binding Path="StartDateTime">
+    ///             <Binding.Converter>
+    ///                 <ConverterGroup>
+    ///                     <DateTimeConverter TargetKind="Local"/>
+    ///                     <FormatConverter FormatString="{0:t}"/>
+    ///                 </ConverterGroup>
+    ///             </Binding.Converter>
+    ///         </Binding>
+    ///     </Label.Content>
+    /// </Label>
     /// ]]>
     /// </code>
     /// </example>
@@ -47,28 +47,28 @@ namespace Kent.Boogaart.Converters
     /// <![CDATA[
     /// <TextBox x:Name="_textBox"/>
     /// <CheckBox IsThreeState="True">
-    ///		<CheckBox.IsChecked>
-    ///			<Binding Path="Text" ElementName="_textBox" FallbackValue="{x:Null}">
-    ///				<Binding.Converter>
-    ///					<ConverterGroup>
-    ///						<CaseConverter Casing="Upper"/>
-    ///						<MapConverter>
-    ///							<Mapping From="YES">
-    ///								<Mapping.To>
-    ///									<sys:Boolean>True</sys:Boolean>
-    ///								</Mapping.To>
-    ///							</Mapping>
-    ///							<Mapping From="NO">
-    ///								<Mapping.To>
-    ///									<sys:Boolean>False</sys:Boolean>
-    ///								</Mapping.To>
-    ///							</Mapping>
-    ///						</MapConverter>
-    ///					</ConverterGroup>
-    ///				</Binding.Converter>
-    ///			</Binding>
-    ///		</CheckBox.IsChecked>
-    ///	</CheckBox>
+    ///     <CheckBox.IsChecked>
+    ///         <Binding Path="Text" ElementName="_textBox" FallbackValue="{x:Null}">
+    ///             <Binding.Converter>
+    ///                 <ConverterGroup>
+    ///                     <CaseConverter Casing="Upper"/>
+    ///                     <MapConverter>
+    ///                         <Mapping From="YES">
+    ///                             <Mapping.To>
+    ///                                 <sys:Boolean>True</sys:Boolean>
+    ///                             </Mapping.To>
+    ///                         </Mapping>
+    ///                         <Mapping From="NO">
+    ///                             <Mapping.To>
+    ///                                 <sys:Boolean>False</sys:Boolean>
+    ///                             </Mapping.To>
+    ///                         </Mapping>
+    ///                     </MapConverter>
+    ///                 </ConverterGroup>
+    ///             </Binding.Converter>
+    ///         </Binding>
+    ///     </CheckBox.IsChecked>
+    /// </CheckBox>
     /// ]]>
     /// </code>
     /// </example>
@@ -79,7 +79,8 @@ namespace Kent.Boogaart.Converters
     public class ConverterGroup : DependencyObject, IValueConverter
     {
 #if !SILVERLIGHT
-        private static readonly DependencyPropertyKey _convertersPropertyKey = DependencyProperty.RegisterReadOnly("Converters",
+        private static readonly DependencyPropertyKey convertersPropertyKey = DependencyProperty.RegisterReadOnly(
+            "Converters",
             typeof(Collection<IValueConverter>),
             typeof(ConverterGroup),
             new PropertyMetadata());
@@ -89,9 +90,10 @@ namespace Kent.Boogaart.Converters
         /// Identifies the <see cref="Converters"/> dependency property.
         /// </summary>
 #if !SILVERLIGHT
-        public static readonly DependencyProperty ConvertersProperty = _convertersPropertyKey.DependencyProperty;
+        public static readonly DependencyProperty ConvertersProperty = convertersPropertyKey.DependencyProperty;
 #else
-        public static readonly DependencyProperty ConvertersProperty = DependencyProperty.Register("Converters",
+        public static readonly DependencyProperty ConvertersProperty = DependencyProperty.Register(
+            "Converters",
             typeof(Collection<IValueConverter>),
             typeof(ConverterGroup),
             new PropertyMetadata(null));
@@ -106,10 +108,11 @@ namespace Kent.Boogaart.Converters
             {
                 return GetValue(ConvertersProperty) as Collection<IValueConverter>;
             }
+
             private set
             {
 #if !SILVERLIGHT
-                SetValue(_convertersPropertyKey, value);
+                SetValue(convertersPropertyKey, value);
 #else
                 SetValue(ConvertersProperty, value);
 #endif
@@ -117,11 +120,11 @@ namespace Kent.Boogaart.Converters
         }
 
         /// <summary>
-        /// Constructs an instance of <c>ConverterGroup</c>.
+        /// Initializes a new instance of the ConverterGroup class.
         /// </summary>
         public ConverterGroup()
         {
-            Converters = new Collection<IValueConverter>();
+            this.Converters = new Collection<IValueConverter>();
         }
 
         /// <summary>
@@ -144,14 +147,14 @@ namespace Kent.Boogaart.Converters
         /// </returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (Converters.Count == 0)
+            if (this.Converters.Count == 0)
             {
                 return DependencyProperty.UnsetValue;
             }
 
-            object convertedValue = value;
+            var convertedValue = value;
 
-            foreach (IValueConverter valueConverter in Converters)
+            foreach (var valueConverter in this.Converters)
             {
                 convertedValue = valueConverter.Convert(convertedValue, targetType, parameter, culture);
             }
@@ -179,16 +182,16 @@ namespace Kent.Boogaart.Converters
         /// </returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (Converters.Count == 0)
+            if (this.Converters.Count == 0)
             {
                 return DependencyProperty.UnsetValue;
             }
 
-            object convertedValue = value;
+            var convertedValue = value;
 
-            for (int i = Converters.Count - 1; i >= 0; --i)
+            for (var i = this.Converters.Count - 1; i >= 0; --i)
             {
-                convertedValue = Converters[i].ConvertBack(convertedValue, targetType, parameter, culture);
+                convertedValue = this.Converters[i].ConvertBack(convertedValue, targetType, parameter, culture);
             }
 
             return convertedValue;

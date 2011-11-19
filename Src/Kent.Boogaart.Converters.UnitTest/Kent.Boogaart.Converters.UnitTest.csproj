@@ -169,11 +169,6 @@
     <Compile Include="Expressions\ParseExceptionTest.cs" />
     <Compile Include="Expressions\ParserTest.cs" />
     <Compile Include="Expressions\TokenizerTest.cs" />
-    <Compile Include="Expressions\TokenizerTestResources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>TokenizerTestResources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Expressions\TokenTest.cs" />
     <Compile Include="FormatConverterTest.cs" />
     <Compile Include="MapConverterTest.cs" />
@@ -194,6 +189,11 @@
     <Compile Include="Expressions\Nodes\NullCoalescingNodeTest.cs" />
     <Compile Include="Expressions\Nodes\TernaryNodeTest.cs" />
     <Compile Include="Expressions\Nodes\WideningBinaryNodeTestBase.cs" />
+    <Compile Include="Expressions\TokenizerTestResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TokenizerTestResources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

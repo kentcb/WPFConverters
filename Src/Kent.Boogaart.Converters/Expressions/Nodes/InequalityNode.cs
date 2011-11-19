@@ -1,6 +1,6 @@
 namespace Kent.Boogaart.Converters.Expressions.Nodes
 {
-    //a node to check whether the left node is not equal to the right node
+    // a node to check whether the left node is not equal to the right node
     internal sealed class InequalityNode : WideningBinaryNode
     {
         protected override string OperatorSymbols

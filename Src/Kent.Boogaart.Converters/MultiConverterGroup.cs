@@ -40,15 +40,15 @@ namespace Kent.Boogaart.Converters
     /// The following example shows how multiple converters might be joined together to produce some useful output:
     /// <code lang="xml">
     /// <![CDATA[
-    ///	<MultiConverterGroup>
-    ///		<MultiConverterGroupStep>
-    /// 		<NumberOfFilesConverter/>
-    ///			<TotalFileSizeConverter/>
-    ///		</MultiConverterGroupStep>
-    ///		<MultiConverterGroupStep>
-    ///			<FormatConverter FormatString="{0} files with a total size of {1}KB."/>
-    ///		</MultiConverterGroupStep>
-    ///	</MultiConverterGroup>
+    /// <MultiConverterGroup>
+    ///     <MultiConverterGroupStep>
+    ///         <NumberOfFilesConverter/>
+    ///         <TotalFileSizeConverter/>
+    ///     </MultiConverterGroupStep>
+    ///     <MultiConverterGroupStep>
+    ///         <FormatConverter FormatString="{0} files with a total size of {1}KB."/>
+    ///     </MultiConverterGroupStep>
+    /// </MultiConverterGroup>
     /// ]]>
     /// </code>
     /// Such a converter might be used in a <c>MultiBinding</c> that is bound to a collection of files.
@@ -58,7 +58,8 @@ namespace Kent.Boogaart.Converters
     public class MultiConverterGroup : DependencyObject, IMultiValueConverter
     {
         private static readonly ExceptionHelper exceptionHelper = new ExceptionHelper(typeof(MultiConverterGroup));
-        private static readonly DependencyPropertyKey _stepsPropertyKey = DependencyProperty.RegisterReadOnly("Steps",
+        private static readonly DependencyPropertyKey stepsPropertyKey = DependencyProperty.RegisterReadOnly(
+            "Steps",
             typeof(Collection<MultiConverterGroupStep>),
             typeof(MultiConverterGroup),
             new FrameworkPropertyMetadata());
@@ -66,29 +67,23 @@ namespace Kent.Boogaart.Converters
         /// <summary>
         /// Identifies the <see cref="Steps"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty StepsProperty = _stepsPropertyKey.DependencyProperty;
+        public static readonly DependencyProperty StepsProperty = stepsPropertyKey.DependencyProperty;
 
         /// <summary>
         /// Gets the collection of <see cref="MultiConverterGroupStep"/>s in this <c>MultiConverterGroup</c>.
         /// </summary>
         public Collection<MultiConverterGroupStep> Steps
         {
-            get
-            {
-                return GetValue(StepsProperty) as Collection<MultiConverterGroupStep>;
-            }
-            private set
-            {
-                SetValue(_stepsPropertyKey, value);
-            }
+            get { return GetValue(StepsProperty) as Collection<MultiConverterGroupStep>; }
+            private set { SetValue(stepsPropertyKey, value); }
         }
 
         /// <summary>
-        /// Constructs an instance of <c>MultiConverterGroup</c>.
+        /// Initializes a new instance of the MultiConverterGroup class.
         /// </summary>
         public MultiConverterGroup()
         {
-            Steps = new Collection<MultiConverterGroupStep>();
+            this.Steps = new Collection<MultiConverterGroupStep>();
         }
 
         /// <summary>
@@ -111,19 +106,19 @@ namespace Kent.Boogaart.Converters
         /// </returns>
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (Steps.Count == 0)
+            if (this.Steps.Count == 0)
             {
                 return DependencyProperty.UnsetValue;
             }
 
-            exceptionHelper.ResolveAndThrowIf(Steps[Steps.Count - 1].Converters.Count != 1, "FinalStepMustHaveOneConverter");
+            exceptionHelper.ResolveAndThrowIf(this.Steps[this.Steps.Count - 1].Converters.Count != 1, "FinalStepMustHaveOneConverter");
 
-            foreach (MultiConverterGroupStep step in Steps)
+            foreach (var step in this.Steps)
             {
                 exceptionHelper.ResolveAndThrowIf(step.Converters.Count == 0, "EachStepMustHaveAtLeastOneConverter");
-                object[] convertedValues = new object[step.Converters.Count];
+                var convertedValues = new object[step.Converters.Count];
 
-                for (int i = 0; i < step.Converters.Count; ++i)
+                for (var i = 0; i < step.Converters.Count; ++i)
                 {
                     convertedValues[i] = step.Converters[i].Convert(values, targetType, parameter, culture);
                 }
@@ -155,17 +150,17 @@ namespace Kent.Boogaart.Converters
         /// </returns>
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
-            if (Steps.Count == 0)
+            if (this.Steps.Count == 0)
             {
                 return null;
             }
 
-            exceptionHelper.ResolveAndThrowIf(Steps[Steps.Count - 1].Converters.Count != 1, "FinalStepMustHaveOneConverter");
-            object[] stepValues = new object[] { value };
+            exceptionHelper.ResolveAndThrowIf(this.Steps[this.Steps.Count - 1].Converters.Count != 1, "FinalStepMustHaveOneConverter");
+            var stepValues = new object[] { value };
 
-            for (int i = Steps.Count - 1; i >= 0; --i)
+            for (var i = this.Steps.Count - 1; i >= 0; --i)
             {
-                MultiConverterGroupStep step = Steps[i];
+                var step = this.Steps[i];
                 exceptionHelper.ResolveAndThrowIf(step.Converters.Count == 0, "EachStepMustHaveAtLeastOneConverter");
                 exceptionHelper.ResolveAndThrowIf(step.Converters.Count != stepValues.Length, "NumberOfConvertersInStepMustEqualNumberOfValuesFromPreviousStep", i + 1, stepValues.Length, i, step.Converters.Count);
                 stepValues = step.Converters[0].ConvertBack(stepValues[0], targetTypes, parameter, culture);

@@ -1,4 +1,5 @@
-﻿using Kent.Boogaart.Converters.Expressions;
+﻿using System.Windows;
+using Kent.Boogaart.Converters.Expressions;
 using Kent.Boogaart.Converters.Expressions.Nodes;
 using Xunit;
 
@@ -6,6 +7,13 @@ namespace Kent.Boogaart.Converters.UnitTest.Expressions.Nodes
 {
     public sealed class TernaryConditionalNodeTest : UnitTest
     {
+        [Fact]
+        public void Evaluate_ShouldReturnUnsetValueIfFirstOperandIsUnsetValue()
+        {
+            var node = new TernaryConditionalNode(new ConstantNode<object>(DependencyProperty.UnsetValue), new ConstantNode<int>(10), new ConstantNode<int>(20));
+            Assert.Equal(DependencyProperty.UnsetValue, node.Evaluate(NodeEvaluationContext.Empty));
+        }
+
         [Fact]
         public void Evaluate_ShouldThrowIfFirstNodeTypeIsNotBoolean()
         {

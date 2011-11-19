@@ -1,6 +1,6 @@
 namespace Kent.Boogaart.Converters.Expressions.Nodes
 {
-    //a node to subtract the right node from the left node
+    // a node to subtract the right node from the left node
     internal sealed class SubtractNode : WideningBinaryNode
     {
         protected override string OperatorSymbols

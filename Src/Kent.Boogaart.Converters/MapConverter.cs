@@ -30,19 +30,19 @@ namespace Kent.Boogaart.Converters
     /// <![CDATA[
     /// <CheckBox x:Name="_checkBox"/>
     /// <Label Content="Here is the label.">
-    ///		<Label.Visibility>
-    ///			<Binding Path="IsChecked" ElementName="_checkBox" FallbackValue="Collapsed">
-    ///				<Binding.Converter>
-    ///					<MapConverter>
-    ///						<Mapping To="{x:Static Visibility.Visible}">
-    ///							<Mapping.From>
-    ///								<sys:Boolean>True</sys:Boolean>
-    ///							</Mapping.From>
-    ///						</Mapping>
-    ///					</MapConverter>
-    ///				</Binding.Converter>
-    ///			</Binding>
-    ///		</Label.Visibility>
+    ///     <Label.Visibility>
+    ///         <Binding Path="IsChecked" ElementName="_checkBox" FallbackValue="Collapsed">
+    ///             <Binding.Converter>
+    ///                 <MapConverter>
+    ///                     <Mapping To="{x:Static Visibility.Visible}">
+    ///                         <Mapping.From>
+    ///                             <sys:Boolean>True</sys:Boolean>
+    ///                         </Mapping.From>
+    ///                     </Mapping>
+    ///                 </MapConverter>
+    ///             </Binding.Converter>
+    ///         </Binding>
+    ///     </Label.Visibility>
     /// </Label>
     /// ]]>
     /// </code>
@@ -54,17 +54,17 @@ namespace Kent.Boogaart.Converters
     /// <code lang="xml">
     /// <![CDATA[
     /// <Label>
-    ///		<Label.Content>
-    ///			<Binding Path="UriFormat">
-    ///				<Binding.Converter>
-    ///					<MapConverter FallbackBehavior="ReturnOriginalValue">
-    ///						<Mapping From="{x:Static sys:UriFormat.SafeUnescaped}" To="Safe unescaped"/>
-    ///						<Mapping From="{x:Static sys:UriFormat.UriEscaped}" To="URI escaped"/>
-    ///					</MapConverter>
-    ///				</Binding.Converter>
-    ///			</Binding>
-    ///		</Label.Content>
-    ///	</Label>
+    ///        <Label.Content>
+    ///            <Binding Path="UriFormat">
+    ///                <Binding.Converter>
+    ///                    <MapConverter FallbackBehavior="ReturnOriginalValue">
+    ///                        <Mapping From="{x:Static sys:UriFormat.SafeUnescaped}" To="Safe unescaped"/>
+    ///                        <Mapping From="{x:Static sys:UriFormat.UriEscaped}" To="URI escaped"/>
+    ///                    </MapConverter>
+    ///                </Binding.Converter>
+    ///            </Binding>
+    ///        </Label.Content>
+    ///    </Label>
     /// ]]>
     /// </code>
     /// </example>
@@ -75,7 +75,8 @@ namespace Kent.Boogaart.Converters
     public class MapConverter : DependencyObject, IValueConverter
     {
 #if !SILVERLIGHT
-        private static readonly DependencyPropertyKey _mappingsPropertyKey = DependencyProperty.RegisterReadOnly("Mappings",
+        private static readonly DependencyPropertyKey mappingsPropertyKey = DependencyProperty.RegisterReadOnly(
+            "Mappings",
             typeof(Collection<Mapping>),
             typeof(MapConverter),
             new PropertyMetadata(null));
@@ -85,9 +86,10 @@ namespace Kent.Boogaart.Converters
         /// Identifies the <see cref="Mappings"/> dependency property.
         /// </summary>
 #if !SILVERLIGHT
-        public static readonly DependencyProperty MappingsProperty = _mappingsPropertyKey.DependencyProperty;
+        public static readonly DependencyProperty MappingsProperty = mappingsPropertyKey.DependencyProperty;
 #else
-        public static readonly DependencyProperty MappingsProperty = DependencyProperty.Register("Mappings",
+        public static readonly DependencyProperty MappingsProperty = DependencyProperty.Register(
+            "Mappings",
             typeof(Collection<Mapping>),
             typeof(MapConverter),
             new PropertyMetadata(null));
@@ -96,7 +98,8 @@ namespace Kent.Boogaart.Converters
         /// <summary>
         /// Identifies the <see cref="FallbackBehavior"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty FallbackBehaviorProperty = DependencyProperty.Register("FallbackBehavior",
+        public static readonly DependencyProperty FallbackBehaviorProperty = DependencyProperty.Register(
+            "FallbackBehavior",
             typeof(FallbackBehavior),
             typeof(MapConverter),
             new PropertyMetadata(FallbackBehavior.ReturnUnsetValue)
@@ -105,11 +108,11 @@ namespace Kent.Boogaart.Converters
 #endif
             );
 
-
         /// <summary>
         /// Identifies the <see cref="FallbackValue"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty FallbackValueProperty = DependencyProperty.Register("FallbackValue",
+        public static readonly DependencyProperty FallbackValueProperty = DependencyProperty.Register(
+            "FallbackValue",
             typeof(object),
             typeof(MapConverter),
             new PropertyMetadata(null));
@@ -132,14 +135,8 @@ namespace Kent.Boogaart.Converters
         /// </remarks>
         public FallbackBehavior FallbackBehavior
         {
-            get
-            {
-                return (FallbackBehavior) GetValue(FallbackBehaviorProperty);
-            }
-            set
-            {
-                SetValue(FallbackBehaviorProperty, value);
-            }
+            get { return (FallbackBehavior)GetValue(FallbackBehaviorProperty); }
+            set { SetValue(FallbackBehaviorProperty, value); }
         }
 
         /// <summary>
@@ -148,14 +145,8 @@ namespace Kent.Boogaart.Converters
         /// </summary>
         public object FallbackValue
         {
-            get
-            {
-                return GetValue(FallbackValueProperty);
-            }
-            set
-            {
-                SetValue(FallbackValueProperty, value);
-            }
+            get { return GetValue(FallbackValueProperty); }
+            set { SetValue(FallbackValueProperty, value); }
         }
 
         /// <summary>
@@ -173,11 +164,12 @@ namespace Kent.Boogaart.Converters
             {
                 return GetValue(MappingsProperty) as Collection<Mapping>;
             }
+
             private set
             {
-                Debug.Assert(Mappings == null);
+                Debug.Assert(this.Mappings == null);
 #if !SILVERLIGHT
-                SetValue(_mappingsPropertyKey, value);
+                SetValue(mappingsPropertyKey, value);
 #else
                 SetValue(MappingsProperty, value);
 #endif
@@ -185,11 +177,11 @@ namespace Kent.Boogaart.Converters
         }
 
         /// <summary>
-        /// Constructs an instance of <c>MapConverter</c>.
+        /// Initializes a new instance of the MapConverter class.
         /// </summary>
         public MapConverter()
         {
-            Mappings = new Collection<Mapping>();
+            this.Mappings = new Collection<Mapping>();
         }
 
         /// <summary>
@@ -212,7 +204,7 @@ namespace Kent.Boogaart.Converters
         /// </returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            foreach (Mapping mapping in Mappings)
+            foreach (var mapping in this.Mappings)
             {
                 if (Equals(value, mapping.From))
                 {
@@ -230,7 +222,7 @@ namespace Kent.Boogaart.Converters
             }
             else
             {
-                return FallbackValue;
+                return this.FallbackValue;
             }
         }
 
@@ -254,7 +246,7 @@ namespace Kent.Boogaart.Converters
         /// </returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            foreach (Mapping mapping in Mappings)
+            foreach (var mapping in this.Mappings)
             {
                 if (Equals(value, mapping.To))
                 {
@@ -272,7 +264,7 @@ namespace Kent.Boogaart.Converters
             }
             else
             {
-                return FallbackValue;
+                return this.FallbackValue;
             }
         }
 

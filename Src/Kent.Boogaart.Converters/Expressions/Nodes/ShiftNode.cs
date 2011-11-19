@@ -1,9 +1,10 @@
 using System.Diagnostics;
+using System.Windows;
 using Kent.Boogaart.HelperTrinity;
 
 namespace Kent.Boogaart.Converters.Expressions.Nodes
 {
-    //a node from which shift nodes will inherit
+    // a node from which shift nodes will inherit
     internal abstract class ShiftNode : BinaryNode
     {
         private static readonly ExceptionHelper exceptionHelper = new ExceptionHelper(typeof(ShiftNode));
@@ -15,23 +16,36 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
 
         public override object Evaluate(NodeEvaluationContext evaluationContext)
         {
-            object leftNodeValue = LeftNode.Evaluate(evaluationContext);
-            object rightNodeValue = RightNode.Evaluate(evaluationContext);
-            NodeValueType leftNodeValueType = GetNodeValueType(leftNodeValue);
-            NodeValueType rightNodeValueType = GetNodeValueType(rightNodeValue);
-            //right operand must always be Int32
+            var leftNodeValue = LeftNode.Evaluate(evaluationContext);
+
+            if (leftNodeValue == DependencyProperty.UnsetValue)
+            {
+                return DependencyProperty.UnsetValue;
+            }
+
+            var rightNodeValue = RightNode.Evaluate(evaluationContext);
+
+            if (rightNodeValue == DependencyProperty.UnsetValue)
+            {
+                return DependencyProperty.UnsetValue;
+            }
+
+            var leftNodeValueType = GetNodeValueType(leftNodeValue);
+            var rightNodeValueType = GetNodeValueType(rightNodeValue);
+
+            // right operand must always be Int32
             exceptionHelper.ResolveAndThrowIf(!IsNumericalNodeValueType(leftNodeValueType) || rightNodeValueType != NodeValueType.Int32, "NodeValuesNotSupportedTypes", OperatorSymbols, leftNodeValueType, rightNodeValueType);
 
             switch (leftNodeValueType)
             {
                 case NodeValueType.Byte:
-                    return DoByte((byte) leftNodeValue, (int) rightNodeValue);
+                    return this.DoByte((byte)leftNodeValue, (int)rightNodeValue);
                 case NodeValueType.Int16:
-                    return DoInt16((short) leftNodeValue, (int) rightNodeValue);
+                    return this.DoInt16((short)leftNodeValue, (int)rightNodeValue);
                 case NodeValueType.Int32:
-                    return DoInt32((int) leftNodeValue, (int) rightNodeValue);
+                    return this.DoInt32((int)leftNodeValue, (int)rightNodeValue);
                 case NodeValueType.Int64:
-                    return DoInt64((long) leftNodeValue, (int) rightNodeValue);
+                    return this.DoInt64((long)leftNodeValue, (int)rightNodeValue);
             }
 
             Debug.Assert(false);

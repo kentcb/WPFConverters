@@ -1,6 +1,6 @@
 namespace Kent.Boogaart.Converters.Expressions.Nodes
 {
-    //a node to determine whether the left node is less than or equal to the right node
+    // a node to determine whether the left node is less than or equal to the right node
     internal sealed class LessThanOrEqualNode : WideningBinaryNode
     {
         protected override string OperatorSymbols

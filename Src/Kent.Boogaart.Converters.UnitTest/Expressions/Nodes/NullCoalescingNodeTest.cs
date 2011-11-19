@@ -1,7 +1,5 @@
-﻿using System;
+﻿using Kent.Boogaart.Converters.Expressions.Nodes;
 using Xunit;
-using Kent.Boogaart.Converters.Expressions;
-using Kent.Boogaart.Converters.Expressions.Nodes;
 
 namespace Kent.Boogaart.Converters.UnitTest.Expressions.Nodes
 {

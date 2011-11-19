@@ -44,14 +44,14 @@ namespace Kent.Boogaart.Converters.Markup
         }
 
         /// <summary>
-        /// Constructs a default instance of <c>ExpressionConverterExtension</c>.
+        /// Initializes a new instance of the ExpressionConverterExtension class.
         /// </summary>
         public ExpressionConverterExtension()
         {
         }
 
         /// <summary>
-        /// Constructs an instance of <c>ExpressionConverterExtension</c> with the given expression.
+        /// Initializes a new instance of the ExpressionConverterExtension class with the given expression.
         /// </summary>
         /// <param name="expression">
         /// The expression.

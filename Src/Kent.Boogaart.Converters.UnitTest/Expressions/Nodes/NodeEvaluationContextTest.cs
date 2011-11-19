@@ -1,37 +1,37 @@
-using Xunit;
 using Kent.Boogaart.Converters.Expressions.Nodes;
+using Xunit;
 
 namespace Kent.Boogaart.Converters.UnitTest.Expressions.Nodes
 {
-	public sealed class NodeEvaluationContextTest : UnitTest
-	{
-		private NodeEvaluationContext _nodeEvaluationContext;
+    public sealed class NodeEvaluationContextTest : UnitTest
+    {
+        private NodeEvaluationContext nodeEvaluationContext;
 
-		protected override void  SetUpCore()
-		{
-			 base.SetUpCore();
-			object[] args = new object[] { 1, "abc", 3.8d, null };
-			_nodeEvaluationContext = new NodeEvaluationContext(args);
-		}
+        protected override void SetUpCore()
+        {
+             base.SetUpCore();
+            object[] args = new object[] { 1, "abc", 3.8d, null };
+            this.nodeEvaluationContext = new NodeEvaluationContext(args);
+        }
 
-		[Fact]
-		public void HasArgument_ShouldDetermineArgumentExistence()
-		{
-			Assert.True(_nodeEvaluationContext.HasArgument(0));
-			Assert.True(_nodeEvaluationContext.HasArgument(1));
-			Assert.True(_nodeEvaluationContext.HasArgument(2));
-			Assert.True(_nodeEvaluationContext.HasArgument(3));
-			Assert.False(_nodeEvaluationContext.HasArgument(4));
-			Assert.False(_nodeEvaluationContext.HasArgument(5));
-		}
+        [Fact]
+        public void HasArgument_ShouldDetermineArgumentExistence()
+        {
+            Assert.True(this.nodeEvaluationContext.HasArgument(0));
+            Assert.True(this.nodeEvaluationContext.HasArgument(1));
+            Assert.True(this.nodeEvaluationContext.HasArgument(2));
+            Assert.True(this.nodeEvaluationContext.HasArgument(3));
+            Assert.False(this.nodeEvaluationContext.HasArgument(4));
+            Assert.False(this.nodeEvaluationContext.HasArgument(5));
+        }
 
-		[Fact]
-		public void GetArgument_ShouldYieldArgument()
-		{
-			Assert.Equal(1, _nodeEvaluationContext.GetArgument(0));
-			Assert.Equal("abc", _nodeEvaluationContext.GetArgument(1));
-			Assert.Equal(3.8d, _nodeEvaluationContext.GetArgument(2));
-			Assert.Null(_nodeEvaluationContext.GetArgument(3));
-		}
-	}
+        [Fact]
+        public void GetArgument_ShouldYieldArgument()
+        {
+            Assert.Equal(1, this.nodeEvaluationContext.GetArgument(0));
+            Assert.Equal("abc", this.nodeEvaluationContext.GetArgument(1));
+            Assert.Equal(3.8d, this.nodeEvaluationContext.GetArgument(2));
+            Assert.Null(this.nodeEvaluationContext.GetArgument(3));
+        }
+    }
 }

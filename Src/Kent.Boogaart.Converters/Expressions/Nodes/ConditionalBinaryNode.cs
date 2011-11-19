@@ -1,8 +1,9 @@
+using System.Windows;
 using Kent.Boogaart.HelperTrinity;
 
 namespace Kent.Boogaart.Converters.Expressions.Nodes
 {
-    //a node from which conditional binary nodes will inherit
+    // a node from which conditional binary nodes will inherit
     internal abstract class ConditionalBinaryNode : BinaryNode
     {
         private static readonly ExceptionHelper exceptionHelper = new ExceptionHelper(typeof(ConditionalBinaryNode));
@@ -14,13 +15,19 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
 
         public sealed override object Evaluate(NodeEvaluationContext evaluationContext)
         {
-            object leftNodeValue = LeftNode.Evaluate(evaluationContext);
+            var leftNodeValue = LeftNode.Evaluate(evaluationContext);
+
+            if (leftNodeValue == DependencyProperty.UnsetValue)
+            {
+                return DependencyProperty.UnsetValue;
+            }
+
             NodeValueType leftNodeValueType = GetNodeValueType(leftNodeValue);
 
             if (leftNodeValueType == NodeValueType.Boolean)
             {
-                //give base a chance to yield a result without evaluating the right node
-                bool? result = DetermineResultPreRightEvaluation((bool) leftNodeValue);
+                // give base a chance to yield a result without evaluating the right node
+                var result = this.DetermineResultPreRightEvaluation((bool)leftNodeValue);
 
                 if (result.HasValue)
                 {
@@ -29,10 +36,16 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
             }
 
             object rightNodeValue = RightNode.Evaluate(evaluationContext);
+
+            if (rightNodeValue == DependencyProperty.UnsetValue)
+            {
+                return DependencyProperty.UnsetValue;
+            }
+
             NodeValueType rightNodeValueType = GetNodeValueType(rightNodeValue);
             exceptionHelper.ResolveAndThrowIf(leftNodeValueType != NodeValueType.Boolean || rightNodeValueType != NodeValueType.Boolean, "OperandsNotBoolean", OperatorSymbols, leftNodeValueType, rightNodeValueType);
 
-            return DetermineResultPostRightEvaluation((bool) leftNodeValue, (bool) rightNodeValue);
+            return this.DetermineResultPostRightEvaluation((bool)leftNodeValue, (bool)rightNodeValue);
         }
 
         protected abstract bool? DetermineResultPreRightEvaluation(bool leftResult);

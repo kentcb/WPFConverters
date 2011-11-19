@@ -1,45 +1,45 @@
-using Xunit;
 using Kent.Boogaart.Converters.Expressions;
+using Xunit;
 
 namespace Kent.Boogaart.Converters.UnitTest.Expressions
 {
-	public sealed class TokenTest : UnitTest
-	{
-		private Token _token;
+    public sealed class TokenTest : UnitTest
+    {
+        private Token token;
 
-		[Fact]
-		public void Constructor_ShouldAssignGivenValues()
-		{
-			_token = new Token(TokenType.Symbol, "fu");
-			Assert.Equal(TokenType.Symbol, _token.Type);
-			Assert.Equal("fu", _token.Value);
+        [Fact]
+        public void Constructor_ShouldAssignGivenValues()
+        {
+            this.token = new Token(TokenType.Symbol, "fu");
+            Assert.Equal(TokenType.Symbol, this.token.Type);
+            Assert.Equal("fu", this.token.Value);
 
-			_token = new Token(TokenType.Word, "bar");
-			Assert.Equal(TokenType.Word, _token.Type);
-			Assert.Equal("bar", _token.Value);
-		}
+            this.token = new Token(TokenType.Word, "bar");
+            Assert.Equal(TokenType.Word, this.token.Type);
+            Assert.Equal("bar", this.token.Value);
+        }
 
-		[Fact]
-		public void Equals_ShouldCompareTypeAndValue()
-		{
-			_token = new Token(TokenType.Number, "123");
-			Assert.False(_token.Equals(TokenType.Number, "123 "));
-			Assert.False(_token.Equals(TokenType.Word, "123"));
-			Assert.True(_token.Equals(TokenType.Number, "123"));
+        [Fact]
+        public void Equals_ShouldCompareTypeAndValue()
+        {
+            this.token = new Token(TokenType.Number, "123");
+            Assert.False(this.token.Equals(TokenType.Number, "123 "));
+            Assert.False(this.token.Equals(TokenType.Word, "123"));
+            Assert.True(this.token.Equals(TokenType.Number, "123"));
 
-			_token = new Token(TokenType.Symbol, "*");
-			Assert.False(_token.Equals(TokenType.Symbol, "/"));
-			Assert.False(_token.Equals(TokenType.Number, "*"));
-			Assert.True(_token.Equals(TokenType.Symbol, "*"));
-		}
+            this.token = new Token(TokenType.Symbol, "*");
+            Assert.False(this.token.Equals(TokenType.Symbol, "/"));
+            Assert.False(this.token.Equals(TokenType.Number, "*"));
+            Assert.True(this.token.Equals(TokenType.Symbol, "*"));
+        }
 
-		[Fact]
-		public void ToString_ShouldYieldDebuggingString()
-		{
-			_token = new Token(TokenType.Number, "123");
-			Assert.Equal("Number: '123'", _token.ToString());
-			_token = new Token(TokenType.Symbol, "{");
-			Assert.Equal("Symbol: '{'", _token.ToString());
-		}
-	}
+        [Fact]
+        public void ToString_ShouldYieldDebuggingString()
+        {
+            this.token = new Token(TokenType.Number, "123");
+            Assert.Equal("Number: '123'", this.token.ToString());
+            this.token = new Token(TokenType.Symbol, "{");
+            Assert.Equal("Symbol: '{'", this.token.ToString());
+        }
+    }
 }

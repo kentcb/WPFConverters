@@ -1,6 +1,6 @@
 namespace Kent.Boogaart.Converters.Expressions.Nodes
 {
-    //a node to divide the left node by the right node
+    // a node to divide the left node by the right node
     internal sealed class DivideNode : WideningBinaryNode
     {
         protected override string OperatorSymbols

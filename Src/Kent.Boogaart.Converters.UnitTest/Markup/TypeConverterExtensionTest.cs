@@ -8,79 +8,79 @@ namespace Kent.Boogaart.Converters.UnitTest.Markup
 {
     public sealed class TypeConverterExtensionTest : UnitTest
     {
-        private TypeConverterExtension _typeConverterExtension;
+        private TypeConverterExtension typeConverterExtension;
 
         protected override void SetUpCore()
         {
             base.SetUpCore();
-            _typeConverterExtension = new TypeConverterExtension();
+            this.typeConverterExtension = new TypeConverterExtension();
         }
 
         [Fact]
         public void Constructor_ShouldSetDefaults()
         {
-            Assert.Null(_typeConverterExtension.SourceType);
-            Assert.Null(_typeConverterExtension.SourceTypeName);
-            Assert.Null(_typeConverterExtension.TargetType);
-            Assert.Null(_typeConverterExtension.TargetTypeName);
+            Assert.Null(this.typeConverterExtension.SourceType);
+            Assert.Null(this.typeConverterExtension.SourceTypeName);
+            Assert.Null(this.typeConverterExtension.TargetType);
+            Assert.Null(this.typeConverterExtension.TargetTypeName);
         }
 
         [Fact]
         public void Constructor_Types_ShouldSetTypes()
         {
-            _typeConverterExtension = new TypeConverterExtension(typeof(int), typeof(string));
-            Assert.Equal(typeof(int), _typeConverterExtension.SourceType);
-            Assert.Null(_typeConverterExtension.SourceTypeName);
-            Assert.Equal(typeof(string), _typeConverterExtension.TargetType);
-            Assert.Null(_typeConverterExtension.TargetTypeName);
+            this.typeConverterExtension = new TypeConverterExtension(typeof(int), typeof(string));
+            Assert.Equal(typeof(int), this.typeConverterExtension.SourceType);
+            Assert.Null(this.typeConverterExtension.SourceTypeName);
+            Assert.Equal(typeof(string), this.typeConverterExtension.TargetType);
+            Assert.Null(this.typeConverterExtension.TargetTypeName);
         }
 
         [Fact]
         public void Constructor_TypeNames_ShouldSetTypeNames()
         {
-            _typeConverterExtension = new TypeConverterExtension("sys:Int32", "sys:String");
-            Assert.Null(_typeConverterExtension.SourceType);
-            Assert.Equal("sys:Int32", _typeConverterExtension.SourceTypeName);
-            Assert.Null(_typeConverterExtension.TargetType);
-            Assert.Equal("sys:String", _typeConverterExtension.TargetTypeName);
+            this.typeConverterExtension = new TypeConverterExtension("sys:Int32", "sys:String");
+            Assert.Null(this.typeConverterExtension.SourceType);
+            Assert.Equal("sys:Int32", this.typeConverterExtension.SourceTypeName);
+            Assert.Null(this.typeConverterExtension.TargetType);
+            Assert.Equal("sys:String", this.typeConverterExtension.TargetTypeName);
         }
 
         [Fact]
         public void SourceType_ShouldGetAndSet()
         {
-            Assert.Null(_typeConverterExtension.SourceType);
-            _typeConverterExtension.SourceType = typeof(int);
-            Assert.Equal(typeof(int), _typeConverterExtension.SourceType);
+            Assert.Null(this.typeConverterExtension.SourceType);
+            this.typeConverterExtension.SourceType = typeof(int);
+            Assert.Equal(typeof(int), this.typeConverterExtension.SourceType);
         }
 
         [Fact]
         public void TargetType_ShouldGetAndSet()
         {
-            Assert.Null(_typeConverterExtension.TargetType);
-            _typeConverterExtension.TargetType = typeof(int);
-            Assert.Equal(typeof(int), _typeConverterExtension.TargetType);
+            Assert.Null(this.typeConverterExtension.TargetType);
+            this.typeConverterExtension.TargetType = typeof(int);
+            Assert.Equal(typeof(int), this.typeConverterExtension.TargetType);
         }
 
         [Fact]
         public void SourceTypeName_ShouldGetAndSet()
         {
-            Assert.Null(_typeConverterExtension.SourceTypeName);
-            _typeConverterExtension.SourceTypeName = "sys:Int32";
-            Assert.Equal("sys:Int32", _typeConverterExtension.SourceTypeName);
+            Assert.Null(this.typeConverterExtension.SourceTypeName);
+            this.typeConverterExtension.SourceTypeName = "sys:Int32";
+            Assert.Equal("sys:Int32", this.typeConverterExtension.SourceTypeName);
         }
 
         [Fact]
         public void TargetTypeName_ShouldGetAndSet()
         {
-            Assert.Null(_typeConverterExtension.TargetTypeName);
-            _typeConverterExtension.TargetTypeName = "sys:Int32";
-            Assert.Equal("sys:Int32", _typeConverterExtension.TargetTypeName);
+            Assert.Null(this.typeConverterExtension.TargetTypeName);
+            this.typeConverterExtension.TargetTypeName = "sys:Int32";
+            Assert.Equal("sys:Int32", this.typeConverterExtension.TargetTypeName);
         }
 
         [Fact]
         public void ProvideValue_ShouldProvideUninitializedTypeConverterIsNoInfoGiven()
         {
-            TypeConverter typeConverter = _typeConverterExtension.ProvideValue(null) as TypeConverter;
+            TypeConverter typeConverter = this.typeConverterExtension.ProvideValue(null) as TypeConverter;
             Assert.Null(typeConverter.SourceType);
             Assert.Null(typeConverter.TargetType);
         }
@@ -88,16 +88,16 @@ namespace Kent.Boogaart.Converters.UnitTest.Markup
         [Fact]
         public void ProvideValue_ShouldWorkWithSourceType()
         {
-            _typeConverterExtension.SourceType = typeof(int);
-            TypeConverter typeConverter = _typeConverterExtension.ProvideValue(null) as TypeConverter;
+            this.typeConverterExtension.SourceType = typeof(int);
+            TypeConverter typeConverter = this.typeConverterExtension.ProvideValue(null) as TypeConverter;
             Assert.Equal(typeof(int), typeConverter.SourceType);
         }
 
         [Fact]
         public void ProvideValue_ShouldWorkWithTargetType()
         {
-            _typeConverterExtension.TargetType = typeof(int);
-            TypeConverter typeConverter = _typeConverterExtension.ProvideValue(null) as TypeConverter;
+            this.typeConverterExtension.TargetType = typeof(int);
+            TypeConverter typeConverter = this.typeConverterExtension.ProvideValue(null) as TypeConverter;
             Assert.Equal(typeof(int), typeConverter.TargetType);
         }
 
@@ -110,8 +110,8 @@ namespace Kent.Boogaart.Converters.UnitTest.Markup
             xamlTypeResolverMock.Setup(x => x.Resolve("sys:Int32")).Returns(typeof(int));
             serviceProviderMock.Setup(x => x.GetService(typeof(IXamlTypeResolver))).Returns(xamlTypeResolverMock.Object);
 
-            _typeConverterExtension.SourceTypeName = "sys:Int32";
-            var typeConverter = _typeConverterExtension.ProvideValue(serviceProviderMock.Object) as TypeConverter;
+            this.typeConverterExtension.SourceTypeName = "sys:Int32";
+            var typeConverter = this.typeConverterExtension.ProvideValue(serviceProviderMock.Object) as TypeConverter;
             Assert.Equal(typeof(int), typeConverter.SourceType);
         }
 
@@ -124,8 +124,8 @@ namespace Kent.Boogaart.Converters.UnitTest.Markup
             xamlTypeResolverMock.Setup(x => x.Resolve("sys:Int32")).Returns(typeof(int));
             serviceProviderMock.Setup(x => x.GetService(typeof(IXamlTypeResolver))).Returns(xamlTypeResolverMock.Object);
 
-            _typeConverterExtension.TargetTypeName = "sys:Int32";
-            TypeConverter typeConverter = _typeConverterExtension.ProvideValue(serviceProviderMock.Object) as TypeConverter;
+            this.typeConverterExtension.TargetTypeName = "sys:Int32";
+            TypeConverter typeConverter = this.typeConverterExtension.ProvideValue(serviceProviderMock.Object) as TypeConverter;
             Assert.Equal(typeof(int), typeConverter.TargetType);
         }
 
@@ -138,9 +138,9 @@ namespace Kent.Boogaart.Converters.UnitTest.Markup
             xamlTypeResolverMock.Setup(x => x.Resolve("sys:Int32")).Returns(typeof(int));
             serviceProviderMock.Setup(x => x.GetService(typeof(IXamlTypeResolver))).Returns(xamlTypeResolverMock.Object);
 
-            _typeConverterExtension.SourceType = typeof(string);
-            _typeConverterExtension.TargetTypeName = "sys:Int32";
-            TypeConverter typeConverter = _typeConverterExtension.ProvideValue(serviceProviderMock.Object) as TypeConverter;
+            this.typeConverterExtension.SourceType = typeof(string);
+            this.typeConverterExtension.TargetTypeName = "sys:Int32";
+            TypeConverter typeConverter = this.typeConverterExtension.ProvideValue(serviceProviderMock.Object) as TypeConverter;
             Assert.Equal(typeof(string), typeConverter.SourceType);
             Assert.Equal(typeof(int), typeConverter.TargetType);
         }

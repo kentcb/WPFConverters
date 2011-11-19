@@ -1,6 +1,6 @@
-using Xunit;
-using Kent.Boogaart.Converters.Expressions.Nodes;
 using System;
+using Kent.Boogaart.Converters.Expressions.Nodes;
+using Xunit;
 
 namespace Kent.Boogaart.Converters.UnitTest.Expressions.Nodes
 {
@@ -11,8 +11,8 @@ namespace Kent.Boogaart.Converters.UnitTest.Expressions.Nodes
         {
             Assert.Equal(NodeValueType.Boolean, Node.GetNodeValueType(true));
             Assert.Equal(NodeValueType.String, Node.GetNodeValueType("abc"));
-            Assert.Equal(NodeValueType.Byte, Node.GetNodeValueType((byte) 1));
-            Assert.Equal(NodeValueType.Int16, Node.GetNodeValueType((short) 1));
+            Assert.Equal(NodeValueType.Byte, Node.GetNodeValueType((byte)1));
+            Assert.Equal(NodeValueType.Int16, Node.GetNodeValueType((short)1));
             Assert.Equal(NodeValueType.Int32, Node.GetNodeValueType(1));
             Assert.Equal(NodeValueType.Int64, Node.GetNodeValueType(1L));
             Assert.Equal(NodeValueType.Single, Node.GetNodeValueType(1f));

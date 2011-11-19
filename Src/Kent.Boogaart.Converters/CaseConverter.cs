@@ -34,7 +34,8 @@ namespace Kent.Boogaart.Converters
         /// <summary>
         /// Identifies the <see cref="Casing"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty CasingProperty = DependencyProperty.Register("Casing",
+        public static readonly DependencyProperty CasingProperty = DependencyProperty.Register(
+            "Casing",
             typeof(CharacterCasing),
             typeof(CaseConverter),
             new PropertyMetadata(CharacterCasing.Normal)
@@ -51,32 +52,26 @@ namespace Kent.Boogaart.Converters
 #endif
         public CharacterCasing Casing
         {
-            get
-            {
-                return (CharacterCasing) GetValue(CasingProperty);
-            }
-            set
-            {
-                SetValue(CasingProperty, value);
-            }
+            get { return (CharacterCasing)GetValue(CasingProperty); }
+            set { SetValue(CasingProperty, value); }
         }
 
         /// <summary>
-        /// Constructs an instance of <c>CaseConverter</c>.
+        /// Initializes a new instance of the CaseConverter class.
         /// </summary>
         public CaseConverter()
         {
         }
 
         /// <summary>
-        /// Constructs an instance of <c>CaseConverter</c> with the specified target casing.
+        /// Initializes a new instance of the CaseConverter class with the specified target casing.
         /// </summary>
         /// <param name="casing">
         /// The target casing for the converter (see <see cref="Casing"/>).
         /// </param>
         public CaseConverter(CharacterCasing casing)
         {
-            Casing = casing;
+            this.Casing = casing;
         }
 
         /// <summary>
@@ -99,13 +94,13 @@ namespace Kent.Boogaart.Converters
         /// </returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            string str = value as string;
+            var str = value as string;
 
             if (str != null)
             {
                 culture = culture ?? CultureInfo.CurrentCulture;
 
-                switch (Casing)
+                switch (this.Casing)
                 {
                     case CharacterCasing.Lower:
                         return str.ToLower(culture);
@@ -148,7 +143,7 @@ namespace Kent.Boogaart.Converters
 
             try
             {
-                ArgumentHelper.AssertEnumMember((CharacterCasing) value, "value");
+                ArgumentHelper.AssertEnumMember((CharacterCasing)value, "value");
             }
             catch (ArgumentException)
             {

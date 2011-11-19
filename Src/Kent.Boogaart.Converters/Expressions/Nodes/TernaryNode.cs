@@ -5,32 +5,23 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
     // a node containing three children
     internal abstract class TernaryNode : Node
     {
-        private readonly Node _firstNode;
-        private readonly Node _secondNode;
-        private readonly Node _thirdNode;
+        private readonly Node firstNode;
+        private readonly Node secondNode;
+        private readonly Node thirdNode;
 
         public Node FirstNode
         {
-            get
-            {
-                return _firstNode;
-            }
+            get { return this.firstNode; }
         }
 
         public Node SecondNode
         {
-            get
-            {
-                return _secondNode;
-            }
+            get { return this.secondNode; }
         }
 
         public Node ThirdNode
         {
-            get
-            {
-                return _thirdNode;
-            }
+            get { return this.thirdNode; }
         }
 
         protected abstract string OperatorSymbols
@@ -43,9 +34,10 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
             Debug.Assert(firstNode != null);
             Debug.Assert(secondNode != null);
             Debug.Assert(thirdNode != null);
-            _firstNode = firstNode;
-            _secondNode = secondNode;
-            _thirdNode = thirdNode;
+
+            this.firstNode = firstNode;
+            this.secondNode = secondNode;
+            this.thirdNode = thirdNode;
         }
     }
 }

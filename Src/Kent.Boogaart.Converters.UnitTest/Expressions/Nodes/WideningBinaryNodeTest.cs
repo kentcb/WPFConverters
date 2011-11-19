@@ -1,4 +1,5 @@
 using System;
+using System.Windows;
 using Kent.Boogaart.Converters.Expressions;
 using Kent.Boogaart.Converters.Expressions.Nodes;
 using Xunit;
@@ -7,116 +8,126 @@ namespace Kent.Boogaart.Converters.UnitTest.Expressions.Nodes
 {
     public sealed class WideningBinaryNodeTest : UnitTest
     {
-        private MockWideningBinaryNode _wideningBinaryNode;
+        private MockWideningBinaryNode wideningBinaryNode;
 
         [Fact]
         public void Evaluate_ShouldThrowIfUnsupportedOperands()
         {
-            _wideningBinaryNode = new MockWideningBinaryNode(new ConstantNode<int>(0), new ConstantNode<short>(0));
-            _wideningBinaryNode.IsSupportedValue = false;
-            var ex = Assert.Throws<ParseException>(() => _wideningBinaryNode.Evaluate(NodeEvaluationContext.Empty));
+            this.wideningBinaryNode = new MockWideningBinaryNode(new ConstantNode<int>(0), new ConstantNode<short>(0));
+            this.wideningBinaryNode.IsSupportedValue = false;
+            var ex = Assert.Throws<ParseException>(() => this.wideningBinaryNode.Evaluate(NodeEvaluationContext.Empty));
             Assert.Equal("Operator 'op' cannot be applied to operands of type 'Int32' and 'Int16'.", ex.Message);
+        }
+
+        [Fact]
+        public void Evaluate_ShouldReturnUnsetValueIfAnyOperandIsUnsetValue()
+        {
+            this.wideningBinaryNode = new MockWideningBinaryNode(new ConstantNode<object>(DependencyProperty.UnsetValue), new ConstantNode<string>(string.Empty));
+            Assert.Equal(DependencyProperty.UnsetValue, this.wideningBinaryNode.Evaluate(NodeEvaluationContext.Empty));
+
+            this.wideningBinaryNode = new MockWideningBinaryNode(new ConstantNode<string>(string.Empty), new ConstantNode<object>(DependencyProperty.UnsetValue));
+            Assert.Equal(DependencyProperty.UnsetValue, this.wideningBinaryNode.Evaluate(NodeEvaluationContext.Empty));
         }
 
         [Fact]
         public void Evaluate_String_ShouldCallDoString()
         {
-            _wideningBinaryNode = new MockWideningBinaryNode(new ConstantNode<string>(""), new ConstantNode<string>(""));
-            _wideningBinaryNode.Evaluate(NodeEvaluationContext.Empty);
-            Assert.True(_wideningBinaryNode.DoStringCalled);
+            this.wideningBinaryNode = new MockWideningBinaryNode(new ConstantNode<string>(string.Empty), new ConstantNode<string>(string.Empty));
+            this.wideningBinaryNode.Evaluate(NodeEvaluationContext.Empty);
+            Assert.True(this.wideningBinaryNode.DoStringCalled);
         }
 
         [Fact]
         public void Evaluate_String_ShouldNotWidenIfOneArgumentIsNull()
         {
-            _wideningBinaryNode = new MockWideningBinaryNode(new ConstantNode<string>(""), NullNode.Instance);
-            _wideningBinaryNode.Evaluate(NodeEvaluationContext.Empty);
-            Assert.True(_wideningBinaryNode.DoStringCalled);
+            this.wideningBinaryNode = new MockWideningBinaryNode(new ConstantNode<string>(string.Empty), NullNode.Instance);
+            this.wideningBinaryNode.Evaluate(NodeEvaluationContext.Empty);
+            Assert.True(this.wideningBinaryNode.DoStringCalled);
         }
 
         [Fact]
         public void Evaluate_Boolean_ShouldCallDoBoolean()
         {
-            _wideningBinaryNode = new MockWideningBinaryNode(new ConstantNode<bool>(false), new ConstantNode<bool>(false));
-            _wideningBinaryNode.Evaluate(NodeEvaluationContext.Empty);
-            Assert.True(_wideningBinaryNode.DoBooleanCalled);
+            this.wideningBinaryNode = new MockWideningBinaryNode(new ConstantNode<bool>(false), new ConstantNode<bool>(false));
+            this.wideningBinaryNode.Evaluate(NodeEvaluationContext.Empty);
+            Assert.True(this.wideningBinaryNode.DoBooleanCalled);
         }
 
         [Fact]
         public void Evaluate_Byte_ShouldCallDoByte()
         {
-            _wideningBinaryNode = new MockWideningBinaryNode(new ConstantNode<byte>(0), new ConstantNode<byte>(0));
-            _wideningBinaryNode.Evaluate(NodeEvaluationContext.Empty);
-            Assert.True(_wideningBinaryNode.DoByteCalled);
+            this.wideningBinaryNode = new MockWideningBinaryNode(new ConstantNode<byte>(0), new ConstantNode<byte>(0));
+            this.wideningBinaryNode.Evaluate(NodeEvaluationContext.Empty);
+            Assert.True(this.wideningBinaryNode.DoByteCalled);
         }
 
         [Fact]
         public void Evaluate_Int16_ShouldCallDoInt16()
         {
-            _wideningBinaryNode = new MockWideningBinaryNode(new ConstantNode<short>(0), new ConstantNode<short>(0));
-            _wideningBinaryNode.Evaluate(NodeEvaluationContext.Empty);
-            Assert.True(_wideningBinaryNode.DoInt16Called);
+            this.wideningBinaryNode = new MockWideningBinaryNode(new ConstantNode<short>(0), new ConstantNode<short>(0));
+            this.wideningBinaryNode.Evaluate(NodeEvaluationContext.Empty);
+            Assert.True(this.wideningBinaryNode.DoInt16Called);
         }
 
         [Fact]
         public void Evaluate_Int32_ShouldCallDoInt32()
         {
-            _wideningBinaryNode = new MockWideningBinaryNode(new ConstantNode<int>(0), new ConstantNode<int>(0));
-            _wideningBinaryNode.Evaluate(NodeEvaluationContext.Empty);
-            Assert.True(_wideningBinaryNode.DoInt32Called);
+            this.wideningBinaryNode = new MockWideningBinaryNode(new ConstantNode<int>(0), new ConstantNode<int>(0));
+            this.wideningBinaryNode.Evaluate(NodeEvaluationContext.Empty);
+            Assert.True(this.wideningBinaryNode.DoInt32Called);
         }
 
         [Fact]
         public void Evaluate_Int64_ShouldCallDoInt64()
         {
-            _wideningBinaryNode = new MockWideningBinaryNode(new ConstantNode<long>(0), new ConstantNode<long>(0));
-            _wideningBinaryNode.Evaluate(NodeEvaluationContext.Empty);
-            Assert.True(_wideningBinaryNode.DoInt64Called);
+            this.wideningBinaryNode = new MockWideningBinaryNode(new ConstantNode<long>(0), new ConstantNode<long>(0));
+            this.wideningBinaryNode.Evaluate(NodeEvaluationContext.Empty);
+            Assert.True(this.wideningBinaryNode.DoInt64Called);
         }
 
         [Fact]
         public void Evaluate_Single_ShouldCallDoSingle()
         {
-            _wideningBinaryNode = new MockWideningBinaryNode(new ConstantNode<float>(0), new ConstantNode<float>(0));
-            _wideningBinaryNode.Evaluate(NodeEvaluationContext.Empty);
-            Assert.True(_wideningBinaryNode.DoSingleCalled);
+            this.wideningBinaryNode = new MockWideningBinaryNode(new ConstantNode<float>(0), new ConstantNode<float>(0));
+            this.wideningBinaryNode.Evaluate(NodeEvaluationContext.Empty);
+            Assert.True(this.wideningBinaryNode.DoSingleCalled);
         }
 
         [Fact]
         public void Evaluate_Double_ShouldCallDoDouble()
         {
-            _wideningBinaryNode = new MockWideningBinaryNode(new ConstantNode<double>(0), new ConstantNode<double>(0));
-            _wideningBinaryNode.Evaluate(NodeEvaluationContext.Empty);
-            Assert.True(_wideningBinaryNode.DoDoubleCalled);
+            this.wideningBinaryNode = new MockWideningBinaryNode(new ConstantNode<double>(0), new ConstantNode<double>(0));
+            this.wideningBinaryNode.Evaluate(NodeEvaluationContext.Empty);
+            Assert.True(this.wideningBinaryNode.DoDoubleCalled);
         }
 
         [Fact]
         public void Evaluate_Decimal_ShouldCallDoDecimal()
         {
-            _wideningBinaryNode = new MockWideningBinaryNode(new ConstantNode<decimal>(0), new ConstantNode<decimal>(0));
-            _wideningBinaryNode.Evaluate(NodeEvaluationContext.Empty);
-            Assert.True(_wideningBinaryNode.DoDecimalCalled);
+            this.wideningBinaryNode = new MockWideningBinaryNode(new ConstantNode<decimal>(0), new ConstantNode<decimal>(0));
+            this.wideningBinaryNode.Evaluate(NodeEvaluationContext.Empty);
+            Assert.True(this.wideningBinaryNode.DoDecimalCalled);
         }
 
         [Fact]
         public void Evaluate_ReferenceType_ShouldCallDoReferenceType()
         {
-            _wideningBinaryNode = new MockWideningBinaryNode(new ConstantNode<object>(null), new ConstantNode<object>(null));
-            _wideningBinaryNode.Evaluate(NodeEvaluationContext.Empty);
-            Assert.True(_wideningBinaryNode.DoReferenceTypeCalled);
+            this.wideningBinaryNode = new MockWideningBinaryNode(new ConstantNode<object>(null), new ConstantNode<object>(null));
+            this.wideningBinaryNode.Evaluate(NodeEvaluationContext.Empty);
+            Assert.True(this.wideningBinaryNode.DoReferenceTypeCalled);
         }
 
         [Fact]
         public void Evaluate_ValueType_ShouldCallDoValueType()
         {
-            _wideningBinaryNode = new MockWideningBinaryNode(new ConstantNode<DateTime>(DateTime.UtcNow), new ConstantNode<DateTime>(DateTime.UtcNow));
-            _wideningBinaryNode.Evaluate(NodeEvaluationContext.Empty);
-            Assert.True(_wideningBinaryNode.DoValueTypeCalled);
+            this.wideningBinaryNode = new MockWideningBinaryNode(new ConstantNode<DateTime>(DateTime.UtcNow), new ConstantNode<DateTime>(DateTime.UtcNow));
+            this.wideningBinaryNode.Evaluate(NodeEvaluationContext.Empty);
+            Assert.True(this.wideningBinaryNode.DoValueTypeCalled);
         }
 
         #region Supporting Types
 
-        //cannot mock because WideningBinaryNode is internal
+        // cannot mock because WideningBinaryNode is internal
         private sealed class MockWideningBinaryNode : WideningBinaryNode
         {
             public bool IsSupportedValue = true;
@@ -147,79 +158,79 @@ namespace Kent.Boogaart.Converters.UnitTest.Expressions.Nodes
 
             protected override bool DoBoolean(bool value1, bool value2, out object result)
             {
-                DoBooleanCalled = true;
+                this.DoBooleanCalled = true;
                 result = null;
-                return IsSupportedValue;
+                return this.IsSupportedValue;
             }
 
             protected override bool DoString(string value1, string value2, out object result)
             {
-                DoStringCalled = true;
+                this.DoStringCalled = true;
                 result = null;
-                return IsSupportedValue;
+                return this.IsSupportedValue;
             }
 
             protected override bool DoByte(byte value1, byte value2, out object result)
             {
-                DoByteCalled = true;
+                this.DoByteCalled = true;
                 result = null;
-                return IsSupportedValue;
+                return this.IsSupportedValue;
             }
 
             protected override bool DoInt16(short value1, short value2, out object result)
             {
-                DoInt16Called = true;
+                this.DoInt16Called = true;
                 result = null;
-                return IsSupportedValue;
+                return this.IsSupportedValue;
             }
 
             protected override bool DoInt32(int value1, int value2, out object result)
             {
-                DoInt32Called = true;
+                this.DoInt32Called = true;
                 result = null;
-                return IsSupportedValue;
+                return this.IsSupportedValue;
             }
 
             protected override bool DoInt64(long value1, long value2, out object result)
             {
-                DoInt64Called = true;
+                this.DoInt64Called = true;
                 result = null;
-                return IsSupportedValue;
+                return this.IsSupportedValue;
             }
 
             protected override bool DoSingle(float value1, float value2, out object result)
             {
-                DoSingleCalled = true;
+                this.DoSingleCalled = true;
                 result = null;
-                return IsSupportedValue;
+                return this.IsSupportedValue;
             }
 
             protected override bool DoDouble(double value1, double value2, out object result)
             {
-                DoDoubleCalled = true;
+                this.DoDoubleCalled = true;
                 result = null;
-                return IsSupportedValue;
+                return this.IsSupportedValue;
             }
 
             protected override bool DoDecimal(decimal value1, decimal value2, out object result)
             {
-                DoDecimalCalled = true;
+                this.DoDecimalCalled = true;
                 result = null;
-                return IsSupportedValue;
+                return this.IsSupportedValue;
             }
 
             protected override bool DoReferenceType(object value1, object value2, out object result)
             {
-                DoReferenceTypeCalled = true;
+                this.DoReferenceTypeCalled = true;
                 result = null;
-                return IsSupportedValue;
+                return this.IsSupportedValue;
             }
 
             protected override bool DoValueType(object value1, object value2, out object result)
             {
-                DoValueTypeCalled = true;
+                this.DoValueTypeCalled = true;
                 result = null;
-                return IsSupportedValue;
+                return this.IsSupportedValue;
             }
         }
 

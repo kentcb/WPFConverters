@@ -35,12 +35,12 @@ namespace Kent.Boogaart.Converters
     /// <code lang="xml">
     /// <![CDATA[
     /// <Label>
-    ///		<Label.Content>
-    ///			<MultiBinding Converter="{FormatConverter {}Your name is '{0}' and you were born on {1:dd/MM/yyyy}.}">
-    ///				<Binding Path="Name"/>
-    ///				<Binding Path="Dob"/>
-    ///			</MultiBinding>
-    ///		</Label.Content>
+    ///     <Label.Content>
+    ///         <MultiBinding Converter="{FormatConverter {}Your name is '{0}' and you were born on {1:dd/MM/yyyy}.}">
+    ///             <Binding Path="Name"/>
+    ///             <Binding Path="Dob"/>
+    ///         </MultiBinding>
+    ///     </Label.Content>
     /// </Label>
     /// ]]>
     /// </code>
@@ -59,7 +59,8 @@ namespace Kent.Boogaart.Converters
         /// <summary>
         /// Identifies the <see cref="FormatString"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty FormatStringProperty = DependencyProperty.Register("FormatString",
+        public static readonly DependencyProperty FormatStringProperty = DependencyProperty.Register(
+            "FormatString",
             typeof(string),
             typeof(FormatConverter),
             new PropertyMetadata(null));
@@ -72,32 +73,26 @@ namespace Kent.Boogaart.Converters
 #endif
         public string FormatString
         {
-            get
-            {
-                return GetValue(FormatStringProperty) as string;
-            }
-            set
-            {
-                SetValue(FormatStringProperty, value);
-            }
+            get { return GetValue(FormatStringProperty) as string; }
+            set { SetValue(FormatStringProperty, value); }
         }
 
         /// <summary>
-        /// Constructs a default instance of <c>FormatConverter</c>.
+        /// Initializes a new instance of the FormatConverter class.
         /// </summary>
         public FormatConverter()
         {
         }
 
         /// <summary>
-        /// Constructs an instance of <c>FormatConverter</c> with the specified format string.
+        /// Initializes a new instance of the FormatConverter class with the specified format string.
         /// </summary>
         /// <param name="formatString">
         /// The format string.
         /// </param>
         public FormatConverter(string formatString)
         {
-            FormatString = formatString;
+            this.FormatString = formatString;
         }
 
         /// <summary>
@@ -120,8 +115,8 @@ namespace Kent.Boogaart.Converters
         /// </returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            exceptionHelper.ResolveAndThrowIf(FormatString == null, "NoFormatString");
-            return string.Format(culture, FormatString, value);
+            exceptionHelper.ResolveAndThrowIf(this.FormatString == null, "NoFormatString");
+            return string.Format(culture, this.FormatString, value);
         }
 
         /// <summary>
@@ -177,8 +172,8 @@ namespace Kent.Boogaart.Converters
         /// </returns>
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            exceptionHelper.ResolveAndThrowIf(FormatString == null, "NoFormatString");
-            return string.Format(culture, FormatString, values);
+            exceptionHelper.ResolveAndThrowIf(this.FormatString == null, "NoFormatString");
+            return string.Format(culture, this.FormatString, values);
         }
 
         /// <summary>

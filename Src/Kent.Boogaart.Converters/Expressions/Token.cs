@@ -3,45 +3,41 @@ using System.Diagnostics;
 
 namespace Kent.Boogaart.Converters.Expressions
 {
-	internal sealed class Token
-	{
-		private readonly TokenType _type;
-		private readonly string _value;
+    internal sealed class Token
+    {
+        private readonly TokenType type;
+        private readonly string value;
 
-		public TokenType Type
-		{
-			get
-			{
-				return _type;
-			}
-		}
+        public TokenType Type
+        {
+            get { return this.type; }
+        }
 
-		public string Value
-		{
-			get
-			{
-				return _value;
-			}
-		}
+        public string Value
+        {
+            get { return this.value; }
+        }
 
-		public Token(TokenType type, string value)
-		{
-			Debug.Assert(Enum.IsDefined(typeof(TokenType), type));
-			Debug.Assert(value != null);
-			_type = type;
-			_value = value;
-		}
+        public Token(TokenType type, string value)
+        {
+            Debug.Assert(Enum.IsDefined(typeof(TokenType), type));
+            Debug.Assert(value != null);
 
-		public bool Equals(TokenType tokenType, string value)
-		{
-			Debug.Assert(Enum.IsDefined(typeof(TokenType), tokenType));
-			Debug.Assert(value != null);
-			return (_type == tokenType) && string.Equals(_value, value, StringComparison.InvariantCulture);
-		}
+            this.type = type;
+            this.value = value;
+        }
 
-		public override string ToString()
-		{
-			return string.Concat(_type, ": '", _value, "'");
-		}
-	}
+        public bool Equals(TokenType tokenType, string value)
+        {
+            Debug.Assert(Enum.IsDefined(typeof(TokenType), tokenType));
+            Debug.Assert(value != null);
+
+            return (this.type == tokenType) && string.Equals(this.value, value, StringComparison.InvariantCulture);
+        }
+
+        public override string ToString()
+        {
+            return string.Concat(this.type, ": '", this.value, "'");
+        }
+    }
 }

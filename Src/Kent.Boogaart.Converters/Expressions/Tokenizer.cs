@@ -9,137 +9,135 @@ namespace Kent.Boogaart.Converters.Expressions
     internal sealed class Tokenizer : IDisposable
     {
         private static readonly ExceptionHelper exceptionHelper = new ExceptionHelper(typeof(Tokenizer));
-        private readonly TextReader _textReader;
-        private readonly StringBuilder _buffer;
-        private char _currentChar;
+        private readonly TextReader textReader;
+        private readonly StringBuilder buffer;
+        private char currentChar;
 
         private bool IsAtEndOfStream
         {
-            get
-            {
-                return (_textReader.Peek() == -1);
-            }
+            get { return this.textReader.Peek() == -1; }
         }
 
         public Tokenizer(TextReader textReader)
         {
             Debug.Assert(textReader != null);
-            _textReader = textReader;
-            _buffer = new StringBuilder();
-            DiscardWhiteSpace();
+
+            this.textReader = textReader;
+            this.buffer = new StringBuilder();
+            this.DiscardWhiteSpace();
         }
 
         public void Dispose()
         {
-            _textReader.Dispose();
+            this.textReader.Dispose();
         }
 
         public Token ReadNextToken()
         {
-            if (IsAtEndOfStream)
+            if (this.IsAtEndOfStream)
             {
                 return null;
             }
 
             Token token;
-            ReadNextChar();
-            _buffer.Length = 0;
-            _buffer.Append(_currentChar);
+            this.ReadNextChar();
+            this.buffer.Length = 0;
+            this.buffer.Append(this.currentChar);
 
-            if (char.IsDigit(_currentChar) || _currentChar == '.')
+            if (char.IsDigit(this.currentChar) || this.currentChar == '.')
             {
-                token = ReadNumberToken();
+                token = this.ReadNumberToken();
             }
-            else if (char.IsLetter(_currentChar))
+            else if (char.IsLetter(this.currentChar))
             {
-                token = ReadWordToken();
+                token = this.ReadWordToken();
             }
-            else if (_currentChar == '"')
+            else if (this.currentChar == '"')
             {
-                token = ReadStringToken();
+                token = this.ReadStringToken();
             }
             else
             {
-                token = ReadSymbolToken();
+                token = this.ReadSymbolToken();
             }
 
-            DiscardWhiteSpace();
+            this.DiscardWhiteSpace();
             return token;
         }
 
         private void ReadNextChar()
         {
-            _currentChar = (char) _textReader.Read();
+            this.currentChar = (char)this.textReader.Read();
         }
 
         private void DiscardWhiteSpace()
         {
-            while (!IsAtEndOfStream && char.IsWhiteSpace((char) _textReader.Peek()))
+            while (!this.IsAtEndOfStream && char.IsWhiteSpace((char)this.textReader.Peek()))
             {
-                ReadNextChar();
+                this.ReadNextChar();
             }
         }
 
         private Token ReadNumberToken()
         {
-            char nextChar = (char) _textReader.Peek();
+            char nextChar = (char)this.textReader.Peek();
 
-            while (!IsAtEndOfStream && (char.IsLetterOrDigit(nextChar) || nextChar == '.'))
+            while (!this.IsAtEndOfStream && (char.IsLetterOrDigit(nextChar) || nextChar == '.'))
             {
-                ReadNextChar();
-                _buffer.Append(_currentChar);
-                nextChar = (char) _textReader.Peek();
+                this.ReadNextChar();
+                this.buffer.Append(this.currentChar);
+                nextChar = (char)this.textReader.Peek();
             }
 
-            return new Token(TokenType.Number, _buffer.ToString());
+            return new Token(TokenType.Number, this.buffer.ToString());
         }
 
         private Token ReadStringToken()
         {
-            _buffer.Length = 0;
-            ReadNextChar();
+            this.buffer.Length = 0;
+            this.ReadNextChar();
 
-            while (!IsAtEndOfStream && _currentChar != '"')
+            while (!this.IsAtEndOfStream && this.currentChar != '"')
             {
-                if (_currentChar == '\\')
+                if (this.currentChar == '\\')
                 {
-                    //handle escape sequence
-                    ReadNextChar();
+                    // handle escape sequence
+                    this.ReadNextChar();
 
-                    switch (_currentChar)
+                    switch (this.currentChar)
                     {
                         case '\'':
-                            _buffer.Append("'");
+                            this.buffer.Append("'");
                             break;
                         case '"':
-                            _buffer.Append("\"");
+                            this.buffer.Append("\"");
                             break;
                         case '\\':
-                            _buffer.Append("\\");
+                            this.buffer.Append("\\");
                             break;
                         case '0':
-                            _buffer.Append("\0");
+                            this.buffer.Append("\0");
                             break;
                         case 'a':
-                            _buffer.Append("\a");
+                            this.buffer.Append("\a");
                             break;
                         case 'b':
-                            _buffer.Append("\b");
+                            this.buffer.Append("\b");
                             break;
                         case 'f':
-                            _buffer.Append("\f");
+                            this.buffer.Append("\f");
                             break;
                         case 'n':
-                            _buffer.Append("\n");
+                            this.buffer.Append("\n");
                             break;
                         case 'r':
-                            _buffer.Append("\r");
+                            this.buffer.Append("\r");
                             break;
                         case 't':
-                            _buffer.Append("\t");
+                            this.buffer.Append("\t");
                             break;
                         case 'v':
-                            _buffer.Append("\v");
+                            this.buffer.Append("\v");
                             break;
                         default:
                             throw exceptionHelper.Resolve("UnrecognizedEscapeSequence");
@@ -147,41 +145,41 @@ namespace Kent.Boogaart.Converters.Expressions
                 }
                 else
                 {
-                    _buffer.Append(_currentChar);
+                    this.buffer.Append(this.currentChar);
                 }
 
-                ReadNextChar();
+                this.ReadNextChar();
             }
 
-            return new Token(TokenType.String, _buffer.ToString());
+            return new Token(TokenType.String, this.buffer.ToString());
         }
 
         private Token ReadWordToken()
         {
-            char nextChar = (char) _textReader.Peek();
+            char nextChar = (char)this.textReader.Peek();
 
-            while (!IsAtEndOfStream && !char.IsWhiteSpace(nextChar) && !char.IsPunctuation(nextChar))
+            while (!this.IsAtEndOfStream && !char.IsWhiteSpace(nextChar) && !char.IsPunctuation(nextChar))
             {
-                ReadNextChar();
-                _buffer.Append(_currentChar);
-                nextChar = (char) _textReader.Peek();
+                this.ReadNextChar();
+                this.buffer.Append(this.currentChar);
+                nextChar = (char)this.textReader.Peek();
             }
 
-            return new Token(TokenType.Word, _buffer.ToString());
+            return new Token(TokenType.Word, this.buffer.ToString());
         }
 
         private Token ReadSymbolToken()
         {
-            char nextChar = (char) _textReader.Peek();
+            char nextChar = (char)this.textReader.Peek();
 
-            while (!IsAtEndOfStream && !char.IsWhiteSpace(nextChar) && !char.IsLetterOrDigit(nextChar) && !IsBracket(nextChar) && nextChar != '"')
+            while (!this.IsAtEndOfStream && !char.IsWhiteSpace(nextChar) && !char.IsLetterOrDigit(nextChar) && !IsBracket(nextChar) && nextChar != '"')
             {
-                ReadNextChar();
-                _buffer.Append(_currentChar);
-                nextChar = (char) _textReader.Peek();
+                this.ReadNextChar();
+                this.buffer.Append(this.currentChar);
+                nextChar = (char)this.textReader.Peek();
             }
 
-            return new Token(TokenType.Symbol, _buffer.ToString());
+            return new Token(TokenType.Symbol, this.buffer.ToString());
         }
 
         private static bool IsBracket(char c)
