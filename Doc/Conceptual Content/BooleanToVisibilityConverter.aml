@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="aea54c67-a101-4935-804f-46b41458e66c" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <section address="BooleanToVisibilityConverter">
+      <title>BooleanToVisibilityConverter</title>
+      <content>
+        <para>
+        	The <codeEntityReference>T:Kent.Boogaart.Converters.BooleanToVisibilityConverter</codeEntityReference> and
+        	<codeEntityReference>T:Kent.Boogaart.Converters.Markup.BooleanToVisibilityConverterExtension</codeEntityReference> classes allow you to
+        	convert <codeInline>boolean</codeInline> values to <codeInline>Visibility</codeInline> values, and vice-versa:
+<code language="xaml">
+<![CDATA[
+<CheckBox x:Name="_checkBox" IsChecked="True">Uncheck to collapse text box</CheckBox>
+<TextBox Visibility="{Binding IsChecked, ElementName=_checkBox, Converter={con:BooleanToVisibilityConverter}}"/>
+]]>
+</code>
+        </para>
+        <para>
+        	Unlike WPF's built-in converter of the same name, this converter has extra options to greatly improve its flexibility. Firstly, you
+        	can specify that <codeInline>Visibility.Hidden</codeInline> be used instead of <codeInline>Visibility.Collapsed</codeInline> by setting
+        	the <codeInline>UseHidden</codeInline> property to <codeInline>true</codeInline>. Secondly, you can reverse the return values
+        	by setting the <codeInline>IsReversed</codeInline> property to <codeInline>true</codeInline>.
+        </para>
+      </content>
+    </section>
+  </developerConceptualDocument>
+</topic>
