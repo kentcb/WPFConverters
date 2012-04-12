@@ -9,18 +9,63 @@
     Title="WPF Converter Examples"
     WindowState="Maximized">
     <TabControl>
+        <TabItem Header="BooleanToVisibilityConverter">
+            <StackPanel>
+                <Expander Header="Example 1" IsExpanded="True">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource ExampleHeader}">
+                            This example uses a BooleanToVisibilityConverter to automatically collapse the TextBox when the CheckBox is unchecked.
+                        </TextBlock>
+                        <CheckBox x:Name="checkBox1" IsChecked="True">Uncheck to collapse the text box</CheckBox>
+                        <TextBox Visibility="{Binding IsChecked, ElementName=checkBox1, Converter={con:BooleanToVisibilityConverter}}"/>
+                        <Label>This label sits below the text box.</Label>
+                    </StackPanel>
+                </Expander>
+                <Expander Header="Example 2">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource ExampleHeader}">
+                            This example uses a BooleanToVisibilityConverter to automatically hide the TextBox when the CheckBox is unchecked.
+                        </TextBlock>
+                        <CheckBox x:Name="checkBox2" IsChecked="True">Uncheck to hide the text box</CheckBox>
+                        <TextBox Visibility="{Binding IsChecked, ElementName=checkBox2, Converter={con:BooleanToVisibilityConverter UseHidden=True}}"/>
+                        <Label>This label sits below the text box.</Label>
+                    </StackPanel>
+                </Expander>
+                <Expander Header="Example 3">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource ExampleHeader}">
+                            This example uses a BooleanToVisibilityConverter to automatically collapse the TextBox when the CheckBox is checked.
+                        </TextBlock>
+                        <CheckBox x:Name="checkBox3">Check to collapse the text box</CheckBox>
+                        <TextBox Visibility="{Binding IsChecked, ElementName=checkBox3, Converter={con:BooleanToVisibilityConverter IsReversed=True}}"/>
+                        <Label>This label sits below the text box.</Label>
+                    </StackPanel>
+                </Expander>
+            </StackPanel>
+        </TabItem>
+        
         <TabItem Header="CaseConverter">
-            <Expander Header="Example 1" IsExpanded="True">
-                <StackPanel>
-                    <TextBlock Style="{StaticResource ExampleHeader}">
-                        This example uses a CaseConverter to automatically convert any text you enter in the TextBox to lowercase
-                        and uppercase.
-                    </TextBlock>
-                    <TextBox x:Name="_textBox1" Text="Enter some text here."/>
-                    <Label Content="{Binding Text, ElementName=_textBox1, Converter={con:CaseConverter Upper}}"/>
-                    <Label Content="{Binding Text, ElementName=_textBox1, Converter={con:CaseConverter Lower}}"/>
-                </StackPanel>
-            </Expander>
+            <StackPanel>
+                <Expander Header="Example 1" IsExpanded="True">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource ExampleHeader}">
+                            This example uses a CaseConverter to automatically convert any text you enter in the TextBox to lowercase and uppercase.
+                        </TextBlock>
+                        <TextBox x:Name="_textBox1" Text="Enter some text here."/>
+                        <Label Content="{Binding Text, ElementName=_textBox1, Converter={con:CaseConverter Upper}}"/>
+                        <Label Content="{Binding Text, ElementName=_textBox1, Converter={con:CaseConverter Lower}}"/>
+                    </StackPanel>
+                </Expander>
+                <Expander Header="Example 2">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource ExampleHeader}">
+                            This example uses a CaseConverter to ensure entered text is always in lowercase, but the backing property is always in uppercase.
+                        </TextBlock>
+                        <TextBox x:Name="textBox2" Text="{Binding Text, ElementName=textBlock2, Converter={con:CaseConverter SourceCasing=Upper, TargetCasing=Lower}, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBlock x:Name="textBlock2" Text="This is the backing property."/>
+                    </StackPanel>
+                </Expander>
+            </StackPanel>
         </TabItem>
         
         <TabItem Header="ConverterGroup">

@@ -4,7 +4,7 @@ using Kent.Boogaart.HelperTrinity;
 
 namespace Kent.Boogaart.Converters.Markup
 {
-#if !SILVERLIGHT
+#if !SILVERLIGHT40
     /// <summary>
     /// Implements a markup extension that allows instances of <see cref="DateTimeConverter"/> to be easily created.
     /// </summary>
@@ -31,7 +31,9 @@ namespace Kent.Boogaart.Converters.Markup
         /// <summary>
         /// Gets or sets the source kind for the <see cref="DateTimeConverter"/>.
         /// </summary>
+#if !SILVERLIGHT
         [ConstructorArgument("sourceKind")]
+#endif
         public DateTimeKind SourceKind
         {
             get
@@ -41,7 +43,7 @@ namespace Kent.Boogaart.Converters.Markup
 
             set
             {
-                ArgumentHelper.AssertEnumMember(value, "value");
+                ArgumentHelper.AssertEnumMember(value, "value", DateTimeKind.Local, DateTimeKind.Unspecified, DateTimeKind.Utc);
                 this.sourceKind = value;
             }
         }
@@ -49,7 +51,9 @@ namespace Kent.Boogaart.Converters.Markup
         /// <summary>
         /// Gets or sets the target kind for the <see cref="DateTimeConverter"/>.
         /// </summary>
+#if !SILVERLIGHT
         [ConstructorArgument("targetKind")]
+#endif
         public DateTimeKind TargetKind
         {
             get
@@ -59,7 +63,7 @@ namespace Kent.Boogaart.Converters.Markup
 
             set
             {
-                ArgumentHelper.AssertEnumMember(value, "value");
+                ArgumentHelper.AssertEnumMember(value, "value", DateTimeKind.Local, DateTimeKind.Unspecified, DateTimeKind.Utc);
                 this.targetKind = value;
             }
         }
@@ -76,7 +80,7 @@ namespace Kent.Boogaart.Converters.Markup
 
             set
             {
-                ArgumentHelper.AssertEnumMember(value, "value");
+                ArgumentHelper.AssertEnumMember(value, "value", DateTimeConversionMode.DoConversion, DateTimeConversionMode.SpecifyKindOnly);
                 this.conversionMode = value;
             }
         }

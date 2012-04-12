@@ -11,25 +11,10 @@ namespace Kent.Boogaart.Converters
     /// The <see cref="MapConverter"/> uses instances of this class to define mappings between one set of values and another.
     /// </para>
     /// </remarks>
-    public class Mapping : DependencyObject
+    public class Mapping
     {
-        /// <summary>
-        /// Identifies the <see cref="From"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty FromProperty = DependencyProperty.Register(
-            "From",
-            typeof(object),
-            typeof(Mapping),
-            new PropertyMetadata(null));
-
-        /// <summary>
-        /// Identifies the <see cref="To"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty ToProperty = DependencyProperty.Register(
-            "To",
-            typeof(object),
-            typeof(Mapping),
-            new PropertyMetadata(null));
+        private object from;
+        private object to;
 
         /// <summary>
         /// Gets or sets the source object for the mapping.
@@ -39,8 +24,8 @@ namespace Kent.Boogaart.Converters
 #endif
         public object From
         {
-            get { return GetValue(FromProperty); }
-            set { SetValue(FromProperty, value); }
+            get { return this.from; }
+            set { this.from = value; }
         }
 
         /// <summary>
@@ -51,8 +36,8 @@ namespace Kent.Boogaart.Converters
 #endif
         public object To
         {
-            get { return GetValue(ToProperty); }
-            set { SetValue(ToProperty, value); }
+            get { return this.to; }
+            set { this.to = value; }
         }
 
         /// <summary>

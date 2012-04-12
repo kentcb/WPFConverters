@@ -14,7 +14,6 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
 
         public ConstantNode(T value)
         {
-            Debug.Assert(value != null);
             this.value = value;
         }
 

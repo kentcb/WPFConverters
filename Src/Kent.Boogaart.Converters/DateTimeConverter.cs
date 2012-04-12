@@ -60,64 +60,13 @@ namespace Kent.Boogaart.Converters
 #if !SILVERLIGHT
     [ValueConversion(typeof(DateTime), typeof(DateTime))]
 #endif
-    public class DateTimeConverter : DependencyObject, IValueConverter
+    public class DateTimeConverter : IValueConverter
     {
-        /// <summary>
-        /// Identifies the <see cref="SourceKind"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty SourceKindProperty = DependencyProperty.Register(
-            "SourceKind",
-            typeof(DateTimeKind),
-            typeof(DateTimeConverter),
-            new PropertyMetadata(DateTimeKind.Unspecified)
-#if !SILVERLIGHT
-            , ValidateDateTimeKind
-#endif
-            );
-
-        /// <summary>
-        /// Identifies the <see cref="TargetKind"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty TargetKindProperty = DependencyProperty.Register(
-            "TargetKind",
-            typeof(DateTimeKind),
-            typeof(DateTimeConverter),
-            new PropertyMetadata(DateTimeKind.Unspecified)
-#if !SILVERLIGHT
-            , ValidateDateTimeKind
-#endif
-            );
-
-        /// <summary>
-        /// Identifies the <see cref="ConversionMode"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty ConversionModeProperty = DependencyProperty.Register(
-            "ConversionMode",
-            typeof(DateTimeConversionMode),
-            typeof(DateTimeConverter),
-            new PropertyMetadata(DateTimeConversionMode.DoConversion)
-#if !SILVERLIGHT
-            , ValidateDateTimeConversionMode
-#endif
-            );
-
-        /// <summary>
-        /// Identifies the <see cref="SourceAdjustment"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty SourceAdjustmentProperty = DependencyProperty.Register(
-            "SourceAdjustment",
-            typeof(TimeSpan),
-            typeof(DateTimeConverter),
-            new PropertyMetadata(TimeSpan.Zero));
-
-        /// <summary>
-        /// Identifies the <see cref="TargetAdjustment"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty TargetAdjustmentProperty = DependencyProperty.Register(
-            "TargetAdjustment",
-            typeof(TimeSpan),
-            typeof(DateTimeConverter),
-            new PropertyMetadata(TimeSpan.Zero));
+        private DateTimeKind sourceKind;
+        private DateTimeKind targetKind;
+        private TimeSpan sourceAdjustment;
+        private TimeSpan targetAdjustment;
+        private DateTimeConversionMode conversionMode;
 
         /// <summary>
         /// Gets or sets the source kind for converted <see cref="DateTime"/>s.
@@ -133,8 +82,16 @@ namespace Kent.Boogaart.Converters
 #endif
         public DateTimeKind SourceKind
         {
-            get { return (DateTimeKind)GetValue(SourceKindProperty); }
-            set { SetValue(SourceKindProperty, value); }
+            get
+            {
+                return this.sourceKind;
+            }
+
+            set
+            {
+                ArgumentHelper.AssertEnumMember(value, "value", DateTimeKind.Local, DateTimeKind.Unspecified, DateTimeKind.Utc);
+                this.sourceKind = value;
+            }
         }
 
         /// <summary>
@@ -151,8 +108,46 @@ namespace Kent.Boogaart.Converters
 #endif
         public DateTimeKind TargetKind
         {
-            get { return (DateTimeKind)GetValue(TargetKindProperty); }
-            set { SetValue(TargetKindProperty, value); }
+            get
+            {
+                return this.targetKind;
+            }
+
+            set
+            {
+                ArgumentHelper.AssertEnumMember(value, "value", DateTimeKind.Local, DateTimeKind.Unspecified, DateTimeKind.Utc);
+                this.targetKind = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value by which the source <see cref="DateTime"/> will be adjusted during conversions.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// This property can be used to ensure that any <see cref="DateTime"/> heading to the source of the binding will be
+        /// adjusted according to the specified <see cref="TimeSpan"/>.
+        /// </para>
+        /// </remarks>
+        public TimeSpan SourceAdjustment
+        {
+            get { return this.sourceAdjustment; }
+            set { this.sourceAdjustment = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets a value by which the target <see cref="DateTime"/> will be adjusted during conversions.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// This property can be used to ensure that any <see cref="DateTime"/> heading to the target of the binding will be
+        /// adjusted according to the specified <see cref="TimeSpan"/>.
+        /// </para>
+        /// </remarks>
+        public TimeSpan TargetAdjustment
+        {
+            get { return this.targetAdjustment; }
+            set { this.targetAdjustment = value; }
         }
 
         /// <summary>
@@ -170,38 +165,16 @@ namespace Kent.Boogaart.Converters
         /// </remarks>
         public DateTimeConversionMode ConversionMode
         {
-            get { return (DateTimeConversionMode)GetValue(ConversionModeProperty); }
-            set { SetValue(ConversionModeProperty, value); }
-        }
+            get
+            {
+                return this.conversionMode;
+            }
 
-        /// <summary>
-        /// Gets or sets a value by which the source <see cref="DateTime"/> will be adjusted during conversions.
-        /// </summary>
-        /// <remarks>
-        /// <para>
-        /// This property can be used to ensure that any <see cref="DateTime"/> heading to the source of the binding will be
-        /// adjusted according to the specified <see cref="TimeSpan"/>.
-        /// </para>
-        /// </remarks>
-        public TimeSpan SourceAdjustment
-        {
-            get { return (TimeSpan)GetValue(SourceAdjustmentProperty); }
-            set { SetValue(SourceAdjustmentProperty, value); }
-        }
-
-        /// <summary>
-        /// Gets or sets a value by which the target <see cref="DateTime"/> will be adjusted during conversions.
-        /// </summary>
-        /// <remarks>
-        /// <para>
-        /// This property can be used to ensure that any <see cref="DateTime"/> heading to the target of the binding will be
-        /// adjusted according to the specified <see cref="TimeSpan"/>.
-        /// </para>
-        /// </remarks>
-        public TimeSpan TargetAdjustment
-        {
-            get { return (TimeSpan)GetValue(TargetAdjustmentProperty); }
-            set { SetValue(TargetAdjustmentProperty, value); }
+            set
+            {
+                ArgumentHelper.AssertEnumMember(value, "value", DateTimeConversionMode.DoConversion, DateTimeConversionMode.SpecifyKindOnly);
+                this.conversionMode = value; 
+            }
         }
 
         /// <summary>
@@ -305,38 +278,6 @@ namespace Kent.Boogaart.Converters
             {
                 return DateTime.SpecifyKind(dateTime, convertTo);
             }
-        }
-
-        private static bool ValidateDateTimeKind(object value)
-        {
-            Debug.Assert(value is DateTimeKind);
-
-            try
-            {
-                ArgumentHelper.AssertEnumMember((DateTimeKind)value, "value");
-            }
-            catch (ArgumentException)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        private static bool ValidateDateTimeConversionMode(object value)
-        {
-            Debug.Assert(value is DateTimeConversionMode);
-
-            try
-            {
-                ArgumentHelper.AssertEnumMember((DateTimeConversionMode)value, "value");
-            }
-            catch (ArgumentException)
-            {
-                return false;
-            }
-
-            return true;
         }
     }
 }

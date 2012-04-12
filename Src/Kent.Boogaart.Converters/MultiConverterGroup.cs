@@ -55,27 +55,17 @@ namespace Kent.Boogaart.Converters
     /// </example>
     [ContentProperty("Steps")]
     [ValueConversion(typeof(object), typeof(object))]
-    public class MultiConverterGroup : DependencyObject, IMultiValueConverter
+    public class MultiConverterGroup : IMultiValueConverter
     {
         private static readonly ExceptionHelper exceptionHelper = new ExceptionHelper(typeof(MultiConverterGroup));
-        private static readonly DependencyPropertyKey stepsPropertyKey = DependencyProperty.RegisterReadOnly(
-            "Steps",
-            typeof(Collection<MultiConverterGroupStep>),
-            typeof(MultiConverterGroup),
-            new FrameworkPropertyMetadata());
-
-        /// <summary>
-        /// Identifies the <see cref="Steps"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty StepsProperty = stepsPropertyKey.DependencyProperty;
+        private readonly Collection<MultiConverterGroupStep> steps;
 
         /// <summary>
         /// Gets the collection of <see cref="MultiConverterGroupStep"/>s in this <c>MultiConverterGroup</c>.
         /// </summary>
         public Collection<MultiConverterGroupStep> Steps
         {
-            get { return GetValue(StepsProperty) as Collection<MultiConverterGroupStep>; }
-            private set { SetValue(stepsPropertyKey, value); }
+            get { return this.steps; }
         }
 
         /// <summary>
@@ -83,7 +73,7 @@ namespace Kent.Boogaart.Converters
         /// </summary>
         public MultiConverterGroup()
         {
-            this.Steps = new Collection<MultiConverterGroupStep>();
+            this.steps = new Collection<MultiConverterGroupStep>();
         }
 
         /// <summary>

@@ -76,47 +76,16 @@ namespace Kent.Boogaart.Converters
 #if !SILVERLIGHT
     [ValueConversion(typeof(object), typeof(object))]
 #endif
-    public class ConverterGroup : DependencyObject, IValueConverter
+    public class ConverterGroup : IValueConverter
     {
-#if !SILVERLIGHT
-        private static readonly DependencyPropertyKey convertersPropertyKey = DependencyProperty.RegisterReadOnly(
-            "Converters",
-            typeof(Collection<IValueConverter>),
-            typeof(ConverterGroup),
-            new PropertyMetadata());
-#endif
-
-        /// <summary>
-        /// Identifies the <see cref="Converters"/> dependency property.
-        /// </summary>
-#if !SILVERLIGHT
-        public static readonly DependencyProperty ConvertersProperty = convertersPropertyKey.DependencyProperty;
-#else
-        public static readonly DependencyProperty ConvertersProperty = DependencyProperty.Register(
-            "Converters",
-            typeof(Collection<IValueConverter>),
-            typeof(ConverterGroup),
-            new PropertyMetadata(null));
-#endif
+        private readonly Collection<IValueConverter> converters;
 
         /// <summary>
         /// Gets the collection of <see cref="IValueConverter"/>s in this <c>ConverterGroup</c>.
         /// </summary>
         public Collection<IValueConverter> Converters
         {
-            get
-            {
-                return GetValue(ConvertersProperty) as Collection<IValueConverter>;
-            }
-
-            private set
-            {
-#if !SILVERLIGHT
-                SetValue(convertersPropertyKey, value);
-#else
-                SetValue(ConvertersProperty, value);
-#endif
-            }
+            get { return this.converters; }
         }
 
         /// <summary>
@@ -124,7 +93,7 @@ namespace Kent.Boogaart.Converters
         /// </summary>
         public ConverterGroup()
         {
-            this.Converters = new Collection<IValueConverter>();
+            this.converters = new Collection<IValueConverter>();
         }
 
         /// <summary>

@@ -36,7 +36,7 @@ namespace Kent.Boogaart.Converters.UnitTest
         public void SourceKind_ShouldThrowIfInvalid()
         {
             var ex = Assert.Throws<ArgumentException>(() => this.dateTimeConverter.SourceKind = (DateTimeKind)100);
-            Assert.Equal("'100' is not a valid value for property 'SourceKind'.", ex.Message);
+            Assert.Equal("Enum value '100' is not defined for enumeration 'System.DateTimeKind'.\r\nParameter name: value", ex.Message);
         }
 
         [Fact]
@@ -53,7 +53,7 @@ namespace Kent.Boogaart.Converters.UnitTest
         public void TargetKind_ShouldThrowIfInvalid()
         {
             var ex = Assert.Throws<ArgumentException>(() => this.dateTimeConverter.TargetKind = (DateTimeKind)100);
-            Assert.Equal("'100' is not a valid value for property 'TargetKind'.", ex.Message);
+            Assert.Equal("Enum value '100' is not defined for enumeration 'System.DateTimeKind'.\r\nParameter name: value", ex.Message);
         }
 
         [Fact]
@@ -70,7 +70,7 @@ namespace Kent.Boogaart.Converters.UnitTest
         public void ConversionMode_ShouldThrowIfInvalid()
         {
             var ex = Assert.Throws<ArgumentException>(() => this.dateTimeConverter.ConversionMode = (DateTimeConversionMode)100);
-            Assert.Equal("'100' is not a valid value for property 'ConversionMode'.", ex.Message);
+            Assert.Equal("Enum value '100' is not defined for enumeration 'Kent.Boogaart.Converters.DateTimeConversionMode'.\r\nParameter name: value", ex.Message);
         }
 
         [Fact]

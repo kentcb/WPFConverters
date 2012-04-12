@@ -59,7 +59,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'SL40 Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\SL40 Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;SILVERLIGHT</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;SILVERLIGHT;SILVERLIGHT40</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <NoStdLib>true</NoStdLib>
@@ -73,7 +73,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'SL40 Release|AnyCPU'">
     <OutputPath>bin\SL40 Release\</OutputPath>
-    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <DefineConstants>TRACE;SILVERLIGHT;SILVERLIGHT40</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -86,8 +86,38 @@
     <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
     <SilverlightApplication>false</SilverlightApplication>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'SL50 Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\SL50 Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;SILVERLIGHT;SILVERLIGHT50</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SilverlightApplication>false</SilverlightApplication>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'SL50 Release|AnyCPU'">
+    <OutputPath>bin\SL50 Release\</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT;SILVERLIGHT50</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SilverlightApplication>false</SilverlightApplication>
+  </PropertyGroup>
   <!--
-    SL40
+    SL
     -->
   <ItemGroup Condition="$(TargetFrameworkIdentifier) == 'Silverlight'">
     <Reference Include="mscorlib" />
@@ -185,6 +215,7 @@
   </ItemGroup>
   <!-- need some inputs for other builds, otherwise the build fails -->
   <ItemGroup>
+    <Compile Include="BooleanToVisibilityConverterTest.cs" />
     <Compile Include="Expressions\Nodes\TernaryConditionalNodeTest.cs" />
     <Compile Include="Expressions\Nodes\NullCoalescingNodeTest.cs" />
     <Compile Include="Expressions\Nodes\TernaryNodeTest.cs" />
@@ -194,6 +225,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TokenizerTestResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Markup\BooleanToVisibilityConverterExtensionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

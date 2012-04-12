@@ -14,34 +14,54 @@
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400">
     <sdk:TabControl>
+        <sdk:TabItem Header="BooleanToVisibilityConverter">
+            <StackPanel>
+                <toolkit:Expander Header="Example 1" IsExpanded="True">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource ExampleHeader}">
+                            This example uses a BooleanToVisibilityConverter to automatically collapse the TextBox when the CheckBox is unchecked.
+                        </TextBlock>
+                        <CheckBox x:Name="checkBox1" IsChecked="True">Uncheck to collapse the text box</CheckBox>
+                        <TextBox Visibility="{Binding IsChecked, ElementName=checkBox1, Converter={con:BooleanToVisibilityConverter}}"/>
+                        <sdk:Label>This label sits below the text box.</sdk:Label>
+                    </StackPanel>
+                </toolkit:Expander>
+                <toolkit:Expander Header="Example 2">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource ExampleHeader}">
+                            This example uses a BooleanToVisibilityConverter to automatically collapse the TextBox when the CheckBox is checked.
+                        </TextBlock>
+                        <CheckBox x:Name="checkBox2">Check to collapse the text box</CheckBox>
+                        <TextBox Visibility="{Binding IsChecked, ElementName=checkBox2, Converter={con:BooleanToVisibilityConverter IsReversed=True}}"/>
+                        <sdk:Label>This label sits below the text box.</sdk:Label>
+                    </StackPanel>
+                </toolkit:Expander>
+            </StackPanel>
+        </sdk:TabItem>
+        
         <sdk:TabItem Header="CaseConverter">
-            <toolkit:Expander Header="Example 1" IsExpanded="True">
-                <StackPanel>
-                    <TextBlock Style="{StaticResource ExampleHeader}">
+            <StackPanel>
+                <toolkit:Expander Header="Example 1" IsExpanded="True">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource ExampleHeader}">
                         This example uses a CaseConverter to automatically convert any text you enter in the TextBox to lowercase
                         and uppercase.
-                    </TextBlock>
-                    <TextBox x:Name="_textBox1" Text="Enter some text here."/>
-                    <sdk:Label>
-                        <sdk:Label.Content>
-                            <Binding Path="Text" ElementName="_textBox1">
-                                <Binding.Converter>
-                                    <con:CaseConverter Casing="Upper"/>
-                                </Binding.Converter>
-                            </Binding>
-                        </sdk:Label.Content>
-                    </sdk:Label>
-                    <sdk:Label>
-                        <sdk:Label.Content>
-                            <Binding Path="Text" ElementName="_textBox1">
-                                <Binding.Converter>
-                                    <con:CaseConverter Casing="Lower"/>
-                                </Binding.Converter>
-                            </Binding>
-                        </sdk:Label.Content>
-                    </sdk:Label>
-                </StackPanel>
-            </toolkit:Expander>
+                        </TextBlock>
+                        <TextBox x:Name="_textBox1" Text="Enter some text here."/>
+                        <sdk:Label Content="{Binding Text, ElementName=_textBox1, Converter={con:CaseConverter TargetCasing=Upper}}"/>
+                        <sdk:Label Content="{Binding Text, ElementName=_textBox1, Converter={con:CaseConverter TargetCasing=Lower}}"/>
+                    </StackPanel>
+                </toolkit:Expander>
+                <toolkit:Expander Header="Example 2">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource ExampleHeader}">
+                            This example uses a CaseConverter to ensure entered text is always in lowercase, but the backing property is always in uppercase.
+                        </TextBlock>
+                        <TextBox x:Name="textBox2" Text="{Binding Text, ElementName=textBlock2, Mode=TwoWay, Converter={con:CaseConverter SourceCasing=Upper, TargetCasing=Lower}}"/>
+                        <TextBlock x:Name="textBlock2" Text="This is the backing property."/>
+                    </StackPanel>
+                </toolkit:Expander>
+            </StackPanel>
         </sdk:TabItem>
 
         <sdk:TabItem Header="ConverterGroup">
@@ -57,7 +77,7 @@
                                 <Binding Path="Text" ElementName="_textBox5">
                                     <Binding.Converter>
                                         <con:ConverterGroup>
-                                            <con:CaseConverter Casing="Upper"/>
+                                            <con:CaseConverter TargetCasing="Upper"/>
                                             <con:FormatConverter FormatString="Converted to uppercase, that text is '{0}'."/>
                                         </con:ConverterGroup>
                                     </Binding.Converter>
@@ -78,7 +98,7 @@
                                 <Binding Path="Text" ElementName="_textBox6" FallbackValue="{x:Null}">
                                     <Binding.Converter>
                                         <con:ConverterGroup>
-                                            <con:CaseConverter Casing="Upper"/>
+                                            <con:CaseConverter TargetCasing="Upper"/>
                                             <con:MapConverter>
                                                 <con:Mapping From="YES">
                                                     <con:Mapping.To>
@@ -96,28 +116,6 @@
                                 </Binding>
                             </CheckBox.IsChecked>
                         </CheckBox>
-                    </StackPanel>
-                </toolkit:Expander>
-                <toolkit:Expander Header="Example 3">
-                    <StackPanel>
-                        <TextBlock Style="{StaticResource ExampleHeader}">
-                            This example first converts the entered text to a DateTime and then adds 10 minutes to it. Finally,
-                            the result is formatted with a FormatConverter.
-                        </TextBlock>
-                        <TextBox x:Name="_textBox7"/>
-                        <sdk:Label>
-                            <sdk:Label.Content>
-                                <Binding Path="Text" ElementName="_textBox7">
-                                    <Binding.Converter>
-                                        <con:ConverterGroup>
-                                            <con:TypeConverter TargetType="{Binding DateTimeType, Source={StaticResource TypeProvider}}"/>
-                                            <con:DateTimeConverter TargetAdjustment="0:10"/>
-                                            <con:FormatConverter FormatString="Adding 10 minutes to that we get a time of '{0:t}'."/>
-                                        </con:ConverterGroup>
-                                    </Binding.Converter>
-                                </Binding>
-                            </sdk:Label.Content>
-                        </sdk:Label>
                     </StackPanel>
                 </toolkit:Expander>
             </StackPanel>
@@ -139,15 +137,7 @@
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <sdk:Label>With conversion:</sdk:Label>
-                            <sdk:Label>
-                                <sdk:Label.Content>
-                                    <Binding Path="DateTimeUtc" ElementName="_root">
-                                        <Binding.Converter>
-                                            <con:DateTimeConverter TargetKind="Local"/>
-                                        </Binding.Converter>
-                                    </Binding>
-                                </sdk:Label.Content>
-                            </sdk:Label>
+                            <sdk:Label Content="{Binding DateTimeUtc, ElementName=_root, Converter={con:DateTimeConverter TargetKind=Local}}"/>
                         </StackPanel>
                     </StackPanel>
                 </toolkit:Expander>
@@ -159,27 +149,11 @@
                         <Button Click="updateDateTime_Click">Update the DateTime</Button>
                         <StackPanel Orientation="Horizontal">
                             <sdk:Label>Without conversion:</sdk:Label>
-                            <sdk:Label>
-                                <sdk:Label.Content>
-                                    <Binding Path="DateTimeUtc" ElementName="_root">
-                                        <Binding.Converter>
-                                            <con:DateTimeConverter TargetKind="Local"/>
-                                        </Binding.Converter>
-                                    </Binding>
-                                </sdk:Label.Content>
-                            </sdk:Label>
+                            <sdk:Label Content="{Binding DateTimeUtc, ElementName=_root, Converter={con:DateTimeConverter TargetKind=Local}}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <sdk:Label>With conversion:</sdk:Label>
-                            <sdk:Label>
-                                <sdk:Label.Content>
-                                    <Binding Path="DateTimeUtc" ElementName="_root">
-                                        <Binding.Converter>
-                                            <con:DateTimeConverter TargetKind="Local" TargetAdjustment="0:3"/>
-                                        </Binding.Converter>
-                                    </Binding>
-                                </sdk:Label.Content>
-                            </sdk:Label>
+                            <sdk:Label Content="{Binding DateTimeUtc, ElementName=_root, Converter={con:DateTimeConverter TargetKind=Local, TargetAdjustment=0:3}}"/>
                         </StackPanel>
                     </StackPanel>
                 </toolkit:Expander>
@@ -250,53 +224,7 @@
                 <toolkit:Expander Header="Example 1" IsExpanded="True">
                     <StackPanel>
                         <TextBlock Style="{StaticResource ExampleHeader}">
-                            This example uses a MapConverter to convert between Boolean and Visibility. Checking the CheckBox
-                            displays a Label; unchecking it hides the Label.
-                        </TextBlock>
-                        <CheckBox x:Name="_checkBox1">Show Label</CheckBox>
-                        <sdk:Label Content="Here is the label.">
-                            <sdk:Label.Visibility>
-                                <Binding Path="IsChecked" ElementName="_checkBox1" FallbackValue="Collapsed">
-                                    <Binding.Converter>
-                                        <con:MapConverter>
-                                            <con:Mapping To="{Binding Visible, Source={StaticResource ValueProvider}}">
-                                                <con:Mapping.From>
-                                                    <sys:Boolean>True</sys:Boolean>
-                                                </con:Mapping.From>
-                                            </con:Mapping>
-                                        </con:MapConverter>
-                                    </Binding.Converter>
-                                </Binding>
-                            </sdk:Label.Visibility>
-                        </sdk:Label>
-                    </StackPanel>
-                </toolkit:Expander>
-                <toolkit:Expander Header="Example 2">
-                    <StackPanel>
-                        <TextBlock Style="{StaticResource ExampleHeader}">
-                            This example uses a MapConverter to convert between the selected UriFormat enumeration member and a
-                            human-readable string.
-                        </TextBlock>
-                        <ComboBox x:Name="_comboBox1"/>
-                        <sdk:Label>
-                            <sdk:Label.Content>
-                                <Binding Path="SelectedValue" ElementName="_comboBox1">
-                                    <Binding.Converter>
-                                        <con:MapConverter FallbackBehavior="ReturnOriginalValue">
-                                            <con:Mapping From="{Binding SafeUnescaped, Source={StaticResource ValueProvider}}" To="Unescaped but safe"/>
-                                            <con:Mapping From="{Binding UriEscaped, Source={StaticResource ValueProvider}}" To="Escaped"/>
-                                        </con:MapConverter>
-                                    </Binding.Converter>
-                                </Binding>
-                            </sdk:Label.Content>
-                        </sdk:Label>
-                    </StackPanel>
-                </toolkit:Expander>
-                <toolkit:Expander Header="Example 3">
-                    <StackPanel>
-                        <TextBlock Style="{StaticResource ExampleHeader}">
-                            This example uses a MapConverter to display a different image depending on whether the CheckBox is
-                            checked or not.
+                            This example uses a MapConverter to display a different image depending on whether the CheckBox is checked or not.
                         </TextBlock>
                         <CheckBox x:Name="_checkBox2">Check me</CheckBox>
                         <Image Height="30">
@@ -322,10 +250,6 @@
                     </StackPanel>
                 </toolkit:Expander>
             </StackPanel>
-        </sdk:TabItem>
-
-        <sdk:TabItem Header="TypeConverter">
-            <sdk:Label>Please see the third ConverterGroup example.</sdk:Label>
         </sdk:TabItem>
     </sdk:TabControl>
 </UserControl>

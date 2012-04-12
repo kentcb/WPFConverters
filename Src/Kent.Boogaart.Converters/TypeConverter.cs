@@ -38,27 +38,11 @@ namespace Kent.Boogaart.Converters
 #if !SILVERLIGHT
     [ValueConversion(typeof(object), typeof(object))]
 #endif
-    public class TypeConverter : DependencyObject, IValueConverter
+    public class TypeConverter : IValueConverter
     {
         private static readonly ExceptionHelper exceptionHelper = new ExceptionHelper(typeof(TypeConverter));
-
-        /// <summary>
-        /// Identifies the <see cref="SourceType"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty SourceTypeProperty = DependencyProperty.Register(
-            "SourceType",
-            typeof(Type),
-            typeof(TypeConverter),
-            new PropertyMetadata(null));
-
-        /// <summary>
-        /// Identifies the <see cref="TargetType"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty TargetTypeProperty = DependencyProperty.Register(
-            "TargetType",
-            typeof(Type),
-            typeof(TypeConverter),
-            new PropertyMetadata(null));
+        private Type sourceType;
+        private Type targetType;
 
         /// <summary>
         /// Gets or sets the source type for the conversion.
@@ -68,8 +52,8 @@ namespace Kent.Boogaart.Converters
 #endif
         public Type SourceType
         {
-            get { return GetValue(SourceTypeProperty) as Type; }
-            set { SetValue(SourceTypeProperty, value); }
+            get { return this.sourceType; }
+            set { this.sourceType = value; }
         }
 
         /// <summary>
@@ -80,8 +64,8 @@ namespace Kent.Boogaart.Converters
 #endif
         public Type TargetType
         {
-            get { return GetValue(TargetTypeProperty) as Type; }
-            set { SetValue(TargetTypeProperty, value); }
+            get { return this.targetType; }
+            set { this.targetType = value; }
         }
 
         /// <summary>

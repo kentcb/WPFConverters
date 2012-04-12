@@ -4,7 +4,7 @@ using Kent.Boogaart.HelperTrinity;
 
 namespace Kent.Boogaart.Converters.Markup
 {
-#if !SILVERLIGHT
+#if !SILVERLIGHT40
     /// <summary>
     /// Implements a markup extension that allows instances of <see cref="FormatConverter"/> to be easily created.
     /// </summary>
@@ -28,7 +28,9 @@ namespace Kent.Boogaart.Converters.Markup
         /// <summary>
         /// Gets or sets the format string for the <see cref="FormatConverter"/>.
         /// </summary>
+#if !SILVERLIGHT
         [ConstructorArgument("formatString")]
+#endif
         public string FormatString
         {
             get { return this.formatString; }

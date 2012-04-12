@@ -43,6 +43,8 @@
     <ContentLayout Include="Content Layout.content" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Conceptual Content\BooleanToVisibilityConverter.aml" />
+    <None Include="Conceptual Content\BooleanToVisibilityConverter.aml" />
     <None Include="Conceptual Content\Converters.aml" />
     <None Include="Conceptual Content\Converters.aml" />
     <None Include="Conceptual Content\Converters.aml" />

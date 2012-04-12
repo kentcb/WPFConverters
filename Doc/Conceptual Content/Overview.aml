@@ -53,16 +53,24 @@
 					<entry><para>Supports Multiple Conversions (WPF only)</para></entry>
 					<entry><para>Supports Forward Conversions</para></entry>
 					<entry><para>Supports Backward Conversions</para></entry>
-					<entry><para>Has Markup Extension (WPF only)</para></entry>
+					<entry><para>Markup Extension Support</para></entry>
 				</row>
 			</tableHeader>
+			<row>
+				<entry><para><link xlink:href="aea54c67-a101-4935-804f-46b41458e66c">BooleanToVisibilityConverter</link></para></entry>
+				<entry><para>Yes</para></entry>
+				<entry><para>No</para></entry>
+				<entry><para>Yes</para></entry>
+				<entry><para>Yes</para></entry>
+				<entry><para>WPF, SL5</para></entry>
+			</row>
 			<row>
 				<entry><para><link xlink:href="0f790919-9ce0-4607-870f-8d20f946f847">CaseConverter</link></para></entry>
 				<entry><para>Yes</para></entry>
 				<entry><para>No</para></entry>
 				<entry><para>Yes</para></entry>
-				<entry><para>No</para></entry>
 				<entry><para>Yes</para></entry>
+				<entry><para>WPF, SL5</para></entry>
 			</row>
 			<row>
 				<entry><para><link xlink:href="97b6062e-594b-419c-9dd1-d07264d10ad9">ConverterGroup</link></para></entry>
@@ -70,7 +78,7 @@
 				<entry><para>No</para></entry>
 				<entry><para>Yes<superscript>1</superscript></para></entry>
 				<entry><para>Yes<superscript>2</superscript></para></entry>
-				<entry><para>Yes</para></entry>
+				<entry><para>None</para></entry>
 			</row>
 			<row>
 				<entry><para><link xlink:href="e15e9869-e742-48c6-a69c-fb1fd73620ae">DateTimeConverter</link></para></entry>
@@ -78,7 +86,7 @@
 				<entry><para>No</para></entry>
 				<entry><para>Yes</para></entry>
 				<entry><para>Yes</para></entry>
-				<entry><para>Yes</para></entry>
+				<entry><para>WPF, SL5</para></entry>
 			</row>
 			<row>
 				<entry><para><link xlink:href="7874a985-9e29-42ee-aa3e-e8fa0b0c7fdb">ExpressionConverter</link></para></entry>
@@ -86,7 +94,7 @@
 				<entry><para>Yes</para></entry>
 				<entry><para>Yes</para></entry>
 				<entry><para>No</para></entry>
-				<entry><para>Yes</para></entry>
+				<entry><para>WPF, SL5</para></entry>
 			</row>
 			<row>
 				<entry><para><link xlink:href="7f1d5603-4c11-4831-9795-499066021657">FormatConverter</link></para></entry>
@@ -94,7 +102,7 @@
 				<entry><para>Yes</para></entry>
 				<entry><para>Yes</para></entry>
 				<entry><para>Yes<superscript>3</superscript></para></entry>
-				<entry><para>Yes</para></entry>
+				<entry><para>WPF, SL5</para></entry>
 			</row>
 			<row>
 				<entry><para><link xlink:href="eecf8a61-37ae-4a02-ad0f-b00356f1d4ad">MapConverter</link></para></entry>
@@ -102,7 +110,7 @@
 				<entry><para>No</para></entry>
 				<entry><para>Yes</para></entry>
 				<entry><para>Yes</para></entry>
-				<entry><para>No</para></entry>
+				<entry><para>None</para></entry>
 			</row>
 			<row>
 				<entry><para><link xlink:href="fa552dfb-a304-4852-9d0b-3d6d6b9e1455">MultiConverterGroup</link></para></entry>
@@ -110,7 +118,7 @@
 				<entry><para>Yes</para></entry>
 				<entry><para>Yes<superscript>4</superscript></para></entry>
 				<entry><para>Yes<superscript>5</superscript></para></entry>
-				<entry><para>No</para></entry>
+				<entry><para>None</para></entry>
 			</row>
 			<row>
 				<entry><para><link xlink:href="ae9b281b-aca2-4e00-8993-0d66d5b6bd1e">TypeConverter</link></para></entry>
@@ -118,7 +126,7 @@
 				<entry><para>No</para></entry>
 				<entry><para>Yes</para></entry>
 				<entry><para>Yes</para></entry>
-				<entry><para>Yes</para></entry>
+				<entry><para>WPF</para></entry>
 			</row>
 		</table>
 		<para>			

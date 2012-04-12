@@ -213,22 +213,14 @@ namespace Kent.Boogaart.Converters
 #if !SILVERLIGHT
     [ValueConversion(typeof(object), typeof(object))]
 #endif
-    public sealed class ExpressionConverter : DependencyObject, IValueConverter
+    public sealed class ExpressionConverter : IValueConverter
 #if !SILVERLIGHT
         , IMultiValueConverter
 #endif
     {
         private static readonly ExceptionHelper exceptionHelper = new ExceptionHelper(typeof(ExpressionConverter));
+        private string expression;
         private Node expressionNode;
-
-        /// <summary>
-        /// Identifies the <see cref="Expression"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty ExpressionProperty = DependencyProperty.Register(
-            "Expression",
-            typeof(string),
-            typeof(ExpressionConverter),
-            new PropertyMetadata(Expression_Changed));
 
         /// <summary>
         /// Gets or sets the expression for this <c>MathConverter</c>.
@@ -238,8 +230,16 @@ namespace Kent.Boogaart.Converters
 #endif
         public string Expression
         {
-            get { return GetValue(ExpressionProperty) as string; }
-            set { SetValue(ExpressionProperty, value); }
+            get
+            {
+                return this.expression;
+            }
+
+            set
+            {
+                this.expression = value;
+                this.expressionNode = null;
+            }
         }
 
         /// <summary>
@@ -280,6 +280,7 @@ namespace Kent.Boogaart.Converters
         /// </returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            this.EnsureExpressionNode();
             exceptionHelper.ResolveAndThrowIf(this.expressionNode == null, "NoExpression");
             return this.expressionNode.Evaluate(new NodeEvaluationContext(new object[] { value }));
         }
@@ -328,6 +329,7 @@ namespace Kent.Boogaart.Converters
         /// </returns>
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
+            this.EnsureExpressionNode();
             exceptionHelper.ResolveAndThrowIf(this.expressionNode == null, "NoExpression");
             return this.expressionNode.Evaluate(new NodeEvaluationContext(values));
         }
@@ -356,24 +358,19 @@ namespace Kent.Boogaart.Converters
         }
 #endif
 
-        private static void Expression_Changed(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        private void EnsureExpressionNode()
         {
-            var expressionConverter = dependencyObject as ExpressionConverter;
-            Debug.Assert(expressionConverter != null);
-
-            if (expressionConverter.Expression != null)
+            if (string.IsNullOrEmpty(this.expression))
             {
-                // turn the expression into an AST each time it changes (not each time our Convert methods are called)
-                using (var stringReader = new StringReader(expressionConverter.Expression))
-                using (var tokenizer = new Tokenizer(stringReader))
-                using (var parser = new Parser(tokenizer))
-                {
-                    expressionConverter.expressionNode = parser.ParseExpression();
-                }
+                return;
             }
-            else
+
+            // turn the expression into an AST each time it changes (not each time our Convert methods are called)
+            using (var stringReader = new StringReader(this.expression))
+            using (var tokenizer = new Tokenizer(stringReader))
+            using (var parser = new Parser(tokenizer))
             {
-                expressionConverter.expressionNode = null;
+                this.expressionNode = parser.ParseExpression();
             }
         }
     }

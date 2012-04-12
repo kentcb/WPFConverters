@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,8 +13,9 @@ namespace Kent.Boogaart.Converters
     /// </summary>
     /// <remarks>
     /// <para>
-    /// The <c>CaseConverter</c> class can be used to convert input strings into upper or lower case according to the <see cref="Casing"/>
-    /// property.
+    /// The <c>CaseConverter</c> class can be used to convert input strings into upper or lower case according to the <see cref="Casing"/> property.
+    /// Setting <see cref="Casing"/> is a shortcut for setting both <see cref="SourceCasing"/> and <see cref="TargetCasing"/>. It is therefore possible
+    /// to specify that the source and target properties be converted to different casings.
     /// </para>
     /// </remarks>
     /// <example>
@@ -26,35 +26,21 @@ namespace Kent.Boogaart.Converters
     /// ]]>
     /// </code>
     /// </example>
+    /// <example>
+    /// The following example shows how a <c>CaseConverter</c> can be used to convert a bound value to upper-case, but display it in lower-case:
+    /// <code lang="xml">
+    /// <![CDATA[
+    /// <Label Content="{Binding Name, Converter={CaseConverter SourceCasing=Upper, TargetCasing=Lower}}"/>
+    /// ]]>
+    /// </code>
+    /// </example>
 #if !SILVERLIGHT
     [ValueConversion(typeof(string), typeof(string))]
 #endif
-    public class CaseConverter : DependencyObject, IValueConverter
+    public class CaseConverter : IValueConverter
     {
-        /// <summary>
-        /// Identifies the <see cref="Casing"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty CasingProperty = DependencyProperty.Register(
-            "Casing",
-            typeof(CharacterCasing),
-            typeof(CaseConverter),
-            new PropertyMetadata(CharacterCasing.Normal)
-#if !SILVERLIGHT
-            , ValidateCasing
-#endif
-            );
-
-        /// <summary>
-        /// Gets or sets the target casing for the converter.
-        /// </summary>
-#if !SILVERLIGHT
-        [ConstructorArgument("casing")]
-#endif
-        public CharacterCasing Casing
-        {
-            get { return (CharacterCasing)GetValue(CasingProperty); }
-            set { SetValue(CasingProperty, value); }
-        }
+        private CharacterCasing sourceCasing;
+        private CharacterCasing targetCasing;
 
         /// <summary>
         /// Initializes a new instance of the CaseConverter class.
@@ -64,14 +50,85 @@ namespace Kent.Boogaart.Converters
         }
 
         /// <summary>
-        /// Initializes a new instance of the CaseConverter class with the specified target casing.
+        /// Initializes a new instance of the CaseConverter class with the specified source and target casings.
         /// </summary>
         /// <param name="casing">
-        /// The target casing for the converter (see <see cref="Casing"/>).
+        /// The source and target casings for the converter (see <see cref="Casing"/>).
         /// </param>
         public CaseConverter(CharacterCasing casing)
         {
             this.Casing = casing;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the CaseConverter class with the specified source and target casings.
+        /// </summary>
+        /// <param name="sourceCasing">
+        /// The source casing for the converter (see <see cref="SourceCasing"/>).
+        /// </param>
+        /// <param name="targetCasing">
+        /// The target casing for the converter (see <see cref="TargetCasing"/>).
+        /// </param>
+        public CaseConverter(CharacterCasing sourceCasing, CharacterCasing targetCasing)
+        {
+            this.SourceCasing = sourceCasing;
+            this.TargetCasing = targetCasing;
+        }
+
+        /// <summary>
+        /// Gets or sets the source casing for the converter.
+        /// </summary>
+#if !SILVERLIGHT
+        [ConstructorArgument("sourceCasing")]
+#endif
+        public CharacterCasing SourceCasing
+        {
+            get
+            {
+                return this.sourceCasing;
+            }
+
+            set
+            {
+                ArgumentHelper.AssertEnumMember(value, "value", CharacterCasing.Lower, CharacterCasing.Upper, CharacterCasing.Normal);
+                this.sourceCasing = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the target casing for the converter.
+        /// </summary>
+#if !SILVERLIGHT
+        [ConstructorArgument("targetCasing")]
+#endif
+        public CharacterCasing TargetCasing
+        {
+            get
+            {
+                return this.targetCasing;
+            }
+
+            set
+            {
+                ArgumentHelper.AssertEnumMember(value, "value", CharacterCasing.Lower, CharacterCasing.Upper, CharacterCasing.Normal);
+                this.targetCasing = value;
+            }
+        }
+
+        /// <summary>
+        /// Sets both the source and target casings for the converter.
+        /// </summary>
+#if !SILVERLIGHT
+        [ConstructorArgument("casing")]
+#endif
+        public CharacterCasing Casing
+        {
+            set
+            {
+                ArgumentHelper.AssertEnumMember(value, "value", CharacterCasing.Lower, CharacterCasing.Upper, CharacterCasing.Normal);
+                this.sourceCasing = value;
+                this.targetCasing = value;
+            }
         }
 
         /// <summary>
@@ -100,7 +157,7 @@ namespace Kent.Boogaart.Converters
             {
                 culture = culture ?? CultureInfo.CurrentCulture;
 
-                switch (this.Casing)
+                switch (this.TargetCasing)
                 {
                     case CharacterCasing.Lower:
                         return str.ToLower(culture);
@@ -134,23 +191,24 @@ namespace Kent.Boogaart.Converters
         /// </returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            var str = value as string;
+
+            if (str != null)
+            {
+                culture = culture ?? CultureInfo.CurrentCulture;
+
+                switch (this.SourceCasing)
+                {
+                    case CharacterCasing.Lower:
+                        return str.ToLower(culture);
+                    case CharacterCasing.Upper:
+                        return str.ToUpper(culture);
+                    case CharacterCasing.Normal:
+                        return str;
+                }
+            }
+
             return DependencyProperty.UnsetValue;
-        }
-
-        private static bool ValidateCasing(object value)
-        {
-            Debug.Assert(value is CharacterCasing);
-
-            try
-            {
-                ArgumentHelper.AssertEnumMember((CharacterCasing)value, "value");
-            }
-            catch (ArgumentException)
-            {
-                return false;
-            }
-
-            return true;
         }
     }
 }

@@ -10,34 +10,24 @@ namespace Kent.Boogaart.Converters
     /// Represents a single step in a <see cref="MultiConverterGroup"/>.
     /// </summary>
     [ContentProperty("Converters")]
-    public class MultiConverterGroupStep : DependencyObject
+    public class MultiConverterGroupStep
     {
-        private static readonly DependencyPropertyKey convertersPropertyKey = DependencyProperty.RegisterReadOnly(
-            "Converters",
-            typeof(Collection<IMultiValueConverter>),
-            typeof(MultiConverterGroupStep),
-            new FrameworkPropertyMetadata());
-
-        /// <summary>
-        /// Identifies the <see cref="Converters"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty ConvertersProperty = convertersPropertyKey.DependencyProperty;
-
-        /// <summary>
-        /// Gets the collection of <see cref="IMultiValueConverter"/>s in this <c>MultiConverterGroupStep</c>.
-        /// </summary>
-        public Collection<IMultiValueConverter> Converters
-        {
-            get { return GetValue(ConvertersProperty) as Collection<IMultiValueConverter>; }
-            private set { SetValue(convertersPropertyKey, value); }
-        }
+        private readonly Collection<IMultiValueConverter> converters;
 
         /// <summary>
         /// Initializes a new instance of the MultiConverterGroupStep class.
         /// </summary>
         public MultiConverterGroupStep()
         {
-            this.Converters = new Collection<IMultiValueConverter>();
+            this.converters = new Collection<IMultiValueConverter>();
+        }
+
+        /// <summary>
+        /// Gets the collection of <see cref="IMultiValueConverter"/>s in this <c>MultiConverterGroupStep</c>.
+        /// </summary>
+        public Collection<IMultiValueConverter> Converters
+        {
+            get { return this.converters; }
         }
     }
 #endif

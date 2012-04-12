@@ -26,7 +26,7 @@ namespace Kent.Boogaart.Converters.UnitTest
         public void FallbackBehavior_ShouldThrowIfInvalid()
         {
             var ex = Assert.Throws<ArgumentException>(() => this.mapConverter.FallbackBehavior = (FallbackBehavior)100);
-            Assert.Equal("'100' is not a valid value for property 'FallbackBehavior'.", ex.Message);
+            Assert.Equal("Enum value '100' is not defined for enumeration 'Kent.Boogaart.Converters.FallbackBehavior'.\r\nParameter name: value", ex.Message);
         }
 
         [Fact]

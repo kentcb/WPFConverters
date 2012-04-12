@@ -34,8 +34,6 @@ namespace Kent.Boogaart.Converters.Examples.SL
         public MainPage()
         {
             InitializeComponent();
-            _comboBox1.ItemsSource = new object[] { UriFormat.SafeUnescaped, UriFormat.Unescaped, UriFormat.UriEscaped };
-            _textBox7.Text = DateTime.Now.ToString("o");
         }
 
         private void updateDateTime_Click(object sender, EventArgs e)

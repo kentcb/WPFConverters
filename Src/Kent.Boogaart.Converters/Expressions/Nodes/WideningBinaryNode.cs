@@ -34,8 +34,8 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
             // we have to convert rather than just cast because the value is boxed
             var convertibleLeftNodeValue = leftNodeValue as IConvertible;
             var convertibleRightNodeValue = rightNodeValue as IConvertible;
-            Debug.Assert(convertibleLeftNodeValue != null || maxNodeValueType == NodeValueType.String);
-            Debug.Assert(convertibleRightNodeValue != null || maxNodeValueType == NodeValueType.String);
+            Debug.Assert(convertibleLeftNodeValue != null || (maxNodeValueType == NodeValueType.String || maxNodeValueType == NodeValueType.ReferenceType));
+            Debug.Assert(convertibleRightNodeValue != null || (maxNodeValueType == NodeValueType.String || maxNodeValueType == NodeValueType.ReferenceType));
 
             var succeeded = false;
             object result = null;

@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Markup;
 using Kent.Boogaart.HelperTrinity;
+using Kent.Boogaart.HelperTrinity.Extensions;
 
 namespace Kent.Boogaart.Converters
 {
@@ -72,50 +73,11 @@ namespace Kent.Boogaart.Converters
 #if !SILVERLIGHT
     [ValueConversion(typeof(object), typeof(object))]
 #endif
-    public class MapConverter : DependencyObject, IValueConverter
+    public class MapConverter : IValueConverter
     {
-#if !SILVERLIGHT
-        private static readonly DependencyPropertyKey mappingsPropertyKey = DependencyProperty.RegisterReadOnly(
-            "Mappings",
-            typeof(Collection<Mapping>),
-            typeof(MapConverter),
-            new PropertyMetadata(null));
-#endif
-
-        /// <summary>
-        /// Identifies the <see cref="Mappings"/> dependency property.
-        /// </summary>
-#if !SILVERLIGHT
-        public static readonly DependencyProperty MappingsProperty = mappingsPropertyKey.DependencyProperty;
-#else
-        public static readonly DependencyProperty MappingsProperty = DependencyProperty.Register(
-            "Mappings",
-            typeof(Collection<Mapping>),
-            typeof(MapConverter),
-            new PropertyMetadata(null));
-#endif
-
-        /// <summary>
-        /// Identifies the <see cref="FallbackBehavior"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty FallbackBehaviorProperty = DependencyProperty.Register(
-            "FallbackBehavior",
-            typeof(FallbackBehavior),
-            typeof(MapConverter),
-            new PropertyMetadata(FallbackBehavior.ReturnUnsetValue)
-#if !SILVERLIGHT
-            , ValidateFallbackValue
-#endif
-            );
-
-        /// <summary>
-        /// Identifies the <see cref="FallbackValue"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty FallbackValueProperty = DependencyProperty.Register(
-            "FallbackValue",
-            typeof(object),
-            typeof(MapConverter),
-            new PropertyMetadata(null));
+        private readonly Collection<Mapping> mappings;
+        private FallbackBehavior fallbackBehavior;
+        private object fallbackValue;
 
         /// <summary>
         /// Gets or sets the fallback behavior for this <c>MapConverter</c>.
@@ -135,8 +97,16 @@ namespace Kent.Boogaart.Converters
         /// </remarks>
         public FallbackBehavior FallbackBehavior
         {
-            get { return (FallbackBehavior)GetValue(FallbackBehaviorProperty); }
-            set { SetValue(FallbackBehaviorProperty, value); }
+            get
+            {
+                return this.fallbackBehavior;
+            }
+
+            set
+            {
+                value.AssertEnumMember("value", FallbackBehavior.ReturnFallbackValue, FallbackBehavior.ReturnOriginalValue, FallbackBehavior.ReturnUnsetValue);
+                this.fallbackBehavior = value;
+            }
         }
 
         /// <summary>
@@ -145,8 +115,8 @@ namespace Kent.Boogaart.Converters
         /// </summary>
         public object FallbackValue
         {
-            get { return GetValue(FallbackValueProperty); }
-            set { SetValue(FallbackValueProperty, value); }
+            get { return this.fallbackValue; }
+            set { this.fallbackValue = value; }
         }
 
         /// <summary>
@@ -160,20 +130,7 @@ namespace Kent.Boogaart.Converters
         /// </remarks>
         public Collection<Mapping> Mappings
         {
-            get
-            {
-                return GetValue(MappingsProperty) as Collection<Mapping>;
-            }
-
-            private set
-            {
-                Debug.Assert(this.Mappings == null);
-#if !SILVERLIGHT
-                SetValue(mappingsPropertyKey, value);
-#else
-                SetValue(MappingsProperty, value);
-#endif
-            }
+            get { return this.mappings; }
         }
 
         /// <summary>
@@ -181,7 +138,7 @@ namespace Kent.Boogaart.Converters
         /// </summary>
         public MapConverter()
         {
-            this.Mappings = new Collection<Mapping>();
+            this.mappings = new Collection<Mapping>();
         }
 
         /// <summary>
@@ -266,12 +223,6 @@ namespace Kent.Boogaart.Converters
             {
                 return this.FallbackValue;
             }
-        }
-
-        private static bool ValidateFallbackValue(object value)
-        {
-            Debug.Assert(value is FallbackBehavior);
-            return Enum.IsDefined(typeof(FallbackBehavior), value);
         }
     }
 }

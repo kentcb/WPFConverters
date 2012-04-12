@@ -5,7 +5,7 @@ using Kent.Boogaart.HelperTrinity;
 
 namespace Kent.Boogaart.Converters.Markup
 {
-#if !SILVERLIGHT
+#if !SILVERLIGHT40
     /// <summary>
     /// Implements a markup extension that allows instances of <see cref="CaseConverter"/> to be easily created.
     /// </summary>
@@ -23,23 +23,59 @@ namespace Kent.Boogaart.Converters.Markup
     /// </example>
     public sealed class CaseConverterExtension : MarkupExtension
     {
-        private CharacterCasing casing;
+        private CharacterCasing sourceCasing;
+        private CharacterCasing targetCasing;
 
         /// <summary>
-        /// Gets or sets the <see cref="CharacterCasing"/> for the <see cref="CaseConverter"/>.
+        /// Gets or sets the source <see cref="CharacterCasing"/> for the <see cref="CaseConverter"/>.
         /// </summary>
-        [ConstructorArgument("casing")]
-        public CharacterCasing Casing
+#if !SILVERLIGHT
+        [ConstructorArgument("sourceCasing")]
+#endif
+        public CharacterCasing SourceCasing
         {
             get
             {
-                return this.casing;
+                return this.sourceCasing;
             }
 
             set
             {
-                ArgumentHelper.AssertEnumMember(value, "value");
-                this.casing = value;
+                ArgumentHelper.AssertEnumMember(value, "value", CharacterCasing.Lower, CharacterCasing.Normal, CharacterCasing.Upper);
+                this.sourceCasing = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the target <see cref="CharacterCasing"/> for the <see cref="CaseConverter"/>.
+        /// </summary>
+#if !SILVERLIGHT
+        [ConstructorArgument("targetCasing")]
+#endif
+        public CharacterCasing TargetCasing
+        {
+            get
+            {
+                return this.targetCasing;
+            }
+
+            set
+            {
+                ArgumentHelper.AssertEnumMember(value, "value", CharacterCasing.Lower, CharacterCasing.Normal, CharacterCasing.Upper);
+                this.targetCasing = value;
+            }
+        }
+
+        /// <summary>
+        /// Sets both the source and target <see cref="CharacterCasing"/> for the <see cref="CaseConverter"/>.
+        /// </summary>
+        public CharacterCasing Casing
+        {
+            set
+            {
+                ArgumentHelper.AssertEnumMember(value, "value", CharacterCasing.Lower, CharacterCasing.Normal, CharacterCasing.Upper);
+                this.sourceCasing = value;
+                this.targetCasing = value;
             }
         }
 
@@ -62,7 +98,22 @@ namespace Kent.Boogaart.Converters.Markup
         }
 
         /// <summary>
-        /// Provides an instance of <see cref="CaseConverter"/> based on <see cref="Casing"/>.
+        /// Initializes a new instance of the CaseConverterExtension class with the specified source and target <see cref="Casing"/>.
+        /// </summary>
+        /// <param name="sourceCasing">
+        /// The source casing for the <see cref="CaseConverter"/>.
+        /// </param>
+        /// <param name="targetCasing">
+        /// The target casing for the <see cref="CaseConverter"/>.
+        /// </param>
+        public CaseConverterExtension(CharacterCasing sourceCasing, CharacterCasing targetCasing)
+        {
+            this.SourceCasing = sourceCasing;
+            this.TargetCasing = targetCasing;
+        }
+
+        /// <summary>
+        /// Provides an instance of <see cref="CaseConverter"/> based on <see cref="SourceCasing"/> and <see cref="TargetCasing"/>.
         /// </summary>
         /// <param name="serviceProvider">
         /// An object that can provide services.
@@ -72,7 +123,7 @@ namespace Kent.Boogaart.Converters.Markup
         /// </returns>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            return new CaseConverter(this.Casing);
+            return new CaseConverter(this.SourceCasing, this.TargetCasing);
         }
     }
 #endif

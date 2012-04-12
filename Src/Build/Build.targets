@@ -17,6 +17,7 @@
 
     <Target Name="Clean">
         <MSBuild Projects="$(SrcDir)\WpfConverters.sln" Properties="Configuration=SL40 $(Configuration)" Targets="Clean" BuildInParallel="True"/>
+        <MSBuild Projects="$(SrcDir)\WpfConverters.sln" Properties="Configuration=SL50 $(Configuration)" Targets="Clean" BuildInParallel="True"/>
         <MSBuild Projects="$(SrcDir)\WpfConverters.sln" Properties="Configuration=FX35 $(Configuration)" Targets="Clean" BuildInParallel="True"/>
         <MSBuild Projects="$(SrcDir)\WpfConverters.sln" Properties="Configuration=FX40 $(Configuration)" Targets="Clean" BuildInParallel="True"/>
 
@@ -25,11 +26,12 @@
 
     <Target Name="Build">
         <!--
-        order is very important here, for reasons I haven't investigated fully. If the Silverlight solution is built second, it is not
-        a valid Silverlight binary. It seems that building the standard solution results in some properties being set that then affect
-        the Silverlight build.
+        order is very important here, for reasons I haven't investigated fully. If the Silverlight solutions are built second, they are not
+        valid Silverlight binaries. It seems that building the standard solution results in some properties being set that then affect
+        the Silverlight builds.
         -->
         <MSBuild Projects="$(SrcDir)\WpfConverters.sln" Properties="Configuration=SL40 $(Configuration)" Targets="Build" BuildInParallel="True"/>
+        <MSBuild Projects="$(SrcDir)\WpfConverters.sln" Properties="Configuration=SL50 $(Configuration)" Targets="Build" BuildInParallel="True"/>
         <MSBuild Projects="$(SrcDir)\WpfConverters.sln" Properties="Configuration=FX35 $(Configuration)" Targets="Build" BuildInParallel="True"/>
         <MSBuild Projects="$(SrcDir)\WpfConverters.sln" Properties="Configuration=FX40 $(Configuration)" Targets="Build" BuildInParallel="True"/>
     </Target>
@@ -107,6 +109,15 @@
             <Output ItemName="SL40Binaries" TaskParameter="Include" />
         </CreateItem>
         <Zip ZipFileName="$(GenDir)\WpfConverters-$(Version)-SL40-bin.zip" WorkingDirectory="$(GenDir)\Temp\SL40\" ZipLevel="9" Files="@(SL40Binaries)" />
+
+        <CreateItem Include="$(SrcDir)\Kent.Boogaart.Converters\bin\SL50 $(Configuration)\*.*" Exclude="$(SrcDir)\Kent.Boogaart.Converters\bin\SL50 $(Configuration)\Coverage.log;$(SrcDir)\Kent.Boogaart.Converters\bin\SL50 $(Configuration)\System.*">
+            <Output ItemName="SL50Files" TaskParameter="Include" />
+        </CreateItem>
+        <Copy SourceFiles="@(SL50Files)" DestinationFolder="$(GenDir)\Temp\SL50" />
+        <CreateItem Include="$(GenDir)\Temp\SL50\*.*">
+            <Output ItemName="SL50Binaries" TaskParameter="Include" />
+        </CreateItem>
+        <Zip ZipFileName="$(GenDir)\WpfConverters-$(Version)-SL50-bin.zip" WorkingDirectory="$(GenDir)\Temp\SL50\" ZipLevel="9" Files="@(SL50Binaries)" />
     </Target>
     
     <Target Name="CreateNuGetPackages">
@@ -141,6 +152,10 @@
             <Output ItemName="SL40_Files" TaskParameter="Include" />
         </CreateItem>
         <Copy SourceFiles="@(SL40_Files)" DestinationFolder="$(GenDir)\NuGet\lib\sl40" />
+        <CreateItem Include="$(SrcDir)\Kent.Boogaart.Converters\bin\SL50 $(Configuration)\Kent.Boogaart.Converters.*">
+            <Output ItemName="SL50_Files" TaskParameter="Include" />
+        </CreateItem>
+        <Copy SourceFiles="@(SL50_Files)" DestinationFolder="$(GenDir)\NuGet\lib\sl50" />
         <CreateItem Include="$(SrcDir)\**\*.*" Exclude="$(SrcDir)\**\*.suo;$(SrcDir)\**\*.csproj.user;$(SrcDir)\**\*.gpState;$(SrcDir)\**\bin\**;$(SrcDir)\**\obj\**;$(SrcDir)\**\.svn\**">
             <Output ItemName="Source_Files" TaskParameter="Include" />
         </CreateItem>

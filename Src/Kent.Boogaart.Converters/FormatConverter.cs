@@ -49,21 +49,13 @@ namespace Kent.Boogaart.Converters
 #if !SILVERLIGHT
     [ValueConversion(typeof(object), typeof(string))]
 #endif
-    public class FormatConverter : DependencyObject, IValueConverter
+    public class FormatConverter : IValueConverter
 #if !SILVERLIGHT
         , IMultiValueConverter
 #endif
     {
         private static readonly ExceptionHelper exceptionHelper = new ExceptionHelper(typeof(FormatConverter));
-
-        /// <summary>
-        /// Identifies the <see cref="FormatString"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty FormatStringProperty = DependencyProperty.Register(
-            "FormatString",
-            typeof(string),
-            typeof(FormatConverter),
-            new PropertyMetadata(null));
+        private string formatString;
 
         /// <summary>
         /// Gets or sets the format string to use when converting bound data.
@@ -73,8 +65,8 @@ namespace Kent.Boogaart.Converters
 #endif
         public string FormatString
         {
-            get { return GetValue(FormatStringProperty) as string; }
-            set { SetValue(FormatStringProperty, value); }
+            get { return this.formatString; }
+            set { this.formatString = value; }
         }
 
         /// <summary>
