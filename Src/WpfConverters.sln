@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kent.Boogaart.Converters.Ex
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kent.Boogaart.Converters.UnitTests", "Kent.Boogaart.Converters.UnitTests\Kent.Boogaart.Converters.UnitTests.csproj", "{F9A95501-1A1A-4A82-A40B-E7BAC6EAF80E}"
 EndProject
+Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "WpfConverters", "..\Doc\WpfConverters.shfbproj", "{875651EB-17E7-40C8-87BF-1CA148CEC0E5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		FX35 Debug|Any CPU = FX35 Debug|Any CPU
@@ -75,6 +77,16 @@ Global
 		{F9A95501-1A1A-4A82-A40B-E7BAC6EAF80E}.SL40 Release|Any CPU.ActiveCfg = FX45 Release|Any CPU
 		{F9A95501-1A1A-4A82-A40B-E7BAC6EAF80E}.SL50 Debug|Any CPU.ActiveCfg = FX45 Release|Any CPU
 		{F9A95501-1A1A-4A82-A40B-E7BAC6EAF80E}.SL50 Release|Any CPU.ActiveCfg = FX45 Release|Any CPU
+		{875651EB-17E7-40C8-87BF-1CA148CEC0E5}.FX35 Debug|Any CPU.ActiveCfg = FX45 Release|Any CPU
+		{875651EB-17E7-40C8-87BF-1CA148CEC0E5}.FX35 Release|Any CPU.ActiveCfg = FX45 Release|Any CPU
+		{875651EB-17E7-40C8-87BF-1CA148CEC0E5}.FX40 Debug|Any CPU.ActiveCfg = FX45 Release|Any CPU
+		{875651EB-17E7-40C8-87BF-1CA148CEC0E5}.FX40 Release|Any CPU.ActiveCfg = FX45 Release|Any CPU
+		{875651EB-17E7-40C8-87BF-1CA148CEC0E5}.FX45 Debug|Any CPU.ActiveCfg = FX45 Debug|Any CPU
+		{875651EB-17E7-40C8-87BF-1CA148CEC0E5}.FX45 Release|Any CPU.ActiveCfg = FX45 Release|Any CPU
+		{875651EB-17E7-40C8-87BF-1CA148CEC0E5}.SL40 Debug|Any CPU.ActiveCfg = FX45 Release|Any CPU
+		{875651EB-17E7-40C8-87BF-1CA148CEC0E5}.SL40 Release|Any CPU.ActiveCfg = FX45 Release|Any CPU
+		{875651EB-17E7-40C8-87BF-1CA148CEC0E5}.SL50 Debug|Any CPU.ActiveCfg = FX45 Release|Any CPU
+		{875651EB-17E7-40C8-87BF-1CA148CEC0E5}.SL50 Release|Any CPU.ActiveCfg = FX45 Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
