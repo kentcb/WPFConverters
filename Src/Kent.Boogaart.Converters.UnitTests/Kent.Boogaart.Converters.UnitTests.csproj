@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">FX45 Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F9A95501-1A1A-4A82-A40B-E7BAC6EAF80E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Kent.Boogaart.Converters.UnitTests</RootNamespace>
+    <AssemblyName>Kent.Boogaart.Converters.UnitTests</AssemblyName>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\Kent.Boogaart.snk</AssemblyOriginatorKeyFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'FX45 Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\FX405 Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;FX45</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'FX45 Release|AnyCPU'">
+    <OutputPath>bin\FX45 Release\</OutputPath>
+    <DefineConstants>TRACE;FX45</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <!--
+    References only really relevant to FX4.5 builds
+    -->
+  <ItemGroup Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.5'">
+    <Reference Include="xunit, Version=1.5.0.1479, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Lib\xUnit\xunit.dll</HintPath>
+    </Reference>
+    <Reference Include="Moq, Version=4.0.10827.0, Culture=neutral, PublicKeyToken=69f491c39445e920">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Lib\Moq\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="PresentationCore, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="PresentationFramework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xaml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="Kent.Boogaart.HelperTrinity, Version=1.4.0.0, Culture=neutral, PublicKeyToken=cc96fa93a217f7a1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Lib\TheHelperTrinity\FX40\Kent.Boogaart.HelperTrinity.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <!--
+    Code only included in FX4.5 build
+    -->
+  <ItemGroup Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.5'">
+    <Compile Include="CaseConverterTest.cs" />
+    <Compile Include="ConverterGroupTest.cs" />
+    <Compile Include="DateTimeConverterTest.cs" />
+    <Compile Include="ExceptionTest.cs" />
+    <Compile Include="ExpressionConverterTest.cs" />
+    <Compile Include="Expressions\Nodes\AddNodeTest.cs" />
+    <Compile Include="Expressions\Nodes\BinaryNodeTest.cs" />
+    <Compile Include="Expressions\Nodes\CastNodeTest.cs" />
+    <Compile Include="Expressions\Nodes\ConditionalAndNodeTest.cs" />
+    <Compile Include="Expressions\Nodes\ConditionalBinaryNodeTest.cs" />
+    <Compile Include="Expressions\Nodes\ConditionalOrNodeTest.cs" />
+    <Compile Include="Expressions\Nodes\DivideNodeTest.cs" />
+    <Compile Include="Expressions\Nodes\EqualityNodeTest.cs" />
+    <Compile Include="Expressions\Nodes\GreaterThanOrEqualNodeTest.cs" />
+    <Compile Include="Expressions\Nodes\GreatThanNodeTest.cs" />
+    <Compile Include="Expressions\Nodes\InequalityNodeTest.cs" />
+    <Compile Include="Expressions\Nodes\LessThanNodeTest.cs" />
+    <Compile Include="Expressions\Nodes\LessThanOrEqualNodeTest.cs" />
+    <Compile Include="Expressions\Nodes\LogicalAndNodeTest.cs" />
+    <Compile Include="Expressions\Nodes\LogicalOrNodeTest.cs" />
+    <Compile Include="Expressions\Nodes\LogicalXorNodeTest.cs" />
+    <Compile Include="Expressions\Nodes\ModulusNodeTest.cs" />
+    <Compile Include="Expressions\Nodes\MultiplyNodeTest.cs" />
+    <Compile Include="Expressions\Nodes\NullNodeTest.cs" />
+    <Compile Include="Expressions\Nodes\SubtractNodeTest.cs" />
+    <Compile Include="Expressions\Nodes\WideningBinaryNodeTest.cs" />
+    <Compile Include="Expressions\Nodes\ComplementNodeTest.cs" />
+    <Compile Include="Expressions\Nodes\ConstantNodeTest.cs" />
+    <Compile Include="Expressions\Nodes\NegateNodeTest.cs" />
+    <Compile Include="Expressions\Nodes\NodeEvaluationContextTest.cs" />
+    <Compile Include="Expressions\Nodes\NodeTest.cs" />
+    <Compile Include="Expressions\Nodes\NotNodeTest.cs" />
+    <Compile Include="Expressions\Nodes\ShiftLeftNodeTest.cs" />
+    <Compile Include="Expressions\Nodes\ShiftNodeTest.cs" />
+    <Compile Include="Expressions\Nodes\ShiftRightNodeTest.cs" />
+    <Compile Include="Expressions\Nodes\UnaryNodeTest.cs" />
+    <Compile Include="Expressions\Nodes\VariableNodeTest.cs" />
+    <Compile Include="Expressions\ParseExceptionTest.cs" />
+    <Compile Include="Expressions\ParserTest.cs" />
+    <Compile Include="Expressions\TokenizerTest.cs" />
+    <Compile Include="Expressions\TokenTest.cs" />
+    <Compile Include="FormatConverterTest.cs" />
+    <Compile Include="MapConverterTest.cs" />
+    <Compile Include="MappingTest.cs" />
+    <Compile Include="Markup\CaseConverterExtensionTest.cs" />
+    <Compile Include="Markup\DateTimeConverterExtensionTest.cs" />
+    <Compile Include="Markup\ExpressionConverterExtensionTest.cs" />
+    <Compile Include="Markup\FormatConverterExtensionTest.cs" />
+    <Compile Include="Markup\TypeConverterExtensionTest.cs" />
+    <Compile Include="MultiConverterGroupStepTest.cs" />
+    <Compile Include="MultiConverterGroupTest.cs" />
+    <Compile Include="TypeConverterTest.cs" />
+    <Compile Include="UnitTest.cs" />
+  </ItemGroup>
+  <!-- need some inputs for other builds, otherwise the build fails -->
+  <ItemGroup>
+    <Compile Include="..\AssemblyInfoCommon.cs">
+      <Link>Properties\AssemblyInfoCommon.cs</Link>
+    </Compile>
+    <Compile Include="BooleanToVisibilityConverterTest.cs" />
+    <Compile Include="Expressions\Nodes\TernaryConditionalNodeTest.cs" />
+    <Compile Include="Expressions\Nodes\NullCoalescingNodeTest.cs" />
+    <Compile Include="Expressions\Nodes\TernaryNodeTest.cs" />
+    <Compile Include="Expressions\Nodes\WideningBinaryNodeTestBase.cs" />
+    <Compile Include="Expressions\TokenizerTestResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TokenizerTestResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Markup\BooleanToVisibilityConverterExtensionTest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Kent.Boogaart.Converters\Kent.Boogaart.Converters.csproj">
+      <Project>{AA776761-9BB4-48BE-A68D-432E5B61A83C}</Project>
+      <Name>Kent.Boogaart.Converters</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Expressions\TokenizerTestResources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>TokenizerTestResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Condition="$(TargetFrameworkIdentifier) == '.NETFramework'" Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>
