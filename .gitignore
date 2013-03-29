@@ -1,0 +1,9 @@
+[Bb]in
+[Oo]bj
+Gen
+ClientBin
+
+*.suo
+*.user
+*.[Cc]ache
+*.shfbproj_*
