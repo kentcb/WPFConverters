@@ -1,6 +1,5 @@
 ﻿using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Security;
 using System.Windows.Markup;
 
 [assembly: AssemblyTitle("WPF Converters")]
@@ -10,8 +9,4 @@ using System.Windows.Markup;
 
 #if !SILVERLIGHT40
 [assembly: XmlnsDefinition("http://schemas.kent.boogaart.com/converters", "Kent.Boogaart.Converters.Markup")]
-#endif
-
-#if !SILVERLIGHT
-[assembly: AllowPartiallyTrustedCallers]
 #endif
