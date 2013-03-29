@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9510EDF4-280D-4924-B493-E2983D64F57B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared Items", "Shared Items", "{9510EDF4-280D-4924-B493-E2983D64F57B}"
 	ProjectSection(SolutionItems) = preProject
-		Kent.Boogaart.snk = Kent.Boogaart.snk
+		AssemblyInfoCommon.cs = AssemblyInfoCommon.cs
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kent.Boogaart.Converters", "Kent.Boogaart.Converters\Kent.Boogaart.Converters.csproj", "{AA776761-9BB4-48BE-A68D-432E5B61A83C}"

@@ -119,7 +119,6 @@
     <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
     <SilverlightApplication>false</SilverlightApplication>
   </PropertyGroup>
-
   <PropertyGroup>
     <DocumentationFile>$(OutputPath)\Kent.Boogaart.Converters.xml</DocumentationFile>
   </PropertyGroup>
@@ -183,6 +182,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\AssemblyInfoCommon.cs">
+      <Link>Properties\AssemblyInfoCommon.cs</Link>
+    </Compile>
     <Compile Include="BooleanToVisibilityConverter.cs" />
     <Compile Include="CaseConverter.cs" />
     <Compile Include="CharacterCasing.cs" />

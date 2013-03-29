@@ -215,6 +215,9 @@
   </ItemGroup>
   <!-- need some inputs for other builds, otherwise the build fails -->
   <ItemGroup>
+    <Compile Include="..\AssemblyInfoCommon.cs">
+      <Link>Properties\AssemblyInfoCommon.cs</Link>
+    </Compile>
     <Compile Include="BooleanToVisibilityConverterTest.cs" />
     <Compile Include="Expressions\Nodes\TernaryConditionalNodeTest.cs" />
     <Compile Include="Expressions\Nodes\NullCoalescingNodeTest.cs" />
