@@ -222,7 +222,7 @@
     SL40
     -->
   <ItemGroup Condition="$(TargetFrameworkVersion) == 'v4.0' And $(TargetFrameworkIdentifier) == 'Silverlight'">
-    <Reference Include="Kent.Boogaart.HelperTrinity, Version=1.5.1.0, Culture=neutral, PublicKeyToken=cc96fa93a217f7a1, processorArchitecture=MSIL">
+    <Reference Include="Kent.Boogaart.HelperTrinity, Version=1.5.2.0, Culture=neutral, PublicKeyToken=cc96fa93a217f7a1">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Lib\TheHelperTrinity\SL40\Kent.Boogaart.HelperTrinity.dll</HintPath>
     </Reference>
@@ -231,9 +231,9 @@
     SL50
     -->
   <ItemGroup Condition="$(TargetFrameworkVersion) == 'v5.0' And $(TargetFrameworkIdentifier) == 'Silverlight'">
-    <Reference Include="Kent.Boogaart.HelperTrinity, Version=1.5.1.0, Culture=neutral, PublicKeyToken=cc96fa93a217f7a1, processorArchitecture=MSIL">
+    <Reference Include="Kent.Boogaart.HelperTrinity, Version=1.5.2.0, Culture=neutral, PublicKeyToken=cc96fa93a217f7a1">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Lib\TheHelperTrinity\SL45\Kent.Boogaart.HelperTrinity.dll</HintPath>
+      <HintPath>..\..\Lib\TheHelperTrinity\SL50\Kent.Boogaart.HelperTrinity.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
