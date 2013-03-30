@@ -1,6 +1,7 @@
-﻿namespace Kent.Boogaart.Converters
+﻿#if SILVERLIGHT
+
+namespace Kent.Boogaart.Converters
 {
-#if SILVERLIGHT
     /// <summary>
     /// Defines different casing modes supported by the <see cref="CaseConverter"/>.
     /// </summary>
@@ -21,5 +22,6 @@
         /// </summary>
         Upper
     }
-#endif
 }
+
+#endif

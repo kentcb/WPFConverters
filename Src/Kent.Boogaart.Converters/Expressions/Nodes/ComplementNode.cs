@@ -1,9 +1,9 @@
-using System.Diagnostics;
-using System.Windows;
-using Kent.Boogaart.HelperTrinity;
-
 namespace Kent.Boogaart.Converters.Expressions.Nodes
 {
+    using Kent.Boogaart.HelperTrinity;
+    using System.Diagnostics;
+    using System.Windows;
+
     // a node to complement an integral value
     internal sealed class ComplementNode : UnaryNode
     {
@@ -24,7 +24,7 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
             }
 
             var nodeValueType = GetNodeValueType(value);
-            exceptionHelper.ResolveAndThrowIf(!IsIntegralNodeValueType(nodeValueType), "NotIntegralType", nodeValueType);
+            exceptionHelper.ResolveAndThrowIf(!Node.IsIntegralNodeValueType(nodeValueType), "NotIntegralType", nodeValueType);
 
             switch (nodeValueType)
             {

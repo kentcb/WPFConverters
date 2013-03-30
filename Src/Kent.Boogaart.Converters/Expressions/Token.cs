@@ -1,8 +1,8 @@
-using System;
-using System.Diagnostics;
-
 namespace Kent.Boogaart.Converters.Expressions
 {
+    using System;
+    using System.Diagnostics;
+
     internal sealed class Token
     {
         private readonly TokenType type;
@@ -32,7 +32,7 @@ namespace Kent.Boogaart.Converters.Expressions
             Debug.Assert(Enum.IsDefined(typeof(TokenType), tokenType));
             Debug.Assert(value != null);
 
-            return (this.type == tokenType) && string.Equals(this.value, value, StringComparison.InvariantCulture);
+            return (this.type == tokenType) && string.Equals(this.value, value, StringComparison.Ordinal);
         }
 
         public override string ToString()

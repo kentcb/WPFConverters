@@ -1,8 +1,8 @@
-﻿using System.Windows;
-using Kent.Boogaart.HelperTrinity;
-
-namespace Kent.Boogaart.Converters.Expressions.Nodes
+﻿namespace Kent.Boogaart.Converters.Expressions.Nodes
 {
+    using Kent.Boogaart.HelperTrinity;
+    using System.Windows;
+
     internal sealed class TernaryConditionalNode : TernaryNode
     {
         private static readonly ExceptionHelper exceptionHelper = new ExceptionHelper(typeof(TernaryConditionalNode));
@@ -10,7 +10,7 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
         protected override string OperatorSymbols
         {
             get
-            { 
+            {
                 return "?";
             }
         }

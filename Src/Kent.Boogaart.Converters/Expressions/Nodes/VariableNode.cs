@@ -1,8 +1,8 @@
-using System.Diagnostics;
-using Kent.Boogaart.HelperTrinity;
-
 namespace Kent.Boogaart.Converters.Expressions.Nodes
 {
+    using Kent.Boogaart.HelperTrinity;
+    using System.Diagnostics;
+
     // node to hold a reference to a variable
     internal sealed class VariableNode : Node
     {

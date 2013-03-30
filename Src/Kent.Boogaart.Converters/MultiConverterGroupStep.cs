@@ -1,11 +1,11 @@
-using System.Collections.ObjectModel;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Markup;
+#if !SILVERLIGHT
 
 namespace Kent.Boogaart.Converters
 {
-#if !SILVERLIGHT
+    using System.Collections.ObjectModel;
+    using System.Windows.Data;
+    using System.Windows.Markup;
+
     /// <summary>
     /// Represents a single step in a <see cref="MultiConverterGroup"/>.
     /// </summary>
@@ -30,5 +30,6 @@ namespace Kent.Boogaart.Converters
             get { return this.converters; }
         }
     }
-#endif
 }
+
+#endif

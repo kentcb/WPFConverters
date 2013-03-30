@@ -1,13 +1,12 @@
-using System;
-using System.Diagnostics;
-using System.Globalization;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Markup;
-using Kent.Boogaart.HelperTrinity;
-
 namespace Kent.Boogaart.Converters
 {
+    using Kent.Boogaart.HelperTrinity.Extensions;
+    using System;
+    using System.Globalization;
+    using System.Windows;
+    using System.Windows.Data;
+    using System.Windows.Markup;
+
     /// <summary>
     /// An implementation of <see cref="IValueConverter"/> that converts <see cref="DateTime"/>s between specified <see cref="DateTimeKind"/>s.
     /// </summary>
@@ -89,7 +88,7 @@ namespace Kent.Boogaart.Converters
 
             set
             {
-                ArgumentHelper.AssertEnumMember(value, "value", DateTimeKind.Local, DateTimeKind.Unspecified, DateTimeKind.Utc);
+                value.AssertEnumMember("value", DateTimeKind.Local, DateTimeKind.Unspecified, DateTimeKind.Utc);
                 this.sourceKind = value;
             }
         }
@@ -115,7 +114,7 @@ namespace Kent.Boogaart.Converters
 
             set
             {
-                ArgumentHelper.AssertEnumMember(value, "value", DateTimeKind.Local, DateTimeKind.Unspecified, DateTimeKind.Utc);
+                value.AssertEnumMember("value", DateTimeKind.Local, DateTimeKind.Unspecified, DateTimeKind.Utc);
                 this.targetKind = value;
             }
         }
@@ -172,8 +171,8 @@ namespace Kent.Boogaart.Converters
 
             set
             {
-                ArgumentHelper.AssertEnumMember(value, "value", DateTimeConversionMode.DoConversion, DateTimeConversionMode.SpecifyKindOnly);
-                this.conversionMode = value; 
+                value.AssertEnumMember("value", DateTimeConversionMode.DoConversion, DateTimeConversionMode.SpecifyKindOnly);
+                this.conversionMode = value;
             }
         }
 

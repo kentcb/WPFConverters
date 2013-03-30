@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Kent.Boogaart.Converters
+﻿namespace Kent.Boogaart.Converters
 {
     /// <summary>
     /// Used to specify how the <see cref="DateTimeConverter"/> should convert <see cref="DateTime"/>s between different

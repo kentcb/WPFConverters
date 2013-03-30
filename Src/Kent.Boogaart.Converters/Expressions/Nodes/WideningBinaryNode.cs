@@ -1,10 +1,10 @@
-using System;
-using System.Diagnostics;
-using System.Windows;
-using Kent.Boogaart.HelperTrinity;
-
 namespace Kent.Boogaart.Converters.Expressions.Nodes
 {
+    using Kent.Boogaart.HelperTrinity;
+    using System;
+    using System.Diagnostics;
+    using System.Windows;
+
     // a binary node that automatically widens one value to match the width of the other if necessary
     internal abstract class WideningBinaryNode : BinaryNode
     {
@@ -14,7 +14,7 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
             : base(leftNode, rightNode)
         {
         }
-        
+
         public sealed override object Evaluate(NodeEvaluationContext evaluationContext)
         {
             var leftNodeValue = LeftNode.Evaluate(evaluationContext);
@@ -77,7 +77,7 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
                     break;
             }
 
-            exceptionHelper.ResolveAndThrowIf(!succeeded, "OperatorNotSupportedWithOperands", OperatorSymbols, leftNodeValueType, rightNodeValueType);
+            exceptionHelper.ResolveAndThrowIf(!succeeded, "OperatorNotSupportedWithOperands", this.OperatorSymbols, leftNodeValueType, rightNodeValueType);
             return result;
         }
 

@@ -1,11 +1,12 @@
-﻿using System;
-using System.Windows.Controls;
-using System.Windows.Markup;
-using Kent.Boogaart.HelperTrinity;
+﻿#if !SILVERLIGHT40
 
 namespace Kent.Boogaart.Converters.Markup
 {
-#if !SILVERLIGHT40
+    using Kent.Boogaart.HelperTrinity.Extensions;
+    using System;
+    using System.Windows.Controls;
+    using System.Windows.Markup;
+
     /// <summary>
     /// Implements a markup extension that allows instances of <see cref="CaseConverter"/> to be easily created.
     /// </summary>
@@ -41,7 +42,7 @@ namespace Kent.Boogaart.Converters.Markup
 
             set
             {
-                ArgumentHelper.AssertEnumMember(value, "value", CharacterCasing.Lower, CharacterCasing.Normal, CharacterCasing.Upper);
+                value.AssertEnumMember("value", CharacterCasing.Lower, CharacterCasing.Normal, CharacterCasing.Upper);
                 this.sourceCasing = value;
             }
         }
@@ -61,7 +62,7 @@ namespace Kent.Boogaart.Converters.Markup
 
             set
             {
-                ArgumentHelper.AssertEnumMember(value, "value", CharacterCasing.Lower, CharacterCasing.Normal, CharacterCasing.Upper);
+                value.AssertEnumMember("value", CharacterCasing.Lower, CharacterCasing.Normal, CharacterCasing.Upper);
                 this.targetCasing = value;
             }
         }
@@ -73,7 +74,7 @@ namespace Kent.Boogaart.Converters.Markup
         {
             set
             {
-                ArgumentHelper.AssertEnumMember(value, "value", CharacterCasing.Lower, CharacterCasing.Normal, CharacterCasing.Upper);
+                value.AssertEnumMember("value", CharacterCasing.Lower, CharacterCasing.Normal, CharacterCasing.Upper);
                 this.sourceCasing = value;
                 this.targetCasing = value;
             }
@@ -126,5 +127,6 @@ namespace Kent.Boogaart.Converters.Markup
             return new CaseConverter(this.SourceCasing, this.TargetCasing);
         }
     }
-#endif
 }
+
+#endif

@@ -1,8 +1,8 @@
-using System;
-using System.Diagnostics;
-
 namespace Kent.Boogaart.Converters.Expressions.Nodes
 {
+    using System;
+    using System.Diagnostics;
+
     // base class for all AST nodes.
     internal abstract class Node
     {

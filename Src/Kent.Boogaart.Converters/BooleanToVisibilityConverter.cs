@@ -1,10 +1,10 @@
-﻿using System;
-using System.Globalization;
-using System.Windows;
-using System.Windows.Data;
-
-namespace Kent.Boogaart.Converters
+﻿namespace Kent.Boogaart.Converters
 {
+    using System;
+    using System.Globalization;
+    using System.Windows;
+    using System.Windows.Data;
+
     /// <summary>
     /// An implementation of <see cref="IValueConverter"/> that converts boolean values to <see cref="Visibility"/> values.
     /// </summary>

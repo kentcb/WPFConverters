@@ -1,10 +1,11 @@
-﻿using System;
-using System.Windows.Markup;
-using Kent.Boogaart.HelperTrinity;
+﻿#if !SILVERLIGHT40
 
 namespace Kent.Boogaart.Converters.Markup
 {
-#if !SILVERLIGHT40
+    using Kent.Boogaart.HelperTrinity.Extensions;
+    using System;
+    using System.Windows.Markup;
+
     /// <summary>
     /// Implements a markup extension that allows instances of <see cref="DateTimeConverter"/> to be easily created.
     /// </summary>
@@ -43,7 +44,7 @@ namespace Kent.Boogaart.Converters.Markup
 
             set
             {
-                ArgumentHelper.AssertEnumMember(value, "value", DateTimeKind.Local, DateTimeKind.Unspecified, DateTimeKind.Utc);
+                value.AssertEnumMember("value", DateTimeKind.Local, DateTimeKind.Unspecified, DateTimeKind.Utc);
                 this.sourceKind = value;
             }
         }
@@ -63,7 +64,7 @@ namespace Kent.Boogaart.Converters.Markup
 
             set
             {
-                ArgumentHelper.AssertEnumMember(value, "value", DateTimeKind.Local, DateTimeKind.Unspecified, DateTimeKind.Utc);
+                value.AssertEnumMember("value", DateTimeKind.Local, DateTimeKind.Unspecified, DateTimeKind.Utc);
                 this.targetKind = value;
             }
         }
@@ -80,7 +81,7 @@ namespace Kent.Boogaart.Converters.Markup
 
             set
             {
-                ArgumentHelper.AssertEnumMember(value, "value", DateTimeConversionMode.DoConversion, DateTimeConversionMode.SpecifyKindOnly);
+                value.AssertEnumMember("value", DateTimeConversionMode.DoConversion, DateTimeConversionMode.SpecifyKindOnly);
                 this.conversionMode = value;
             }
         }
@@ -144,5 +145,6 @@ namespace Kent.Boogaart.Converters.Markup
             return dateTimeConverter;
         }
     }
-#endif
 }
+
+#endif

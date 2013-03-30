@@ -1,13 +1,13 @@
-using System;
-using System.ComponentModel;
-using System.Globalization;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Markup;
-using Kent.Boogaart.HelperTrinity;
-
 namespace Kent.Boogaart.Converters
 {
+    using Kent.Boogaart.HelperTrinity;
+    using System;
+    using System.ComponentModel;
+    using System.Globalization;
+    using System.Windows;
+    using System.Windows.Data;
+    using System.Windows.Markup;
+
     /// <summary>
     /// An implementation of <see cref="IValueConverter"/> that attempts to convert values between specified <see cref="Type"/>s.
     /// </summary>

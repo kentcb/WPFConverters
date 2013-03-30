@@ -1,8 +1,7 @@
-using System.Windows;
-using System.Windows.Markup;
-
 namespace Kent.Boogaart.Converters
 {
+    using System.Windows.Markup;
+
     /// <summary>
     /// Represents a mapping <see cref="From"/> one value <see cref="To"/> another.
     /// </summary>

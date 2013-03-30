@@ -1,10 +1,10 @@
-using System;
-using System.Diagnostics;
-using System.Windows;
-using Kent.Boogaart.HelperTrinity;
-
 namespace Kent.Boogaart.Converters.Expressions.Nodes
 {
+    using Kent.Boogaart.HelperTrinity;
+    using System;
+    using System.Diagnostics;
+    using System.Windows;
+
     // a node to cast a value to another type
     internal sealed class CastNode : UnaryNode
     {

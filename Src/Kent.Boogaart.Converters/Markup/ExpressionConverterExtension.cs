@@ -1,11 +1,11 @@
-﻿using System;
-using System.Windows.Data;
-using System.Windows.Markup;
-using Kent.Boogaart.HelperTrinity;
+﻿#if !SILVERLIGHT40
 
 namespace Kent.Boogaart.Converters.Markup
 {
-#if !SILVERLIGHT40
+    using Kent.Boogaart.HelperTrinity;
+    using System;
+    using System.Windows.Markup;
+
     /// <summary>
     /// Implements a markup extension that allows instances of <see cref="ExpressionConverter"/> to be easily created.
     /// See <see cref="ExpressionConverter"/> for more information on supported expressions.
@@ -25,7 +25,7 @@ namespace Kent.Boogaart.Converters.Markup
     public sealed class ExpressionConverterExtension : MarkupExtension
     {
         private static readonly ExceptionHelper exceptionHelper = new ExceptionHelper(typeof(ExpressionConverterExtension));
-        private string _expression;
+        private string expression;
 
         /// <summary>
         /// Gets or sets the expression to use in the <see cref="ExpressionConverter"/>.
@@ -35,14 +35,8 @@ namespace Kent.Boogaart.Converters.Markup
 #endif
         public string Expression
         {
-            get
-            {
-                return _expression;
-            }
-            set
-            {
-                _expression = value;
-            }
+            get { return this.expression; }
+            set { this.expression = value; }
         }
 
         /// <summary>
@@ -60,7 +54,7 @@ namespace Kent.Boogaart.Converters.Markup
         /// </param>
         public ExpressionConverterExtension(string expression)
         {
-            _expression = expression;
+            this.expression = expression;
         }
 
         /// <summary>
@@ -74,9 +68,10 @@ namespace Kent.Boogaart.Converters.Markup
         /// </returns>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            exceptionHelper.ResolveAndThrowIf(_expression == null, "NoExpression");
-            return new ExpressionConverter(_expression);
+            exceptionHelper.ResolveAndThrowIf(this.expression == null, "NoExpression");
+            return new ExpressionConverter(this.expression);
         }
     }
-#endif
 }
+
+#endif

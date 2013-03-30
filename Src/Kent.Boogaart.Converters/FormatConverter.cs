@@ -1,12 +1,13 @@
-using System;
-using System.Globalization;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Markup;
-using Kent.Boogaart.HelperTrinity;
-
 namespace Kent.Boogaart.Converters
 {
+    using Kent.Boogaart.HelperTrinity;
+    using Kent.Boogaart.HelperTrinity.Extensions;
+    using System;
+    using System.Globalization;
+    using System.Windows;
+    using System.Windows.Data;
+    using System.Windows.Markup;
+
     /// <summary>
     /// An implementation of <see cref="IValueConverter"/> and <see cref="IMultiValueConverter"/> that formats any bound data with a specified
     /// <see cref="FormatString"/>.
@@ -51,7 +52,7 @@ namespace Kent.Boogaart.Converters
 #endif
     public class FormatConverter : IValueConverter
 #if !SILVERLIGHT
-        , IMultiValueConverter
+, IMultiValueConverter
 #endif
     {
         private static readonly ExceptionHelper exceptionHelper = new ExceptionHelper(typeof(FormatConverter));
@@ -131,7 +132,7 @@ namespace Kent.Boogaart.Converters
         /// </returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            ArgumentHelper.AssertNotNull(targetType, "targetType");
+            value.AssertNotNull("targetType");
 
             try
             {

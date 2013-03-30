@@ -1,5 +1,3 @@
-using System.Diagnostics;
-
 namespace Kent.Boogaart.Converters.Expressions.Nodes
 {
     // a node to hold a constant value

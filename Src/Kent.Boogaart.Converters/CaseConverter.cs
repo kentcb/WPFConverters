@@ -1,13 +1,13 @@
-using System;
-using System.Globalization;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Markup;
-using Kent.Boogaart.HelperTrinity;
-
 namespace Kent.Boogaart.Converters
 {
+    using Kent.Boogaart.HelperTrinity.Extensions;
+    using System;
+    using System.Globalization;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Data;
+    using System.Windows.Markup;
+
     /// <summary>
     /// An implementation of <see cref="IValueConverter"/> that converts the casing of the input string.
     /// </summary>
@@ -90,7 +90,7 @@ namespace Kent.Boogaart.Converters
 
             set
             {
-                ArgumentHelper.AssertEnumMember(value, "value", CharacterCasing.Lower, CharacterCasing.Upper, CharacterCasing.Normal);
+                value.AssertEnumMember("value", CharacterCasing.Lower, CharacterCasing.Upper, CharacterCasing.Normal);
                 this.sourceCasing = value;
             }
         }
@@ -110,7 +110,7 @@ namespace Kent.Boogaart.Converters
 
             set
             {
-                ArgumentHelper.AssertEnumMember(value, "value", CharacterCasing.Lower, CharacterCasing.Upper, CharacterCasing.Normal);
+                value.AssertEnumMember("value", CharacterCasing.Lower, CharacterCasing.Upper, CharacterCasing.Normal);
                 this.targetCasing = value;
             }
         }
@@ -125,7 +125,7 @@ namespace Kent.Boogaart.Converters
         {
             set
             {
-                ArgumentHelper.AssertEnumMember(value, "value", CharacterCasing.Lower, CharacterCasing.Upper, CharacterCasing.Normal);
+                value.AssertEnumMember("value", CharacterCasing.Lower, CharacterCasing.Upper, CharacterCasing.Normal);
                 this.sourceCasing = value;
                 this.targetCasing = value;
             }

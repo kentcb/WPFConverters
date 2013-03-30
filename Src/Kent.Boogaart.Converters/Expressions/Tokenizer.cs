@@ -1,11 +1,11 @@
-using System;
-using System.Diagnostics;
-using System.IO;
-using System.Text;
-using Kent.Boogaart.HelperTrinity;
-
 namespace Kent.Boogaart.Converters.Expressions
 {
+    using Kent.Boogaart.HelperTrinity;
+    using System;
+    using System.Diagnostics;
+    using System.IO;
+    using System.Text;
+
     internal sealed class Tokenizer : IDisposable
     {
         private static readonly ExceptionHelper exceptionHelper = new ExceptionHelper(typeof(Tokenizer));

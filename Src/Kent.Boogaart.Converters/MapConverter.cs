@@ -1,15 +1,13 @@
-using System;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Globalization;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Markup;
-using Kent.Boogaart.HelperTrinity;
-using Kent.Boogaart.HelperTrinity.Extensions;
-
 namespace Kent.Boogaart.Converters
 {
+    using Kent.Boogaart.HelperTrinity.Extensions;
+    using System;
+    using System.Collections.ObjectModel;
+    using System.Globalization;
+    using System.Windows;
+    using System.Windows.Data;
+    using System.Windows.Markup;
+
     /// <summary>
     /// An implementation of <see cref="IValueConverter"/> that converts from one set of values to another based on the contents of the
     /// <see cref="Mappings"/> collection.
@@ -163,7 +161,7 @@ namespace Kent.Boogaart.Converters
         {
             foreach (var mapping in this.Mappings)
             {
-                if (Equals(value, mapping.From))
+                if (object.Equals(value, mapping.From))
                 {
                     return mapping.To;
                 }
@@ -205,7 +203,7 @@ namespace Kent.Boogaart.Converters
         {
             foreach (var mapping in this.Mappings)
             {
-                if (Equals(value, mapping.To))
+                if (object.Equals(value, mapping.To))
                 {
                     return mapping.From;
                 }

@@ -1,10 +1,11 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Markup;
+﻿#if !SILVERLIGHT40
 
 namespace Kent.Boogaart.Converters.Markup
 {
-#if !SILVERLIGHT40
+    using System;
+    using System.Windows;
+    using System.Windows.Markup;
+
     /// <summary>
     /// Implements a markup extension that allows instances of <see cref="BooleanToVisibilityConverter"/> to be easily created.
     /// </summary>
@@ -98,5 +99,6 @@ namespace Kent.Boogaart.Converters.Markup
 #endif
         }
     }
-#endif
 }
+
+#endif

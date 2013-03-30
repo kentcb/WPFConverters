@@ -1,8 +1,8 @@
-using System;
-using System.Runtime.Serialization;
-
 namespace Kent.Boogaart.Converters.Expressions
 {
+    using System;
+    using System.Runtime.Serialization;
+
     /// <summary>
     /// Exception thrown when the <see cref="Parser"/> encounters any errors.
     /// </summary>

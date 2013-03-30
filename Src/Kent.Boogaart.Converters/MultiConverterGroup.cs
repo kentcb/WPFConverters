@@ -1,14 +1,14 @@
-using System;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Globalization;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Markup;
-using Kent.Boogaart.HelperTrinity;
-
 namespace Kent.Boogaart.Converters
 {
+    using Kent.Boogaart.HelperTrinity;
+    using System;
+    using System.Collections.ObjectModel;
+    using System.Diagnostics;
+    using System.Globalization;
+    using System.Windows;
+    using System.Windows.Data;
+    using System.Windows.Markup;
+
 #if !SILVERLIGHT
     /// <summary>
     /// An implementation of <see cref="IMultiValueConverter"/> that allows multiple <see cref="IMultiValueConverter"/>s to be chained together in

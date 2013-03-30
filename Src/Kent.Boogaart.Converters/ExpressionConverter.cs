@@ -1,16 +1,15 @@
-using System;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Markup;
-using Kent.Boogaart.Converters.Expressions;
-using Kent.Boogaart.Converters.Expressions.Nodes;
-using Kent.Boogaart.HelperTrinity;
-
 namespace Kent.Boogaart.Converters
 {
+    using Kent.Boogaart.Converters.Expressions;
+    using Kent.Boogaart.Converters.Expressions.Nodes;
+    using Kent.Boogaart.HelperTrinity;
+    using System;
+    using System.Globalization;
+    using System.IO;
+    using System.Windows;
+    using System.Windows.Data;
+    using System.Windows.Markup;
+
     /// <summary>
     /// An implementation of <see cref="IValueConverter"/> and <see cref="IMultiValueConverter"/> that converts bound values by using
     /// a C#-like expression.
@@ -215,7 +214,7 @@ namespace Kent.Boogaart.Converters
 #endif
     public sealed class ExpressionConverter : IValueConverter
 #if !SILVERLIGHT
-        , IMultiValueConverter
+, IMultiValueConverter
 #endif
     {
         private static readonly ExceptionHelper exceptionHelper = new ExceptionHelper(typeof(ExpressionConverter));
@@ -358,14 +357,14 @@ namespace Kent.Boogaart.Converters
         }
 #endif
 
+        // turn the expression into an AST each time it changes (not each time our Convert methods are called)
         private void EnsureExpressionNode()
         {
-            if (string.IsNullOrEmpty(this.expression))
+            if (this.expressionNode != null || string.IsNullOrEmpty(this.expression))
             {
                 return;
             }
 
-            // turn the expression into an AST each time it changes (not each time our Convert methods are called)
             using (var stringReader = new StringReader(this.expression))
             using (var tokenizer = new Tokenizer(stringReader))
             using (var parser = new Parser(tokenizer))

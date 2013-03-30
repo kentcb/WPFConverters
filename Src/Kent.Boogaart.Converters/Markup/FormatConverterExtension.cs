@@ -1,10 +1,11 @@
-﻿using System;
-using System.Windows.Markup;
-using Kent.Boogaart.HelperTrinity;
+﻿#if !SILVERLIGHT40
 
 namespace Kent.Boogaart.Converters.Markup
 {
-#if !SILVERLIGHT40
+    using Kent.Boogaart.HelperTrinity;
+    using System;
+    using System.Windows.Markup;
+
     /// <summary>
     /// Implements a markup extension that allows instances of <see cref="FormatConverter"/> to be easily created.
     /// </summary>
@@ -70,5 +71,6 @@ namespace Kent.Boogaart.Converters.Markup
             return new FormatConverter(this.FormatString);
         }
     }
-#endif
 }
+
+#endif

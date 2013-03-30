@@ -1,7 +1,7 @@
-using System.Diagnostics;
-
 namespace Kent.Boogaart.Converters.Expressions.Nodes
 {
+    using System.Diagnostics;
+
     // a node containing two children
     internal abstract class BinaryNode : Node
     {

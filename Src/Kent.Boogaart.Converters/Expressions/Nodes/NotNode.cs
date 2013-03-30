@@ -1,8 +1,8 @@
-using System.Windows;
-using Kent.Boogaart.HelperTrinity;
-
 namespace Kent.Boogaart.Converters.Expressions.Nodes
 {
+    using Kent.Boogaart.HelperTrinity;
+    using System.Windows;
+
     // a node to negate a boolean value
     internal sealed class NotNode : UnaryNode
     {

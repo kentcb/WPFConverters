@@ -1,8 +1,8 @@
-using System.Windows;
-using Kent.Boogaart.HelperTrinity;
-
 namespace Kent.Boogaart.Converters.Expressions.Nodes
 {
+    using Kent.Boogaart.HelperTrinity;
+    using System.Windows;
+
     // a node from which conditional binary nodes will inherit
     internal abstract class ConditionalBinaryNode : BinaryNode
     {
@@ -22,7 +22,7 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
                 return DependencyProperty.UnsetValue;
             }
 
-            NodeValueType leftNodeValueType = GetNodeValueType(leftNodeValue);
+            var leftNodeValueType = GetNodeValueType(leftNodeValue);
 
             if (leftNodeValueType == NodeValueType.Boolean)
             {
@@ -35,15 +35,15 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
                 }
             }
 
-            object rightNodeValue = RightNode.Evaluate(evaluationContext);
+            var rightNodeValue = RightNode.Evaluate(evaluationContext);
 
             if (rightNodeValue == DependencyProperty.UnsetValue)
             {
                 return DependencyProperty.UnsetValue;
             }
 
-            NodeValueType rightNodeValueType = GetNodeValueType(rightNodeValue);
-            exceptionHelper.ResolveAndThrowIf(leftNodeValueType != NodeValueType.Boolean || rightNodeValueType != NodeValueType.Boolean, "OperandsNotBoolean", OperatorSymbols, leftNodeValueType, rightNodeValueType);
+            var rightNodeValueType = GetNodeValueType(rightNodeValue);
+            exceptionHelper.ResolveAndThrowIf(leftNodeValueType != NodeValueType.Boolean || rightNodeValueType != NodeValueType.Boolean, "OperandsNotBoolean", this.OperatorSymbols, leftNodeValueType, rightNodeValueType);
 
             return this.DetermineResultPostRightEvaluation((bool)leftNodeValue, (bool)rightNodeValue);
         }

@@ -1,10 +1,10 @@
-using System;
-using System.Diagnostics;
-using Kent.Boogaart.Converters.Expressions.Nodes;
-using Kent.Boogaart.HelperTrinity;
-
 namespace Kent.Boogaart.Converters.Expressions
 {
+    using Kent.Boogaart.Converters.Expressions.Nodes;
+    using Kent.Boogaart.HelperTrinity;
+    using System;
+    using System.Diagnostics;
+
     internal sealed class Parser : IDisposable
     {
         private static readonly ExceptionHelper exceptionHelper = new ExceptionHelper(typeof(Parser));
@@ -493,7 +493,7 @@ namespace Kent.Boogaart.Converters.Expressions
 
             var numberStr = this.currentToken.Value;
 
-            if (numberStr.StartsWith("0x"))
+            if (numberStr.StartsWith("0x", StringComparison.Ordinal))
             {
                 return this.ParseHexadecimalConstant();
             }

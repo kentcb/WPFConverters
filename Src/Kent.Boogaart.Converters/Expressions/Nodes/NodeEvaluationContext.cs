@@ -1,7 +1,7 @@
-using System.Diagnostics;
-
 namespace Kent.Boogaart.Converters.Expressions.Nodes
 {
+    using System.Diagnostics;
+
     internal sealed class NodeEvaluationContext
     {
         private readonly object[] arguments;

@@ -1,12 +1,12 @@
-using System;
-using System.Collections.ObjectModel;
-using System.Globalization;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Markup;
-
 namespace Kent.Boogaart.Converters
 {
+    using System;
+    using System.Collections.ObjectModel;
+    using System.Globalization;
+    using System.Windows;
+    using System.Windows.Data;
+    using System.Windows.Markup;
+
     /// <summary>
     /// An implementation of <see cref="IValueConverter"/> that allows multiple <see cref="IValueConverter"/> implementations to be grouped
     /// together and executed in a pipeline.
