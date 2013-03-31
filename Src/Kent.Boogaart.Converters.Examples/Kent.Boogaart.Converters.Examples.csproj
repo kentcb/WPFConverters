@@ -16,6 +16,7 @@
     <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
     <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'FX35 Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -26,6 +27,7 @@
     <ErrorReport>prompt</ErrorReport>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'FX35 Release|AnyCPU'">
     <OutputPath>bin\FX35 Release\</OutputPath>
@@ -36,6 +38,7 @@
     <ErrorReport>prompt</ErrorReport>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'FX40 Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -46,6 +49,7 @@
     <ErrorReport>prompt</ErrorReport>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'FX40 Release|AnyCPU'">
     <OutputPath>bin\FX40 Release\</OutputPath>
@@ -56,6 +60,7 @@
     <ErrorReport>prompt</ErrorReport>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'FX45 Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -66,6 +71,7 @@
     <ErrorReport>prompt</ErrorReport>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'FX45 Release|AnyCPU'">
     <OutputPath>bin\FX45 Release\</OutputPath>
@@ -76,6 +82,7 @@
     <ErrorReport>prompt</ErrorReport>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <!--
     Shared for .NETFramework target framework
@@ -188,6 +195,9 @@
   <!-- need some inputs for SL builds, otherwise the build fails -->
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Condition="$(TargetFrameworkIdentifier) == '.NETFramework'" Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
