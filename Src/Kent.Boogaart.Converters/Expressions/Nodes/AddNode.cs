@@ -3,14 +3,14 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
     // a node to add the left node to the right node
     internal sealed class AddNode : WideningBinaryNode
     {
-        protected override string OperatorSymbols
-        {
-            get { return "+"; }
-        }
-
         public AddNode(Node leftNode, Node rightNode)
             : base(leftNode, rightNode)
         {
+        }
+
+        protected override string OperatorSymbols
+        {
+            get { return "+"; }
         }
 
         protected override bool DoString(string value1, string value2, out object result)

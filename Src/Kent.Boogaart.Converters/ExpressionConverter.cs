@@ -222,6 +222,24 @@ namespace Kent.Boogaart.Converters
         private Node expressionNode;
 
         /// <summary>
+        /// Initializes a new instance of the ExpressionConverter class.
+        /// </summary>
+        public ExpressionConverter()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the ExpressionConverter class with the specified expression.
+        /// </summary>
+        /// <param name="expression">
+        /// The expression (see <see cref="Expression"/>).
+        /// </param>
+        public ExpressionConverter(string expression)
+        {
+            this.Expression = expression;
+        }
+
+        /// <summary>
         /// Gets or sets the expression for this <c>MathConverter</c>.
         /// </summary>
 #if !SILVERLIGHT
@@ -239,24 +257,6 @@ namespace Kent.Boogaart.Converters
                 this.expression = value;
                 this.expressionNode = null;
             }
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the ExpressionConverter class.
-        /// </summary>
-        public ExpressionConverter()
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the ExpressionConverter class with the specified expression.
-        /// </summary>
-        /// <param name="expression">
-        /// The expression (see <see cref="Expression"/>).
-        /// </param>
-        public ExpressionConverter(string expression)
-        {
-            this.Expression = expression;
         }
 
         /// <summary>

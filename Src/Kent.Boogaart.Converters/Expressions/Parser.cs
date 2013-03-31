@@ -19,6 +19,13 @@ namespace Kent.Boogaart.Converters.Expressions
             this.ReadNextToken();
         }
 
+        private enum RealType
+        {
+            Single,
+            Double,
+            Decimal
+        }
+
         private bool AreMoreTokens
         {
             get { return this.currentToken != null; }
@@ -39,6 +46,19 @@ namespace Kent.Boogaart.Converters.Expressions
             }
 
             return expression;
+        }
+
+        private static bool EqualsAny(string value, params string[] acceptableValues)
+        {
+            foreach (var acceptableValue in acceptableValues)
+            {
+                if (string.Equals(acceptableValue, value, StringComparison.Ordinal))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         #region Implementation of Parse Methods
@@ -652,26 +672,6 @@ namespace Kent.Boogaart.Converters.Expressions
         private void EnsureMoreTokens()
         {
             exceptionHelper.ResolveAndThrowIf(!this.AreMoreTokens, "UnexpectedEndOfInput");
-        }
-
-        private static bool EqualsAny(string value, params string[] acceptableValues)
-        {
-            foreach (var acceptableValue in acceptableValues)
-            {
-                if (string.Equals(acceptableValue, value, StringComparison.Ordinal))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        private enum RealType
-        {
-            Single,
-            Double,
-            Decimal
         }
     }
 }

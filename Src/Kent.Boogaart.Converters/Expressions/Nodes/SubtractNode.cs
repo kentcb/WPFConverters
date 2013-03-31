@@ -3,17 +3,14 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
     // a node to subtract the right node from the left node
     internal sealed class SubtractNode : WideningBinaryNode
     {
-        protected override string OperatorSymbols
-        {
-            get
-            {
-                return "-";
-            }
-        }
-
         public SubtractNode(Node leftNode, Node rightNode)
             : base(leftNode, rightNode)
         {
+        }
+
+        protected override string OperatorSymbols
+        {
+            get { return "-"; }
         }
 
         protected override bool DoByte(byte value1, byte value2, out object result)

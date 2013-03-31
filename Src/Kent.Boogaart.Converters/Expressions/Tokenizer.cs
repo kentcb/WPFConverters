@@ -13,11 +13,6 @@ namespace Kent.Boogaart.Converters.Expressions
         private readonly StringBuilder buffer;
         private char currentChar;
 
-        private bool IsAtEndOfStream
-        {
-            get { return this.textReader.Peek() == -1; }
-        }
-
         public Tokenizer(TextReader textReader)
         {
             Debug.Assert(textReader != null);
@@ -25,6 +20,11 @@ namespace Kent.Boogaart.Converters.Expressions
             this.textReader = textReader;
             this.buffer = new StringBuilder();
             this.DiscardWhiteSpace();
+        }
+
+        private bool IsAtEndOfStream
+        {
+            get { return this.textReader.Peek() == -1; }
         }
 
         public void Dispose()
@@ -63,6 +63,11 @@ namespace Kent.Boogaart.Converters.Expressions
 
             this.DiscardWhiteSpace();
             return token;
+        }
+
+        private static bool IsBracket(char c)
+        {
+            return c == '(' || c == ')' || c == '{' || c == '}';
         }
 
         private void ReadNextChar()
@@ -180,11 +185,6 @@ namespace Kent.Boogaart.Converters.Expressions
             }
 
             return new Token(TokenType.Symbol, this.buffer.ToString());
-        }
-
-        private static bool IsBracket(char c)
-        {
-            return c == '(' || c == ')' || c == '{' || c == '}';
         }
     }
 }

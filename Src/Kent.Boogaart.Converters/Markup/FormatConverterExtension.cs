@@ -27,18 +27,6 @@ namespace Kent.Boogaart.Converters.Markup
         private string formatString;
 
         /// <summary>
-        /// Gets or sets the format string for the <see cref="FormatConverter"/>.
-        /// </summary>
-#if !SILVERLIGHT
-        [ConstructorArgument("formatString")]
-#endif
-        public string FormatString
-        {
-            get { return this.formatString; }
-            set { this.formatString = value; }
-        }
-
-        /// <summary>
         /// Initializes a new instance of the FormatConverterExtension class.
         /// </summary>
         public FormatConverterExtension()
@@ -54,6 +42,18 @@ namespace Kent.Boogaart.Converters.Markup
         public FormatConverterExtension(string formatString)
         {
             this.formatString = formatString;
+        }
+
+        /// <summary>
+        /// Gets or sets the format string for the <see cref="FormatConverter"/>.
+        /// </summary>
+#if !SILVERLIGHT
+        [ConstructorArgument("formatString")]
+#endif
+        public string FormatString
+        {
+            get { return this.formatString; }
+            set { this.formatString = value; }
         }
 
         /// <summary>

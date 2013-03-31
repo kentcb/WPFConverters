@@ -3,17 +3,14 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
     // a node that performs a logical and between the left and right nodes
     internal sealed class LogicalAndNode : WideningBinaryNode
     {
-        protected override string OperatorSymbols
-        {
-            get
-            {
-                return "&";
-            }
-        }
-
         public LogicalAndNode(Node leftNode, Node rightNode)
             : base(leftNode, rightNode)
         {
+        }
+
+        protected override string OperatorSymbols
+        {
+            get { return "&"; }
         }
 
         protected override bool DoBoolean(bool value1, bool value2, out object result)

@@ -16,6 +16,28 @@ namespace Kent.Boogaart.Converters
         private object to;
 
         /// <summary>
+        /// Initializes a new instance of the Mapping class.
+        /// </summary>
+        public Mapping()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the Mapping class with the specified <paramref name="from"/> and <paramref name="to"/> values.
+        /// </summary>
+        /// <param name="from">
+        /// The value for the source in the mapping (see <see cref="From"/>).
+        /// </param>
+        /// <param name="to">
+        /// The value for the destination in the mapping (see <see cref="To"/>).
+        /// </param>
+        public Mapping(object from, object to)
+        {
+            this.From = from;
+            this.To = to;
+        }
+
+        /// <summary>
         /// Gets or sets the source object for the mapping.
         /// </summary>
 #if !SILVERLIGHT
@@ -37,28 +59,6 @@ namespace Kent.Boogaart.Converters
         {
             get { return this.to; }
             set { this.to = value; }
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the Mapping class.
-        /// </summary>
-        public Mapping()
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the Mapping class with the specified <paramref name="from"/> and <paramref name="to"/> values.
-        /// </summary>
-        /// <param name="from">
-        /// The value for the source in the mapping (see <see cref="From"/>).
-        /// </param>
-        /// <param name="to">
-        /// The value for the destination in the mapping (see <see cref="To"/>).
-        /// </param>
-        public Mapping(object from, object to)
-        {
-            this.From = from;
-            this.To = to;
         }
     }
 }

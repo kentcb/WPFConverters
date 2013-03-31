@@ -28,18 +28,6 @@ namespace Kent.Boogaart.Converters.Markup
         private string expression;
 
         /// <summary>
-        /// Gets or sets the expression to use in the <see cref="ExpressionConverter"/>.
-        /// </summary>
-#if !SILVERLIGHT
-        [ConstructorArgument("expression")]
-#endif
-        public string Expression
-        {
-            get { return this.expression; }
-            set { this.expression = value; }
-        }
-
-        /// <summary>
         /// Initializes a new instance of the ExpressionConverterExtension class.
         /// </summary>
         public ExpressionConverterExtension()
@@ -55,6 +43,18 @@ namespace Kent.Boogaart.Converters.Markup
         public ExpressionConverterExtension(string expression)
         {
             this.expression = expression;
+        }
+
+        /// <summary>
+        /// Gets or sets the expression to use in the <see cref="ExpressionConverter"/>.
+        /// </summary>
+#if !SILVERLIGHT
+        [ConstructorArgument("expression")]
+#endif
+        public string Expression
+        {
+            get { return this.expression; }
+            set { this.expression = value; }
         }
 
         /// <summary>

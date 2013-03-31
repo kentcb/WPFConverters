@@ -5,14 +5,14 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
     {
         private readonly T value;
 
-        public T Value
-        {
-            get { return this.value; }
-        }
-
         public ConstantNode(T value)
         {
             this.value = value;
+        }
+
+        public T Value
+        {
+            get { return this.value; }
         }
 
         public override object Evaluate(NodeEvaluationContext evaluationContext)

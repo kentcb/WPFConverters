@@ -8,6 +8,15 @@ namespace Kent.Boogaart.Converters.Expressions
         private readonly TokenType type;
         private readonly string value;
 
+        public Token(TokenType type, string value)
+        {
+            Debug.Assert(Enum.IsDefined(typeof(TokenType), type));
+            Debug.Assert(value != null);
+
+            this.type = type;
+            this.value = value;
+        }
+
         public TokenType Type
         {
             get { return this.type; }
@@ -16,15 +25,6 @@ namespace Kent.Boogaart.Converters.Expressions
         public string Value
         {
             get { return this.value; }
-        }
-
-        public Token(TokenType type, string value)
-        {
-            Debug.Assert(Enum.IsDefined(typeof(TokenType), type));
-            Debug.Assert(value != null);
-
-            this.type = type;
-            this.value = value;
         }
 
         public bool Equals(TokenType tokenType, string value)

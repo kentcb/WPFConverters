@@ -59,18 +59,6 @@ namespace Kent.Boogaart.Converters
         private string formatString;
 
         /// <summary>
-        /// Gets or sets the format string to use when converting bound data.
-        /// </summary>
-#if !SILVERLIGHT
-        [ConstructorArgument("formatString")]
-#endif
-        public string FormatString
-        {
-            get { return this.formatString; }
-            set { this.formatString = value; }
-        }
-
-        /// <summary>
         /// Initializes a new instance of the FormatConverter class.
         /// </summary>
         public FormatConverter()
@@ -86,6 +74,18 @@ namespace Kent.Boogaart.Converters
         public FormatConverter(string formatString)
         {
             this.FormatString = formatString;
+        }
+
+        /// <summary>
+        /// Gets or sets the format string to use when converting bound data.
+        /// </summary>
+#if !SILVERLIGHT
+        [ConstructorArgument("formatString")]
+#endif
+        public string FormatString
+        {
+            get { return this.formatString; }
+            set { this.formatString = value; }
         }
 
         /// <summary>

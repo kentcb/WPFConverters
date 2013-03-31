@@ -4,9 +4,8 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
 
     internal sealed class NodeEvaluationContext
     {
-        private readonly object[] arguments;
-
         public static readonly NodeEvaluationContext Empty = new NodeEvaluationContext(new object[] { });
+        private readonly object[] arguments;
 
         private NodeEvaluationContext(object[] arguments)
         {

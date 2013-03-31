@@ -3,17 +3,14 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
     // a node to a conditional and between the left and right nodes
     internal sealed class ConditionalAndNode : ConditionalBinaryNode
     {
-        protected override string OperatorSymbols
-        {
-            get
-            {
-                return "&&";
-            }
-        }
-
         public ConditionalAndNode(Node leftNode, Node rightNode)
             : base(leftNode, rightNode)
         {
+        }
+
+        protected override string OperatorSymbols
+        {
+            get { return "&&"; }
         }
 
         protected override bool? DetermineResultPreRightEvaluation(bool leftResult)

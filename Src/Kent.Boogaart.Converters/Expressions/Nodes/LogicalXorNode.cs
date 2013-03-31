@@ -3,17 +3,14 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
     // a node that performs a logical xor between the left and right nodes
     internal sealed class LogicalXorNode : WideningBinaryNode
     {
-        protected override string OperatorSymbols
-        {
-            get
-            {
-                return "^";
-            }
-        }
-
         public LogicalXorNode(Node leftNode, Node rightNode)
             : base(leftNode, rightNode)
         {
+        }
+
+        protected override string OperatorSymbols
+        {
+            get { return "^"; }
         }
 
         protected override bool DoBoolean(bool value1, bool value2, out object result)

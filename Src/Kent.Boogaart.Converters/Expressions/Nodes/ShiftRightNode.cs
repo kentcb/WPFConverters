@@ -3,17 +3,14 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
     // a node to shift an integral value right
     internal sealed class ShiftRightNode : ShiftNode
     {
-        protected override string OperatorSymbols
-        {
-            get
-            {
-                return ">>";
-            }
-        }
-
         public ShiftRightNode(Node leftNode, Node rightNode)
             : base(leftNode, rightNode)
         {
+        }
+
+        protected override string OperatorSymbols
+        {
+            get { return ">>"; }
         }
 
         protected override int DoByte(byte value1, int value2)

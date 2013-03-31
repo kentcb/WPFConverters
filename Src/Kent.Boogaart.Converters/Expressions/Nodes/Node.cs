@@ -6,8 +6,6 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
     // base class for all AST nodes.
     internal abstract class Node
     {
-        public abstract object Evaluate(NodeEvaluationContext evaluationContext);
-
         public static NodeValueType GetNodeValueType(object value)
         {
             if (value == null)
@@ -86,5 +84,7 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
             Debug.Assert(Enum.IsDefined(typeof(NodeValueType), nodeValueType));
             return (nodeValueType >= NodeValueType.Byte) && (nodeValueType <= NodeValueType.Int64);
         }
+
+        public abstract object Evaluate(NodeEvaluationContext evaluationContext);
     }
 }

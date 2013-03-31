@@ -3,17 +3,14 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
     // a node to multiply the left node and the right node
     internal sealed class MultiplyNode : WideningBinaryNode
     {
-        protected override string OperatorSymbols
-        {
-            get
-            {
-                return "*";
-            }
-        }
-
         public MultiplyNode(Node leftNode, Node rightNode)
             : base(leftNode, rightNode)
         {
+        }
+
+        protected override string OperatorSymbols
+        {
+            get { return "*"; }
         }
 
         protected override bool DoByte(byte value1, byte value2, out object result)

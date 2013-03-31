@@ -7,17 +7,14 @@
     {
         private static readonly ExceptionHelper exceptionHelper = new ExceptionHelper(typeof(TernaryConditionalNode));
 
-        protected override string OperatorSymbols
-        {
-            get
-            {
-                return "?";
-            }
-        }
-
         public TernaryConditionalNode(Node firstNode, Node secondNode, Node thirdNode)
             : base(firstNode, secondNode, thirdNode)
         {
+        }
+
+        protected override string OperatorSymbols
+        {
+            get { return "?"; }
         }
 
         public override object Evaluate(NodeEvaluationContext evaluationContext)

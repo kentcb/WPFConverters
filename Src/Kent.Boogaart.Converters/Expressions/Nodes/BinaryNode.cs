@@ -8,6 +8,14 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
         private readonly Node leftNode;
         private readonly Node rightNode;
 
+        protected BinaryNode(Node leftNode, Node rightNode)
+        {
+            Debug.Assert(leftNode != null);
+            Debug.Assert(rightNode != null);
+            this.leftNode = leftNode;
+            this.rightNode = rightNode;
+        }
+
         public Node LeftNode
         {
             get { return this.leftNode; }
@@ -21,14 +29,6 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
         protected abstract string OperatorSymbols
         {
             get;
-        }
-
-        protected BinaryNode(Node leftNode, Node rightNode)
-        {
-            Debug.Assert(leftNode != null);
-            Debug.Assert(rightNode != null);
-            this.leftNode = leftNode;
-            this.rightNode = rightNode;
         }
     }
 }

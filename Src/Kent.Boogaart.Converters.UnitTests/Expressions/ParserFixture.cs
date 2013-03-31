@@ -7,6 +7,7 @@ namespace Kent.Boogaart.Converters.UnitTests.Expressions
     using Xunit;
     using Xunit.Extensions;
 
+    [CLSCompliant(false)]
     public sealed class ParserFixture
     {
         [Fact]

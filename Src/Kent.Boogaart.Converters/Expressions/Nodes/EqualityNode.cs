@@ -3,17 +3,14 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
     // a node to check whether the left node is equal to the right node
     internal sealed class EqualityNode : WideningBinaryNode
     {
-        protected override string OperatorSymbols
-        {
-            get
-            {
-                return "==";
-            }
-        }
-
         public EqualityNode(Node leftNode, Node rightNode)
             : base(leftNode, rightNode)
         {
+        }
+
+        protected override string OperatorSymbols
+        {
+            get { return "=="; }
         }
 
         protected override bool DoString(string value1, string value2, out object result)

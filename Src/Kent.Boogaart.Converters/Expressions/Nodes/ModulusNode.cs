@@ -3,17 +3,14 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
     // a node to calculate the remainder after diving the left node by the right node
     internal sealed class ModulusNode : WideningBinaryNode
     {
-        protected override string OperatorSymbols
-        {
-            get
-            {
-                return "%";
-            }
-        }
-
         public ModulusNode(Node leftNode, Node rightNode)
             : base(leftNode, rightNode)
         {
+        }
+
+        protected override string OperatorSymbols
+        {
+            get { return "%"; }
         }
 
         protected override bool DoByte(byte value1, byte value2, out object result)
