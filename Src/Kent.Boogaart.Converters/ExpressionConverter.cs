@@ -281,7 +281,7 @@ namespace Kent.Boogaart.Converters
         {
             this.EnsureExpressionNode();
             exceptionHelper.ResolveAndThrowIf(this.expressionNode == null, "NoExpression");
-            return this.expressionNode.Evaluate(new NodeEvaluationContext(new object[] { value }));
+            return this.expressionNode.Evaluate(NodeEvaluationContext.Create(value));
         }
 
         /// <summary>
@@ -330,7 +330,7 @@ namespace Kent.Boogaart.Converters
         {
             this.EnsureExpressionNode();
             exceptionHelper.ResolveAndThrowIf(this.expressionNode == null, "NoExpression");
-            return this.expressionNode.Evaluate(new NodeEvaluationContext(values));
+            return this.expressionNode.Evaluate(NodeEvaluationContext.Create(values));
         }
 
         /// <summary>

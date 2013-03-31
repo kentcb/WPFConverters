@@ -1,3 +1,5 @@
+#if !SILVERLIGHT
+
 namespace Kent.Boogaart.Converters
 {
     using Kent.Boogaart.HelperTrinity;
@@ -9,7 +11,6 @@ namespace Kent.Boogaart.Converters
     using System.Windows.Data;
     using System.Windows.Markup;
 
-#if !SILVERLIGHT
     /// <summary>
     /// An implementation of <see cref="IMultiValueConverter"/> that allows multiple <see cref="IMultiValueConverter"/>s to be chained together in
     /// a sequence of steps.
@@ -61,19 +62,19 @@ namespace Kent.Boogaart.Converters
         private readonly Collection<MultiConverterGroupStep> steps;
 
         /// <summary>
-        /// Gets the collection of <see cref="MultiConverterGroupStep"/>s in this <c>MultiConverterGroup</c>.
-        /// </summary>
-        public Collection<MultiConverterGroupStep> Steps
-        {
-            get { return this.steps; }
-        }
-
-        /// <summary>
         /// Initializes a new instance of the MultiConverterGroup class.
         /// </summary>
         public MultiConverterGroup()
         {
             this.steps = new Collection<MultiConverterGroupStep>();
+        }
+
+        /// <summary>
+        /// Gets the collection of <see cref="MultiConverterGroupStep"/>s in this <c>MultiConverterGroup</c>.
+        /// </summary>
+        public Collection<MultiConverterGroupStep> Steps
+        {
+            get { return this.steps; }
         }
 
         /// <summary>
@@ -159,5 +160,6 @@ namespace Kent.Boogaart.Converters
             return stepValues;
         }
     }
-#endif
 }
+
+#endif

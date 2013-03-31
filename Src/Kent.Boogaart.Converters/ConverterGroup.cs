@@ -81,19 +81,19 @@ namespace Kent.Boogaart.Converters
         private readonly Collection<IValueConverter> converters;
 
         /// <summary>
-        /// Gets the collection of <see cref="IValueConverter"/>s in this <c>ConverterGroup</c>.
-        /// </summary>
-        public Collection<IValueConverter> Converters
-        {
-            get { return this.converters; }
-        }
-
-        /// <summary>
         /// Initializes a new instance of the ConverterGroup class.
         /// </summary>
         public ConverterGroup()
         {
             this.converters = new Collection<IValueConverter>();
+        }
+
+        /// <summary>
+        /// Gets the collection of <see cref="IValueConverter"/>s in this <c>ConverterGroup</c>.
+        /// </summary>
+        public Collection<IValueConverter> Converters
+        {
+            get { return this.converters; }
         }
 
         /// <summary>

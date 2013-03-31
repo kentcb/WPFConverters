@@ -68,6 +68,28 @@ namespace Kent.Boogaart.Converters
         private DateTimeConversionMode conversionMode;
 
         /// <summary>
+        /// Initializes a new instance of the DateTimeConverter class
+        /// </summary>
+        public DateTimeConverter()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the DateTimeConverter class with the specified source and target kinds.
+        /// </summary>
+        /// <param name="sourceKind">
+        /// The source kind for converted <see cref="DateTime"/>s.
+        /// </param>
+        /// <param name="targetKind">
+        /// The target kind for converted <see cref="DateTime"/>s.
+        /// </param>
+        public DateTimeConverter(DateTimeKind sourceKind, DateTimeKind targetKind)
+        {
+            this.SourceKind = sourceKind;
+            this.TargetKind = targetKind;
+        }
+
+        /// <summary>
         /// Gets or sets the source kind for converted <see cref="DateTime"/>s.
         /// </summary>
         /// <remarks>
@@ -174,28 +196,6 @@ namespace Kent.Boogaart.Converters
                 value.AssertEnumMember("value", DateTimeConversionMode.DoConversion, DateTimeConversionMode.SpecifyKindOnly);
                 this.conversionMode = value;
             }
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the DateTimeConverter class
-        /// </summary>
-        public DateTimeConverter()
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the DateTimeConverter class with the specified source and target kinds.
-        /// </summary>
-        /// <param name="sourceKind">
-        /// The source kind for converted <see cref="DateTime"/>s.
-        /// </param>
-        /// <param name="targetKind">
-        /// The target kind for converted <see cref="DateTime"/>s.
-        /// </param>
-        public DateTimeConverter(DateTimeKind sourceKind, DateTimeKind targetKind)
-        {
-            this.SourceKind = sourceKind;
-            this.TargetKind = targetKind;
         }
 
         /// <summary>

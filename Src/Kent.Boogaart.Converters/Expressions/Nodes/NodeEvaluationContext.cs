@@ -8,10 +8,20 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
 
         public static readonly NodeEvaluationContext Empty = new NodeEvaluationContext(new object[] { });
 
-        public NodeEvaluationContext(object[] arguments)
+        private NodeEvaluationContext(object[] arguments)
         {
             Debug.Assert(arguments != null);
             this.arguments = arguments;
+        }
+
+        public static NodeEvaluationContext Create(params object[] arguments)
+        {
+            if (arguments == null || arguments.Length == 0)
+            {
+                return Empty;
+            }
+
+            return new NodeEvaluationContext(arguments);
         }
 
         public bool HasArgument(int index)

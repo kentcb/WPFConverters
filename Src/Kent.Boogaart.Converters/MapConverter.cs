@@ -78,6 +78,14 @@ namespace Kent.Boogaart.Converters
         private object fallbackValue;
 
         /// <summary>
+        /// Initializes a new instance of the MapConverter class.
+        /// </summary>
+        public MapConverter()
+        {
+            this.mappings = new Collection<Mapping>();
+        }
+
+        /// <summary>
         /// Gets or sets the fallback behavior for this <c>MapConverter</c>.
         /// </summary>
         /// <remarks>
@@ -129,14 +137,6 @@ namespace Kent.Boogaart.Converters
         public Collection<Mapping> Mappings
         {
             get { return this.mappings; }
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the MapConverter class.
-        /// </summary>
-        public MapConverter()
-        {
-            this.mappings = new Collection<Mapping>();
         }
 
         /// <summary>

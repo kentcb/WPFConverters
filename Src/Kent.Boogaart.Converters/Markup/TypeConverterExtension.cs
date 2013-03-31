@@ -27,6 +27,45 @@ namespace Kent.Boogaart.Converters.Markup
         private readonly TypeExtension targetTypeExtension;
 
         /// <summary>
+        /// Initializes a new instance of the TypeConverterExtension class.
+        /// </summary>
+        public TypeConverterExtension()
+        {
+            this.sourceTypeExtension = new TypeExtension();
+            this.targetTypeExtension = new TypeExtension();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the TypeConverterExtension class with the specified source and target types.
+        /// </summary>
+        /// <param name="sourceType">
+        /// The source type for the <see cref="TypeConverter"/>.
+        /// </param>
+        /// <param name="targetType">
+        /// The target type for the <see cref="TypeConverter"/>.
+        /// </param>
+        public TypeConverterExtension(Type sourceType, Type targetType)
+        {
+            this.sourceTypeExtension = new TypeExtension(sourceType);
+            this.targetTypeExtension = new TypeExtension(targetType);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the TypeConverterExtension class with the specified source and target types.
+        /// </summary>
+        /// <param name="sourceTypeName">
+        /// The source type name for the <see cref="TypeConverter"/>.
+        /// </param>
+        /// <param name="targetTypeName">
+        /// The target type name for the <see cref="TypeConverter"/>.
+        /// </param>
+        public TypeConverterExtension(string sourceTypeName, string targetTypeName)
+        {
+            this.sourceTypeExtension = new TypeExtension(sourceTypeName);
+            this.targetTypeExtension = new TypeExtension(targetTypeName);
+        }
+
+        /// <summary>
         /// Gets or sets the source type for the <see cref="TypeConverter"/>.
         /// </summary>
         [ConstructorArgument("sourceType")]
@@ -64,45 +103,6 @@ namespace Kent.Boogaart.Converters.Markup
         {
             get { return this.targetTypeExtension.TypeName; }
             set { this.targetTypeExtension.TypeName = value; }
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the TypeConverterExtension class.
-        /// </summary>
-        public TypeConverterExtension()
-        {
-            this.sourceTypeExtension = new TypeExtension();
-            this.targetTypeExtension = new TypeExtension();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the TypeConverterExtension class with the specified source and target types.
-        /// </summary>
-        /// <param name="sourceType">
-        /// The source type for the <see cref="TypeConverter"/>.
-        /// </param>
-        /// <param name="targetType">
-        /// The target type for the <see cref="TypeConverter"/>.
-        /// </param>
-        public TypeConverterExtension(Type sourceType, Type targetType)
-        {
-            this.sourceTypeExtension = new TypeExtension(sourceType);
-            this.targetTypeExtension = new TypeExtension(targetType);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the TypeConverterExtension class with the specified source and target types.
-        /// </summary>
-        /// <param name="sourceTypeName">
-        /// The source type name for the <see cref="TypeConverter"/>.
-        /// </param>
-        /// <param name="targetTypeName">
-        /// The target type name for the <see cref="TypeConverter"/>.
-        /// </param>
-        public TypeConverterExtension(string sourceTypeName, string targetTypeName)
-        {
-            this.sourceTypeExtension = new TypeExtension(sourceTypeName);
-            this.targetTypeExtension = new TypeExtension(targetTypeName);
         }
 
         /// <summary>

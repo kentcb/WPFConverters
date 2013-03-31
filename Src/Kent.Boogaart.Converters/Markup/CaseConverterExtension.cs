@@ -28,6 +28,39 @@ namespace Kent.Boogaart.Converters.Markup
         private CharacterCasing targetCasing;
 
         /// <summary>
+        /// Initializes a new instance of the CaseConverterExtension class.
+        /// </summary>
+        public CaseConverterExtension()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the CaseConverterExtension class with the specified <see cref="Casing"/>.
+        /// </summary>
+        /// <param name="casing">
+        /// The casing for the <see cref="CaseConverter"/>.
+        /// </param>
+        public CaseConverterExtension(CharacterCasing casing)
+        {
+            this.Casing = casing;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the CaseConverterExtension class with the specified source and target <see cref="Casing"/>.
+        /// </summary>
+        /// <param name="sourceCasing">
+        /// The source casing for the <see cref="CaseConverter"/>.
+        /// </param>
+        /// <param name="targetCasing">
+        /// The target casing for the <see cref="CaseConverter"/>.
+        /// </param>
+        public CaseConverterExtension(CharacterCasing sourceCasing, CharacterCasing targetCasing)
+        {
+            this.SourceCasing = sourceCasing;
+            this.TargetCasing = targetCasing;
+        }
+
+        /// <summary>
         /// Gets or sets the source <see cref="CharacterCasing"/> for the <see cref="CaseConverter"/>.
         /// </summary>
 #if !SILVERLIGHT
@@ -78,39 +111,6 @@ namespace Kent.Boogaart.Converters.Markup
                 this.sourceCasing = value;
                 this.targetCasing = value;
             }
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the CaseConverterExtension class.
-        /// </summary>
-        public CaseConverterExtension()
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the CaseConverterExtension class with the specified <see cref="Casing"/>.
-        /// </summary>
-        /// <param name="casing">
-        /// The casing for the <see cref="CaseConverter"/>.
-        /// </param>
-        public CaseConverterExtension(CharacterCasing casing)
-        {
-            this.Casing = casing;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the CaseConverterExtension class with the specified source and target <see cref="Casing"/>.
-        /// </summary>
-        /// <param name="sourceCasing">
-        /// The source casing for the <see cref="CaseConverter"/>.
-        /// </param>
-        /// <param name="targetCasing">
-        /// The target casing for the <see cref="CaseConverter"/>.
-        /// </param>
-        public CaseConverterExtension(CharacterCasing sourceCasing, CharacterCasing targetCasing)
-        {
-            this.SourceCasing = sourceCasing;
-            this.TargetCasing = targetCasing;
         }
 
         /// <summary>

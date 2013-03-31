@@ -45,6 +45,28 @@ namespace Kent.Boogaart.Converters
         private Type targetType;
 
         /// <summary>
+        /// Initializes a new instance of the TypeConverter class.
+        /// </summary>
+        public TypeConverter()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the TypeConverter class with the specified source and target types.
+        /// </summary>
+        /// <param name="sourceType">
+        /// The source type (see <see cref="SourceType"/>).
+        /// </param>
+        /// <param name="targetType">
+        /// The target type (see <see cref="TargetType"/>).
+        /// </param>
+        public TypeConverter(Type sourceType, Type targetType)
+        {
+            this.SourceType = sourceType;
+            this.TargetType = targetType;
+        }
+
+        /// <summary>
         /// Gets or sets the source type for the conversion.
         /// </summary>
 #if !SILVERLIGHT
@@ -66,28 +88,6 @@ namespace Kent.Boogaart.Converters
         {
             get { return this.targetType; }
             set { this.targetType = value; }
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the TypeConverter class.
-        /// </summary>
-        public TypeConverter()
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the TypeConverter class with the specified source and target types.
-        /// </summary>
-        /// <param name="sourceType">
-        /// The source type (see <see cref="SourceType"/>).
-        /// </param>
-        /// <param name="targetType">
-        /// The target type (see <see cref="TargetType"/>).
-        /// </param>
-        public TypeConverter(Type sourceType, Type targetType)
-        {
-            this.SourceType = sourceType;
-            this.TargetType = targetType;
         }
 
         /// <summary>

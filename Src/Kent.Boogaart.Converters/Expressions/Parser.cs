@@ -11,17 +11,17 @@ namespace Kent.Boogaart.Converters.Expressions
         private readonly Tokenizer tokenizer;
         private Token currentToken;
 
-        private bool AreMoreTokens
-        {
-            get { return this.currentToken != null; }
-        }
-
         public Parser(Tokenizer tokenizer)
         {
             Debug.Assert(tokenizer != null);
 
             this.tokenizer = tokenizer;
             this.ReadNextToken();
+        }
+
+        private bool AreMoreTokens
+        {
+            get { return this.currentToken != null; }
         }
 
         public void Dispose()

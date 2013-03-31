@@ -5,10 +5,7 @@ namespace Kent.Boogaart.Converters.Expressions.Nodes
     {
         protected override string OperatorSymbols
         {
-            get
-            {
-                return "+";
-            }
+            get { return "+"; }
         }
 
         public AddNode(Node leftNode, Node rightNode)
