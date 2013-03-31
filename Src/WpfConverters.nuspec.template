@@ -13,7 +13,7 @@
     </description>
     <tags>.NET helper wpf silverlight binding converters value-converters</tags>
     <dependencies>
-        <dependency id="Kent.Boogaart.HelperTrinity" version="1.4.0.0" />
+        <dependency id="Kent.Boogaart.HelperTrinity" version="1.5.2" />
     </dependencies>
   </metadata>
 </package>

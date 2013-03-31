@@ -18,6 +18,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{50EE3C34-6789-41F2-91B3-728C1C6ABC93}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\packages.config = .nuget\packages.config
+		WpfConverters.nuspec.template = WpfConverters.nuspec.template
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{22063774-CC56-4E8A-B720-7280D0CB2EA9}"
