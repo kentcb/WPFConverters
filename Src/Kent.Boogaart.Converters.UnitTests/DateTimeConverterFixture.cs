@@ -3,6 +3,7 @@ namespace Kent.Boogaart.Converters.UnitTests
     using System;
     using System.Windows;
     using Xunit;
+    using Xunit.Extensions;
 
     public sealed class DateTimeConverterFixture
     {
@@ -79,29 +80,24 @@ namespace Kent.Boogaart.Converters.UnitTests
             Assert.Equal(sourceDateTime, result);
         }
 
-        [Fact]
-        public void convert_converts_value_to_target_kind()
+        [Theory]
+        [InlineData(DateTimeKind.Local, DateTimeKind.Local)]
+        [InlineData(DateTimeKind.Unspecified, DateTimeKind.Local)]
+        [InlineData(DateTimeKind.Utc, DateTimeKind.Local)]
+        [InlineData(DateTimeKind.Local, DateTimeKind.Utc)]
+        [InlineData(DateTimeKind.Unspecified, DateTimeKind.Utc)]
+        [InlineData(DateTimeKind.Utc, DateTimeKind.Utc)]
+        public void convert_converts_value_to_target_kind(DateTimeKind sourceDateTimeKind, DateTimeKind targetDateTimeKind)
         {
             var converter = new DateTimeConverter
             {
-                TargetKind = DateTimeKind.Local
+                TargetKind = targetDateTimeKind
             };
-            var sourceDateTime = DateTime.UtcNow;
+            
+            var sourceDateTime = DateTime.SpecifyKind(DateTime.UtcNow, sourceDateTimeKind);
             var result = (DateTime)converter.Convert(sourceDateTime, null, null, null);
 
-            Assert.Equal(DateTimeKind.Local, result.Kind);
-
-            converter.TargetKind = DateTimeKind.Utc;
-            result = (DateTime)converter.Convert(sourceDateTime, null, null, null);
-
-            Assert.Equal(DateTimeKind.Utc, result.Kind);
-            Assert.Equal(sourceDateTime, result);
-
-            sourceDateTime = new DateTime(Environment.TickCount, DateTimeKind.Unspecified);
-            result = (DateTime)converter.Convert(sourceDateTime, null, null, null);
-
-            Assert.Equal(DateTimeKind.Utc, result.Kind);
-            Assert.Equal(sourceDateTime, result);
+            Assert.Equal(targetDateTimeKind, result.Kind);
         }
 
         [Fact]
@@ -156,29 +152,23 @@ namespace Kent.Boogaart.Converters.UnitTests
             Assert.Equal(sourceDateTime, result);
         }
 
-        [Fact]
-        public void convert_back_converts_value_to_source_kind()
+        [Theory]
+        [InlineData(DateTimeKind.Local, DateTimeKind.Local)]
+        [InlineData(DateTimeKind.Local, DateTimeKind.Unspecified)]
+        [InlineData(DateTimeKind.Local, DateTimeKind.Utc)]
+        [InlineData(DateTimeKind.Utc, DateTimeKind.Local)]
+        [InlineData(DateTimeKind.Utc, DateTimeKind.Unspecified)]
+        [InlineData(DateTimeKind.Utc, DateTimeKind.Utc)]
+        public void convert_back_converts_value_to_source_kind(DateTimeKind sourceDateTimeKind, DateTimeKind targetDateTimeKind)
         {
             var converter = new DateTimeConverter
             {
-                SourceKind = DateTimeKind.Local
+                SourceKind = sourceDateTimeKind
             };
-            var sourceDateTime = DateTime.UtcNow;
+            var sourceDateTime = DateTime.SpecifyKind(DateTime.UtcNow, sourceDateTimeKind);
             var result = (DateTime)converter.ConvertBack(sourceDateTime, null, null, null);
 
-            Assert.Equal(DateTimeKind.Local, result.Kind);
-
-            converter.SourceKind = DateTimeKind.Utc;
-            result = (DateTime)converter.ConvertBack(sourceDateTime, null, null, null);
-
-            Assert.Equal(DateTimeKind.Utc, result.Kind);
-            Assert.Equal(sourceDateTime, result);
-
-            sourceDateTime = new DateTime(Environment.TickCount, DateTimeKind.Unspecified);
-            result = (DateTime)converter.ConvertBack(sourceDateTime, null, null, null);
-
-            Assert.Equal(DateTimeKind.Utc, result.Kind);
-            Assert.Equal(sourceDateTime, result);
+            Assert.Equal(sourceDateTimeKind, result.Kind);
         }
 
         [Fact]
