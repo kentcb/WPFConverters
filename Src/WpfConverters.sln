@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared Items", "Shared Items", "{9510EDF4-280D-4924-B493-E2983D64F57B}"
 	ProjectSection(SolutionItems) = preProject
 		AssemblyInfoCommon.cs = AssemblyInfoCommon.cs
@@ -17,7 +19,6 @@ Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "WpfConverters", "..\Doc\Wpf
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{50EE3C34-6789-41F2-91B3-728C1C6ABC93}"
 	ProjectSection(SolutionItems) = preProject
-		.nuget\packages.config = .nuget\packages.config
 		WpfConverters.nuspec.template = WpfConverters.nuspec.template
 	EndProjectSection
 EndProject
