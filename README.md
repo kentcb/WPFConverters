@@ -26,7 +26,7 @@ Install-Package Kent.Boogaart.Converters
 </TextBlock>
 ```
 
-Please download the documentation for detailed explanations of every converter, along with examples of use. The source code download also includes sample projects for both WPF and Silverlight.
+Please see [the documentation](Doc/overview.md) for more details. The source code download also includes sample projects for both WPF and Silverlight.
 
 ## Who?
 
