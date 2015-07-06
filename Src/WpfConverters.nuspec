@@ -5,8 +5,8 @@
     <version>@build.number@</version>
     <authors>Kent Boogaart</authors>
     <owners>Kent Boogaart</owners>
-    <licenseUrl>http://wpfconverters.codeplex.com/license</licenseUrl>
-    <projectUrl>http://wpfconverters.codeplex.com/</projectUrl>
+    <licenseUrl>http://opensource.org/licenses/MS-PL</licenseUrl>
+    <projectUrl>https://github.com/kentcb/WPFConverters/</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
         WPF Converters provides a number of generic binding converters for use in WPF and Silverlight applications. Online at http://wpfconverters.codeplex.com/.
