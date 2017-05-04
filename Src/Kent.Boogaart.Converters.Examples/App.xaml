@@ -1,0 +1,209 @@
+﻿<Application x:Class="Kent.Boogaart.Converters.Examples.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <Style TargetType="TabControl">
+            <Setter Property="Margin" Value="3"/>
+        </Style>
+
+        <Style TargetType="Expander">
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="Background" Value="#200000e0"/>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="3"/>
+        </Style>
+
+        <Style TargetType="CheckBox">
+            <Setter Property="Margin" Value="3"/>
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="3"/>
+        </Style>
+
+        <Style TargetType="ComboBox">
+            <Setter Property="Margin" Value="3"/>
+        </Style>
+
+        <Style x:Key="ExampleHeader" TargetType="{x:Type TextBlock}">
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+
+        <DrawingImage x:Key="Cross">
+            <DrawingImage.Drawing>
+                <DrawingGroup>
+                    <DrawingGroup.Children>
+                        <GeometryDrawing Geometry="F1 M 5,10L 10,5L 25,20L 40,5L 45,10L 30,25L 45,40L 40,45L 25,30L 10,45L 5,40L 20,25L 5,10 Z ">
+                            <GeometryDrawing.Pen>
+                                <Pen LineJoin="Round">
+                                    <Pen.Brush>
+                                        <LinearGradientBrush StartPoint="0.501355,0.987805" EndPoint="0.501355,0.0121951">
+                                            <LinearGradientBrush.GradientStops>
+                                                <GradientStop Color="#FFB8120D" Offset="0"/>
+                                                <GradientStop Color="#FFFF351E" Offset="1"/>
+                                            </LinearGradientBrush.GradientStops>
+                                        </LinearGradientBrush>
+                                    </Pen.Brush>
+                                </Pen>
+                            </GeometryDrawing.Pen>
+                            <GeometryDrawing.Brush>
+                                <LinearGradientBrush StartPoint="0.501355,0.987805" EndPoint="0.501355,0.0121951">
+                                    <LinearGradientBrush.GradientStops>
+                                        <GradientStop Color="#FFFFAE8C" Offset="0"/>
+                                        <GradientStop Color="#FFF60D0B" Offset="0.493151"/>
+                                        <GradientStop Color="#FFFC8B74" Offset="1"/>
+                                    </LinearGradientBrush.GradientStops>
+                                </LinearGradientBrush>
+                            </GeometryDrawing.Brush>
+                        </GeometryDrawing>
+                    </DrawingGroup.Children>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
+        <DrawingImage x:Key="Tick">
+            <DrawingImage.Drawing>
+                <DrawingGroup>
+                    <DrawingGroup.Children>
+                        <GeometryDrawing Geometry="F1 M 3,30L 8,25L 18,35L 43,5L 48,10L 18,45L 3,30 Z ">
+                            <GeometryDrawing.Pen>
+                                <Pen LineJoin="Round">
+                                    <Pen.Brush>
+                                        <LinearGradientBrush StartPoint="0.881643,0.621951" EndPoint="0.0120773,0.621951">
+                                            <LinearGradientBrush.GradientStops>
+                                                <GradientStop Color="#FF0D8D37" Offset="0"/>
+                                                <GradientStop Color="#FF98D774" Offset="1"/>
+                                            </LinearGradientBrush.GradientStops>
+                                        </LinearGradientBrush>
+                                    </Pen.Brush>
+                                </Pen>
+                            </GeometryDrawing.Pen>
+                            <GeometryDrawing.Brush>
+                                <LinearGradientBrush StartPoint="0.881643,0.621951" EndPoint="0.0120773,0.621951">
+                                    <LinearGradientBrush.GradientStops>
+                                        <GradientStop Color="#FF7AD854" Offset="0"/>
+                                        <GradientStop Color="#FFC8F87D" Offset="0.511416"/>
+                                        <GradientStop Color="#FF39BF27" Offset="1"/>
+                                    </LinearGradientBrush.GradientStops>
+                                </LinearGradientBrush>
+                            </GeometryDrawing.Brush>
+                        </GeometryDrawing>
+                    </DrawingGroup.Children>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
+        <DrawingImage x:Key="Male">
+            <DrawingImage.Drawing>
+                <DrawingGroup>
+                    <DrawingGroup.Children>
+                        <GeometryDrawing Brush="#FFDF8F80" Geometry="F1 M 304,34C 348.183,34 384,69.8173 384,114C 384,158.183 348.183,194 304,194C 259.817,194 224,158.183 224,114C 224,69.8173 259.817,34 304,34 Z ">
+                            <GeometryDrawing.Pen>
+                                <Pen Thickness="3" LineJoin="Round" Brush="#FF000000"/>
+                            </GeometryDrawing.Pen>
+                        </GeometryDrawing>
+                        <GeometryDrawing Brush="#FF463DA6" Geometry="F1 M 288,192C 288,202.333 288,212.667 272,217.833C 256,223 224,223 202.667,260.333C 181.333,297.667 170.667,372.333 160,447L 224,447L 224,383L 224,479L 384,479L 384,446.997L 384,383L 384,447L 448,447C 437.333,372.333 426.667,297.667 405.333,260.333C 384,223 352,223 336,217.833C 320,212.667 320,202.333 320,192L 288,192 Z ">
+                            <GeometryDrawing.Pen>
+                                <Pen Thickness="3" LineJoin="Round" Brush="#FF000000"/>
+                            </GeometryDrawing.Pen>
+                        </GeometryDrawing>
+                        <GeometryDrawing Brush="#FF460D0D" Geometry="F1 M 224,448L 224,736L 288,736C 288,661.333 288,586.667 293.333,549.333C 298.667,512 309.333,512 314.667,549.333C 320,586.667 320,661.333 320,736L 384,736L 384,448L 224,448 Z ">
+                            <GeometryDrawing.Pen>
+                                <Pen Thickness="3" LineJoin="Round" Brush="#FF000000"/>
+                            </GeometryDrawing.Pen>
+                        </GeometryDrawing>
+                        <GeometryDrawing Brush="#FF230101" Geometry="F1 M 224,736L 192,768L 224,800L 288,736L 224,736 Z ">
+                            <GeometryDrawing.Pen>
+                                <Pen LineJoin="Round" Brush="#FF000000"/>
+                            </GeometryDrawing.Pen>
+                        </GeometryDrawing>
+                        <GeometryDrawing Brush="#FF230101" Geometry="F1 M 384,736L 416,768L 384,800L 320,736L 384,736 Z ">
+                            <GeometryDrawing.Pen>
+                                <Pen LineJoin="Round" Brush="#FF000000"/>
+                            </GeometryDrawing.Pen>
+                        </GeometryDrawing>
+                        <GeometryDrawing Brush="#FFDF8F80" Geometry="F1 M 160,448L 160,480L 224,480L 224,448L 160,448 Z ">
+                            <GeometryDrawing.Pen>
+                                <Pen Thickness="3" LineJoin="Round" Brush="#FF000000"/>
+                            </GeometryDrawing.Pen>
+                        </GeometryDrawing>
+                        <GeometryDrawing Brush="#FFDF8F80" Geometry="F1 M 448,448L 448,480L 384,480L 384,448L 448,448 Z ">
+                            <GeometryDrawing.Pen>
+                                <Pen Thickness="3" LineJoin="Round" Brush="#FF000000"/>
+                            </GeometryDrawing.Pen>
+                        </GeometryDrawing>
+                    </DrawingGroup.Children>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+        
+        <DrawingImage x:Key="Female">
+            <DrawingImage.Drawing>
+                <DrawingGroup>
+                    <DrawingGroup.Children>
+                        <GeometryDrawing Brush="#FFDF8F80" Geometry="F1 M 304,34C 348.183,34 384,69.8173 384,114C 384,158.183 348.183,194 304,194C 259.817,194 224,158.183 224,114C 224,69.8173 259.817,34 304,34 Z ">
+                            <GeometryDrawing.Pen>
+                                <Pen Thickness="3" LineJoin="Round" Brush="#FF000000"/>
+                            </GeometryDrawing.Pen>
+                        </GeometryDrawing>
+                        <GeometryDrawing Brush="#FFC31515" Geometry="F1 M 288,192C 288,202.333 288,212.667 272,217.833C 256,223 224,223 202.667,260.333C 181.333,297.667 170.667,372.333 160,447L 224,447L 224,383L 224,479L 384,479L 384,446.997L 384,383L 384,447L 448,447C 437.333,372.333 426.667,297.667 405.333,260.333C 384,223 352,223 336,217.833C 320,212.667 320,202.333 320,192L 288,192 Z ">
+                            <GeometryDrawing.Pen>
+                                <Pen Thickness="3" LineJoin="Round" Brush="#FF000000"/>
+                            </GeometryDrawing.Pen>
+                        </GeometryDrawing>
+                        <GeometryDrawing Brush="#FF230101" Geometry="F1 M 224,736L 192,768L 224,800L 288,736L 224,736 Z ">
+                            <GeometryDrawing.Pen>
+                                <Pen LineJoin="Round" Brush="#FF000000"/>
+                            </GeometryDrawing.Pen>
+                        </GeometryDrawing>
+                        <GeometryDrawing Brush="#FF230101" Geometry="F1 M 384,736L 416,768L 384,800L 320,736L 384,736 Z ">
+                            <GeometryDrawing.Pen>
+                                <Pen LineJoin="Round" Brush="#FF000000"/>
+                            </GeometryDrawing.Pen>
+                        </GeometryDrawing>
+                        <GeometryDrawing Brush="#FFDF8F80" Geometry="F1 M 160,448L 160,480L 224,480L 224,448L 160,448 Z ">
+                            <GeometryDrawing.Pen>
+                                <Pen Thickness="3" LineJoin="Round" Brush="#FF000000"/>
+                            </GeometryDrawing.Pen>
+                        </GeometryDrawing>
+                        <GeometryDrawing Brush="#FFDF8F80" Geometry="F1 M 448,448L 448,480L 384,480L 384,448L 448,448 Z ">
+                            <GeometryDrawing.Pen>
+                                <Pen Thickness="3" LineJoin="Round" Brush="#FF000000"/>
+                            </GeometryDrawing.Pen>
+                        </GeometryDrawing>
+                        <GeometryDrawing Brush="#FF000000" Geometry="F1 M 224,448L 192,672L 416,672L 384,448L 224,448 Z ">
+                            <GeometryDrawing.Pen>
+                                <Pen Thickness="3" LineJoin="Round" Brush="#FF000000"/>
+                            </GeometryDrawing.Pen>
+                        </GeometryDrawing>
+                        <GeometryDrawing Brush="#FFDF8F80" Geometry="F1 M 224,736L 224,672L 288,672L 288,736L 224,736 Z ">
+                            <GeometryDrawing.Pen>
+                                <Pen Thickness="3" LineJoin="Round" Brush="#FF000000"/>
+                            </GeometryDrawing.Pen>
+                        </GeometryDrawing>
+                        <GeometryDrawing Brush="#FFDF8F80" Geometry="F1 M 320,672L 320,736L 384,736L 384,672L 320,672 Z ">
+                            <GeometryDrawing.Pen>
+                                <Pen Thickness="3" LineJoin="Round" Brush="#FF000000"/>
+                            </GeometryDrawing.Pen>
+                        </GeometryDrawing>
+                        <GeometryDrawing Brush="#FFC31515" Geometry="F1 M 208,288C 208,304 208,320 216,328C 224,336 240,336 256,336">
+                            <GeometryDrawing.Pen>
+                                <Pen Thickness="3" LineJoin="Round" Brush="#FF000000"/>
+                            </GeometryDrawing.Pen>
+                        </GeometryDrawing>
+                        <GeometryDrawing Brush="#FFC31515" Geometry="F1 M 304,288C 304,304 304,320 312,328C 320,336 336,336 352,336">
+                            <GeometryDrawing.Pen>
+                                <Pen Thickness="3" LineJoin="Round" Brush="#FF000000"/>
+                            </GeometryDrawing.Pen>
+                        </GeometryDrawing>
+                    </DrawingGroup.Children>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+    </Application.Resources>
+</Application>

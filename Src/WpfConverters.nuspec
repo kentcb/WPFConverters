@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Kent.Boogaart.Converters</id>
+    <version>@build.number@</version>
+    <authors>Kent Boogaart</authors>
+    <owners>Kent Boogaart</owners>
+    <licenseUrl>http://opensource.org/licenses/MS-PL</licenseUrl>
+    <projectUrl>https://github.com/kentcb/WPFConverters/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>
+        WPF Converters provides a number of generic binding converters for use in WPF and Silverlight applications. Online at https://github.com/kentcb/WPFConverters/.
+    </description>
+    <tags>.NET helper wpf silverlight binding converters value-converters</tags>
+    <dependencies>
+        <dependency id="Kent.Boogaart.HelperTrinity" version="1.5.2" />
+    </dependencies>
+  </metadata>
+</package>
