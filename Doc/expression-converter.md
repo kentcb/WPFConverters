@@ -47,9 +47,7 @@ The actual expression has again been escaped due to its presence in XAML. Unesca
     <MultiBinding.Converter> 
         <con:ExpressionConverterExtension> 
             <con:ExpressionConverterExtension.Expression>
-                &lt;![CDATA[
-                {0} && {1} && {3} && !{2}
-                ]]&gt;
+                <![CDATA[ {0} && {1} && {3} && !{2}]]>
             </con:ExpressionConverterExtension.Expression> 
         </con:ExpressionConverterExtension> 
     </MultiBinding.Converter> 
