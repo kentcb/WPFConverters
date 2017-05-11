@@ -1,7 +1,7 @@
 
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared Items", "Shared Items", "{9510EDF4-280D-4924-B493-E2983D64F57B}"
 	ProjectSection(SolutionItems) = preProject
@@ -14,6 +14,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kent.Boogaart.Converters.Examples", "Kent.Boogaart.Converters.Examples\Kent.Boogaart.Converters.Examples.csproj", "{9DE85C8D-117B-4601-AAC0-473B5A943E3A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kent.Boogaart.Converters.UnitTests", "Kent.Boogaart.Converters.UnitTests\Kent.Boogaart.Converters.UnitTests.csproj", "{F9A95501-1A1A-4A82-A40B-E7BAC6EAF80E}"
+EndProject
+Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "WpfConverters", "..\Doc\WpfConverters.shfbproj", "{875651EB-17E7-40C8-87BF-1CA148CEC0E5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{50EE3C34-6789-41F2-91B3-728C1C6ABC93}"
 	ProjectSection(SolutionItems) = preProject
@@ -89,6 +91,16 @@ Global
 		{F9A95501-1A1A-4A82-A40B-E7BAC6EAF80E}.SL40 Release|Any CPU.ActiveCfg = FX45 Release|Any CPU
 		{F9A95501-1A1A-4A82-A40B-E7BAC6EAF80E}.SL50 Debug|Any CPU.ActiveCfg = FX45 Release|Any CPU
 		{F9A95501-1A1A-4A82-A40B-E7BAC6EAF80E}.SL50 Release|Any CPU.ActiveCfg = FX45 Release|Any CPU
+		{875651EB-17E7-40C8-87BF-1CA148CEC0E5}.FX35 Debug|Any CPU.ActiveCfg = FX45 Release|Any CPU
+		{875651EB-17E7-40C8-87BF-1CA148CEC0E5}.FX35 Release|Any CPU.ActiveCfg = FX45 Release|Any CPU
+		{875651EB-17E7-40C8-87BF-1CA148CEC0E5}.FX40 Debug|Any CPU.ActiveCfg = FX45 Release|Any CPU
+		{875651EB-17E7-40C8-87BF-1CA148CEC0E5}.FX40 Release|Any CPU.ActiveCfg = FX45 Release|Any CPU
+		{875651EB-17E7-40C8-87BF-1CA148CEC0E5}.FX45 Debug|Any CPU.ActiveCfg = FX45 Debug|Any CPU
+		{875651EB-17E7-40C8-87BF-1CA148CEC0E5}.FX45 Release|Any CPU.ActiveCfg = FX45 Release|Any CPU
+		{875651EB-17E7-40C8-87BF-1CA148CEC0E5}.SL40 Debug|Any CPU.ActiveCfg = FX45 Release|Any CPU
+		{875651EB-17E7-40C8-87BF-1CA148CEC0E5}.SL40 Release|Any CPU.ActiveCfg = FX45 Release|Any CPU
+		{875651EB-17E7-40C8-87BF-1CA148CEC0E5}.SL50 Debug|Any CPU.ActiveCfg = FX45 Release|Any CPU
+		{875651EB-17E7-40C8-87BF-1CA148CEC0E5}.SL50 Release|Any CPU.ActiveCfg = FX45 Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
